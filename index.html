@@ -24,7 +24,7 @@
     </header>
 
     <nav class="sidebar-nav">
-      <!-- Primary top nav -->
+      <!-- Primeros botones del la barra lateral -->
       <ul class="nav-list primary-nav">
         <li class="nav-item">
           <a href="#" class="nav-link">
@@ -75,9 +75,16 @@
           </a>
           <span class="nav-tooltip">Settings</span>
         </li>
+        <!-- Alternar modo oscuro o claro -->
+        <li class="nav-item">
+          <button id="dark-mode-toggle" class="nav-link dark-mode-toggle">
+              <span class="material-symbols-rounded" id="dark-mode-icon">computer</span>
+              <span id="dark-mode-label">Sistema</span>
+          </button>
+      </li>
       </ul>
 
-      <!-- Secondary bottom nav -->
+      <!-- Ultimos 2 botones del la barra lateral -->
       <ul class="nav-list secondary-nav">
         <li class="nav-item">
           <a href="#" class="nav-link">
@@ -94,6 +101,7 @@
           <span class="nav-tooltip">Logout</span>
         </li>
       </ul>
+</nav>
     </nav>
   </aside>
 
@@ -116,35 +124,37 @@
     <main class="main">
       <section class="intro">
         <h2>Bienvenido a Calculativa</h2>
-        <p>Explora nuestras herramientas de cálculo y optimiza tus tareas diarias.</p>
+        <p>es una herramienta diseñada para gestionar y visualizar correlativas académicas de manera eficiente. Permite a las instituciones educativas y estudiantes planificar su trayectoria académica con facilidad.</p>
       </section>
-
-      <section class="features">
-        <h2>Características Principales</h2>
-        <div class="feature-list">
-          <div class="feature">
-            <h3>Calculadora Básica</h3>
-            <p>Realiza operaciones matemáticas simples como suma, resta, multiplicación y división.</p>
-          </div>
-          <div class="feature">
-            <h3>Calculadora Científica</h3>
-            <p>Funciones avanzadas como logaritmos, potencias, trigonometría y más.</p>
-          </div>
-          <div class="feature">
-            <h3>Calculadora Financiera</h3>
-            <p>Calcula intereses, préstamos, amortizaciones y otros conceptos financieros.</p>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-      <p>&copy; 2025 Calculativa. Todos los derechos reservados.</p>
-    </footer>
+    
+        <section class="instituciones">
+            <h2>Instituciones</h2>
+            
+            <div class="institucion-list">
+                <div class="institucion">
+                    <h3>ISFD Bella Vista</h3>
+                    <p>isfd-bella-vista</p>
+                </div>
+                <div class="institucion">
+                    <h3>ISFD Mercedes</h3>
+                    <p>isfd-mercedes</p>
+                </div>
+                <div class="institucion">
+                    <h3>ISFD Santa Lucía</h3>
+                    <p>isfd-santa-lucia</p>
+                </div>
+            </div>
+        </section>
+      </main>
   </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>Copyright &copy; 2025 Calculativa. Todos los derechos reservados.</p>
+  </footer>
 
   <!-- Script -->
   <script src="assets/js/slidebar.js"></script>
+  <script src="assets/js/theme.js"></script>
 </body>
 </html>

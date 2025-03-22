@@ -9,10 +9,74 @@
   font-family: "Poppins", sans-serif;
 }
 
-body {
-  min-height: 100vh;
-  background: linear-gradient(#F1FAFF, #CBE4FF);
+
+/* Estilos para el Dark Mode Toggle (Botón) */
+.dark-mode-toggle {
   display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 12px 15px; /* Misma cantidad de padding que los demás botones */
+  border: none;
+  background-color: transparent;
+  color: #fff;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 8px; /* Misma cantidad de border-radius que los demás botones */
+  margin-top: 4px; /* Agrega un margen superior para separarlo del botón "Settings" */
+}
+
+.dark-mode-toggle:hover {
+  color: #151A2D;
+  background: #fff;
+}
+
+.dark-mode-toggle span {
+  font-size: 1rem;
+}
+
+/* Temas de color (igual que antes) */
+body {
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+body.dark-mode {
+  background-color: #121212;
+  color: #eee;
+}
+
+/* Puedes agregar más estilos específicos para el modo oscuro */
+.dark-mode .sidebar {
+  background-color: #212121;
+}
+
+.dark-mode .sidebar-nav .nav-link {
+  color: #eee;
+}
+
+/* Estilos para el modo sistema (opcional) */
+@media (prefers-color-scheme: dark) {
+  body.system-mode {
+      background-color: #121212;
+      color: #eee;
+  }
+
+  .system-mode .sidebar {
+      background-color: #212121;
+  }
+
+  .system-mode .sidebar-nav .nav-link {
+      color: #eee;
+  }
+}
+
+.main-content {
+  margin-left: 302px;
+  flex: 1;
+  padding: 20px;
+  transition: margin 0.4s ease;
+  min-height: calc(100vh - 120px); /* Ajusta el valor según la altura de tu header y footer */
 }
 
 .sidebar {
@@ -21,7 +85,7 @@ body {
   margin: 16px;
   border-radius: 16px;
   background: #151A2D;
-  height: calc(100vh - 32px);
+  height: calc(100dvh - 32px);
   transition: all 0.4s ease;
 }
 
@@ -167,7 +231,7 @@ body {
   width: 100%;
 }
 
-/* Responsive para telefonos y tablets */
+/* Responsive para telefonos y tablets (Slidebar)*/
 @media (max-width: 1024px) {
   .sidebar {
     height: 56px;
@@ -238,6 +302,7 @@ body {
   flex: 1;
   padding: 20px;
   transition: margin 0.4s ease;
+  
 }
 
 .sidebar.collapsed + .main-content {
@@ -300,43 +365,41 @@ body {
   color: #555;
 }
 
-.features {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.feature {
+.institucion {
   background-color: #f9f9f9;
   padding: 20px;
   border-radius: 12px;
   flex: 1 1 calc(33.333% - 40px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
+  cursor: pointer; /* Agrega cursor de puntero */
+  margin: 10px 0;
 }
 
-.feature:hover {
+.institucion:hover {
   transform: translateY(-5px);
+  transform: scale(1.05); /* Agrega un ligero aumento de tamaño */
+  transition: transform 0.3s ease-in-out; /* Agrega una transición suave */
 }
 
-.feature h3 {
+.institucion h3 {
   font-size: 20px;
   color: #151A2D;
   margin-bottom: 10px;
 }
 
-.feature p {
+.institucion p {
   font-size: 14px;
   color: #555;
 }
 
 .footer {
-  text-align: center;
+  background: #fff;
   padding: 20px;
-  margin-top: 20px;
-  background-color: #fff;
   border-radius: 16px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-top: auto;
 }
 
 .footer p {

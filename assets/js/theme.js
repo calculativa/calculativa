@@ -1,52 +1,37 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const themeToggle = document.getElementById("theme-toggle");
-    let savedTheme = localStorage.getItem("theme") || "system";
+document.addEventListener('DOMContentLoaded', function() {
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const darkModeIcon = document.getElementById('dark-mode-icon');
+    const darkModeLabel = document.getElementById('dark-mode-label');
+    let currentMode = localStorage.getItem('darkMode') || 'system';
 
-    // Función para aplicar el tema del sistema
-    function applySystemTheme() {
-        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        document.documentElement.classList.toggle("dark-mode", prefersDark);
-        document.documentElement.classList.toggle("light-mode", !prefersDark);
-    }
+    function updateMode(mode) {
+        document.body.classList.remove('light-mode', 'dark-mode', 'system-mode');
+        document.body.classList.add(`${mode}-mode`);
+        localStorage.setItem('darkMode', mode);
+        currentMode = mode;
 
-    // Función para aplicar el tema seleccionado
-    function applyTheme(theme) {
-        document.documentElement.classList.remove("light-mode", "dark-mode");
-
-        if (theme === "dark") {
-            document.documentElement.classList.add("dark-mode");
-            themeToggle.textContent = "🌙";
-            themeToggle.setAttribute("aria-label", "Cambiar a tema claro");
-        } else if (theme === "light") {
-            document.documentElement.classList.add("light-mode");
-            themeToggle.textContent = "☀️";
-            themeToggle.setAttribute("aria-label", "Cambiar a tema sistema");
+        // Actualiza el icono y la etiqueta
+        if (mode === 'light') {
+            darkModeIcon.textContent = 'light_mode';
+            darkModeLabel.textContent = 'Claro';
+        } else if (mode === 'dark') {
+            darkModeIcon.textContent = 'dark_mode';
+            darkModeLabel.textContent = 'Oscuro';
         } else {
-            themeToggle.textContent = "🖥️";
-            themeToggle.setAttribute("aria-label", "Cambiar a tema oscuro");
-            applySystemTheme(); // Aplicar el tema del sistema
+            darkModeIcon.textContent = 'computer'; // Cambia a "computer"
+            darkModeLabel.textContent = 'Sistema';
         }
-        
-        localStorage.setItem("theme", theme);
     }
 
-    // Aplicar el tema guardado al cargar la página
-    applyTheme(savedTheme);
+    updateMode(currentMode);
 
-    // Detectar cambios en el sistema y actualizar en tiempo real
-    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
-        if (localStorage.getItem("theme") === "system") {
-            applyTheme("system");
+    darkModeToggle.addEventListener('click', function() {
+        if (currentMode === 'light') {
+            updateMode('dark');
+        } else if (currentMode === 'dark') {
+            updateMode('system');
+        } else {
+            updateMode('light');
         }
-    });
-
-    // Cambiar tema al hacer clic en el botón
-    themeToggle.addEventListener("click", () => {
-        const themes = ["dark", "light", "system"];
-        const currentIndex = themes.indexOf(savedTheme);
-        const newTheme = themes[(currentIndex + 1) % themes.length]; // Ciclar entre temas
-        
-        savedTheme = newTheme; // Guardar el nuevo estado
-        applyTheme(newTheme);
     });
 });
