@@ -1,728 +1,363 @@
-@import "https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap";
+/* styles.css */
+/* Importing Google Fonts - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-
-/* Modo Light (por defecto) */
-:root {
-    --color-apagado: #434343;
-    --color-rendir: #2422b5;
-    --color-aprobado: #00ca28;
-
-    --color-check-rojo: #d93e3e;
-    --color-check-anaranjado: #d88322;
-    --color-check-verde: #66cc67;
-
-    --bg-color: #FFFFFF;
-    --text-color: #333333;
-    --header-color: #111111;
-    --border-color: #DDDDDD;
-    --primary-color: #3f5adf;
-    --hover-color: #0300b3;
-    --box-shadow: -5px -5px 18px -5px rgba(0,0,0,1);
-    -webkit-box-shadow: -5px -5px 18px -5px rgba(0,0,0,1);
-    -moz-box-shadow: -5px -5px 18px -5px rgba(0,0,0,1);
-}
-
-/* Modo Dark */
-.dark-mode {
-    --bg-color: #121212;
-    --text-color: #E0E0E0;
-    --header-color: #FFFFFF;
-    --border-color: #d6d6d6;
-    --primary-color: #3f5adf;
-    --hover-color: #3700B3;
-    --bg-button-check: #6a6a6a;
-
-    --box-shadow: -5px -5px 18px -5px rgba(255,255,255,1);
-    -webkit-box-shadow: -5px -5px 18px -5px rgba(255,255,255,1);
-    -moz-box-shadow: -5px -5px 18px -5px rgba(255,255,255,1);
-}
-
-/* Opcional: Si quieres hacer explícito el modo claro */
-.light-mode {
-    --bg-color: #f5f5f5;
-    --text-color: #333333;
-    --header-color: #f5f5f5;
-    --border-color: #DDDDDD;
-    --primary-color: #3f5adf;
-    --hover-color: #3700B3;
-    --box-shadow: -8px -5px 19px 9px rgba(0,0,0,0.44);
-    -webkit-box-shadow: -8px -5px 19px 9px rgba(0,0,0,0.44);
-    -moz-box-shadow: -8px -5px 19px 9px rgba(0,0,0,0.44);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 
 body {
-    font-family: "Poppins", sans-serif;
-    font-size: 1.2rem;
-    height: 100vh;
-    padding: 10px 5px;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    transition: background-color 0.5s ease, color 0.5s ease;
-    
-}
-
-.grid-container>* {
-    box-shadow: var(--box-shadow);
-    border-radius: 10px;
-    padding: 5px;
-    text-align: center;
-    font-weight: 200;
-    overflow: auto;
-    
-}
-
-/*-----Hacer Responsive para Telefonos-----*/
-
-.grid-container {
-    display: grid;
-    gap: 5px;
-    transition: background-color 0.5s ease, color 0.5s ease;
-    grid-template:
-    "header" 50px
-    "main" auto
-    "sidebar" 65px
-    "footer" 50px;
-    
-}
-.header {
-    grid-area: header;
-    background-color: var(--primary-color);
-}
-
-.navbar {
-    grid-area: navbar;
-    background-color: var(--bg-color);
+  min-height: 100vh;
+  background: linear-gradient(#F1FAFF, #CBE4FF);
+  display: flex;
 }
 
 .sidebar {
-    grid-area: sidebar;
-    background-color: var(--bg-color);
+  position: fixed;
+  width: 270px;
+  margin: 16px;
+  border-radius: 16px;
+  background: #151A2D;
+  height: calc(100vh - 32px);
+  transition: all 0.4s ease;
+}
+
+.sidebar.collapsed {
+  width: 85px;
+}
+
+/* Estilos de la barra lateral (ya existentes) */
+.sidebar .sidebar-header {
+  display: flex;
+  position: relative;
+  padding: 25px 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sidebar-header .header-logo img {
+  width: 46px;
+  height: 46px;
+  display: block;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.sidebar-header .toggler {
+  height: 35px;
+  width: 35px;
+  color: #151A2D;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  background: #fff;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: 0.4s ease;
+}
+
+.sidebar-header .sidebar-toggler {
+  position: absolute;
+  right: 20px;
+}
+
+.sidebar-header .menu-toggler {
+  display: none;
+}
+
+.sidebar.collapsed .sidebar-header .toggler {
+  transform: translate(-4px, 65px);
+}
+
+.sidebar-header .toggler:hover {
+  background: #dde4fb;
+}
+
+.sidebar-header .toggler span {
+  font-size: 1.75rem;
+  transition: 0.4s ease;
+}
+
+.sidebar.collapsed .sidebar-header .toggler span {
+  transform: rotate(180deg);
+}
+
+.sidebar-nav .nav-list {
+  list-style: none;
+  display: flex;
+  gap: 4px;
+  padding: 0 15px;
+  flex-direction: column;
+  transform: translateY(15px);
+  transition: 0.4s ease;
+}
+
+.sidebar.collapsed .sidebar-nav .primary-nav {
+  transform: translateY(65px);
+}
+
+.sidebar-nav .nav-link {
+  color: #fff;
+  display: flex;
+  gap: 12px;
+  white-space: nowrap;
+  border-radius: 8px;
+  padding: 12px 15px;
+  align-items: center;
+  text-decoration: none;
+  transition: 0.4s ease;
+}
+
+.sidebar.collapsed .sidebar-nav .nav-link {
+  border-radius: 12px;
+}
+
+.sidebar .sidebar-nav .nav-link .nav-label {
+  transition: opacity 0.3s ease;
+}
+
+.sidebar.collapsed .sidebar-nav .nav-link .nav-label {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sidebar-nav .nav-link:hover {
+  color: #151A2D;
+  background: #fff;
+}
+
+.sidebar-nav .nav-item {
+  position: relative;
+}
+
+.sidebar-nav .nav-tooltip {
+  position: absolute;
+  top: -10px;
+  opacity: 0;
+  color: #151A2D;
+  display: none;
+  pointer-events: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  white-space: nowrap;
+  background: #fff;
+  left: calc(100% + 25px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  transition: 0s;
+}
+
+.sidebar.collapsed .sidebar-nav .nav-tooltip {
+  display: block;
+}
+
+.sidebar-nav .nav-item:hover .nav-tooltip {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(50%);
+  transition: all 0.4s ease;
+}
+
+.sidebar-nav .secondary-nav {
+  position: absolute;
+  bottom: 30px;
+  width: 100%;
+}
+
+/* Responsive para telefonos y tablets */
+@media (max-width: 1024px) {
+  .sidebar {
+    height: 56px;
+    margin: 13px;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    width: calc(100% - 26px);
+    max-height: calc(100vh - 26px);
+  }
+
+  .sidebar.menu-active {
+    overflow-y: auto;
+  }
+
+  .sidebar .sidebar-header {
+    position: sticky;
+    top: 0;
     z-index: 20;
+    border-radius: 16px;
+    background: #151A2D;
+    padding: 8px 10px;
+  }
+
+  .sidebar-header .header-logo img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .sidebar-header .sidebar-toggler,
+  .sidebar-nav .nav-item:hover .nav-tooltip {
+    display: none;
+  }
+  
+  .sidebar-header .menu-toggler {
+    display: flex;
+    height: 30px;
+    width: 30px;
+  }
+
+  .sidebar-header .menu-toggler span {
+    font-size: 1.3rem;
+  }
+
+  .sidebar .sidebar-nav .nav-list {
+    padding: 0 10px;
+  }
+
+  .sidebar-nav .nav-link {
+    gap: 10px;
+    padding: 10px;
+    font-size: 0.94rem;
+  }
+
+  .sidebar-nav .nav-link .nav-icon {
+    font-size: 1.37rem;
+  }
+
+  .sidebar-nav .secondary-nav {
+    position: relative;
+    bottom: 0;
+    margin: 40px 0 30px;
+  }
+}
+
+/* Nuevos estilos para el contenido principal */
+.main-content {
+  margin-left: 302px; /* Ancho de la barra lateral + margen */
+  flex: 1;
+  padding: 20px;
+  transition: margin 0.4s ease;
+}
+
+.sidebar.collapsed + .main-content {
+  margin-left: 117px; /* Ancho de la barra lateral colapsada + margen */
+}
+
+.main-header {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.main-header h1 {
+  font-size: 24px;
+  color: #151A2D;
+  margin: 0;
+}
+
+.main-nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.main-nav ul li a {
+  color: #151A2D;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.main-nav ul li a:hover {
+  color: #007BFF;
 }
 
 .main {
-    grid-area: main;
-    background-color: var(--bg-color);
-    z-index: 10;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.intro {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.intro h2 {
+  font-size: 28px;
+  color: #151A2D;
+  margin-bottom: 10px;
+}
+
+.intro p {
+  font-size: 16px;
+  color: #555;
+}
+
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.feature {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 12px;
+  flex: 1 1 calc(33.333% - 40px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.feature:hover {
+  transform: translateY(-5px);
+}
+
+.feature h3 {
+  font-size: 20px;
+  color: #151A2D;
+  margin-bottom: 10px;
+}
+
+.feature p {
+  font-size: 14px;
+  color: #555;
 }
 
 .footer {
-    grid-area: footer;
-    background-color: var(--primary-color);
-    
+  text-align: center;
+  padding: 20px;
+  margin-top: 20px;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/*-----HEADER-----*/
-
-.header {
-    text-transform: uppercase;
-    overflow:hidden;
-    
+.footer p {
+  font-size: 14px;
+  color: #555;
+  margin: 0;
 }
 
-/*-----Dar Estilo al boton Light y Dark mode-----*/
-
-.theme-button {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 5px;
+@media (max-width: 1024px) {
+  .main-content {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    color: var(--text-color);
-    transition: color 0.3s ease;
-}
-
-/*-----MAIN-----*/
-
-/*-----Cajas de años-----*/
-
-/*-----CajaCursado es la caja total de todos los años-----*/
-/*-----CajaMateria son las cajas individual de cada año-----*/
-
-.caja-cursado {
-    display: flex;
-    height: 100%;
-}
-
-.caja-materias{
-    border: .1rem solid var(--primary-color);
-    border-left: 0;
-    background-color: var(--bg-color);
-    width: 100%;
-    height: max-content;
-    flex: 1;
-}
-
-.caja-materias:first-child {
-    border-left: .1rem solid var(--primary-color);
-    border-radius: 8px 0 0 8px;
-}
-
-.caja-materias:last-child {
-    border-radius: 0 8px 8px 0 ;
-}
-
-/*-----Hacer que el Main tenga desplazamiento Horizontal-----*/
-
-.caja-cursado {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    overflow-wrap: break-word;
-    scrollbar-color: var(--primary-color) var(--bg-color);
-    scrollbar-width: thin;
-    overflow-y: auto;
-}
-
-.caja-materias {
-    display: flex;
-    flex: 0 0 auto;
-    width: 50%;
-    
-    text-align: center;
-    flex-direction: column; /* Organiza el contenido en columna */
-    justify-content: space-between; /* Empuja .caja-cambiador hacia abajo */
-    overflow-y: auto;
-}
-
-.scrolling-buttons-container {
-    user-select: none;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 25px;
-    width: 100%; /* Asegura que ocupe todo el ancho disponible */
-    max-width: 100%; /* Limita el ancho máximo para evitar que los botones estén muy separados */
-}
-
-.material-symbols-outlined {
-    font-size: 70px; /* Ajusta este valor según lo grande que quieras el ícono */
-    color: #f5f5f5; /* Cambia el color si es necesario */
-    cursor: pointer;
-}
-
-/*Botones de las cajas materias*/
-
-.botones-materias {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    height: 100%;
-    width: 100%;
-}
-
-.materia-contenedor {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    align-items: center; /* Alinea verticalmente el botón y los checkboxes */
-}
-
-.materia-boton {
-    display: flex;
-    margin-left: 5px;
-    align-items: center;
-    width: 80%; /* Limita el ancho del contenedor del botón */
-    height: 100%;
-    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
-    overflow: hidden; /* Oculta el texto que se desborda */
-    text-overflow: ellipsis; /* Añade puntos suspensivos al texto truncado */
-}
-
-.materia-btn {
-    padding: .3em; /*Tamaño de los botones*/
-    display: inline-block; /* Cambia a inline-block para que funcione text-overflow */
-    width: 100%; /* Ocupa todo el ancho disponible del contenedor */
-    text-align: left; /* Alinea el texto a la izquierda */
-    border: 0.2rem solid var(--color-apagado);
-    font-size: .6em;
-    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
-    overflow: hidden; /* Oculta el texto que se desborda */
-    text-overflow: ellipsis; /* Añade puntos suspensivos al texto truncado */
-    background-color: var(--bg-button-check);
-    color: var(--text-color);
-}
-
-.materia-none1 {
-    visibility: hidden;
-}
-
-/*Personalizacion de Check-boxs*/
-
-.materia-checkboxes {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    width: 60%; /* Limita el ancho del contenedor de checkboxes */
-    height: 100%;
-    gap: 5px; /* Espaciado entre checkboxes */
-    
-}
-
-/* Oculta el checkbox nativo */
-.custom-checkbox input[type="checkbox"] {
-    display: none;
-    opacity: 1; /* Oculta el checkbox */
-    position: relative; /* Lo saca del flujo normal */
-}
-
-/* Estilos base para los checkboxes */
-.custom-checkbox .checkmark {
-    display: flex;
-    width: 20px;
-    height: 20px;
-    background-color: var(--bg-button-check);
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s, border-color 0.3s;
-}
-
-/* Cambiar el color de fondo cuando el checkbox está seleccionado */
-.custom-checkbox input[type="checkbox"][data-checkbox="1"]:checked + .checkmark {
-    background-color: var(--color-check-rojo); /* Primer checkbox: rojo */
-    border-color: var(--color-check-rojo);
-}
-
-.custom-checkbox input[type="checkbox"][data-checkbox="2"]:checked + .checkmark {
-    background-color: var(--color-check-anaranjado); /* Segundo checkbox: naranja */
-    border-color: var(--color-check-anaranjado);
-}
-
-.custom-checkbox input[type="checkbox"][data-checkbox="3"]:checked + .checkmark {
-    background-color: var(--color-check-verde); /* Tercer checkbox: verde */
-    border-color: var(--color-check-verde);
-}
-
-/* Añadir un "tick" (marca de verificación) cuando el checkbox está seleccionado */
-.custom-checkbox input[type="checkbox"]:checked + .checkmark::after {
-    content: "";
-    display: block;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    transform: rotate(45deg);
-    margin-left: 6px;
-    margin-top: 2px;
-}
-
-/* Cambiar el estilo del checkbox al pasar el mouse */
-.custom-checkbox:hover .checkmark {
-    border-color: var(--primary-color);
-}
-
-/*-----Cajas cambiadores-----*/
-/*-----CajasCambiadores es la caja abajo y contiene el cambio total de selectores por año-----*/
-
-.caja-cambiador{
-    border-top: .1rem solid var(--primary-color);
-    width: 100%;
-    height: 10%; /* Altura de la caja cambiador */
-    margin-top: auto; /* Asegura que esté al final */
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-left: 5px;
-    font-weight: bold;
-}
-
-.cambiar-lista-text{
-    font-size: 2.8vw; /* Reduce el tamaño de la fuente */
-    width: 80%;
-}
-
-/*-----SIDEBAR-----*/
-
-.sidebar {
-    display: flex;
-    flex-direction: column;
-    align-items: baseline;
-    justify-content: space-around;
-    text-align: justify;
-}
-
-#materia-nombre {
-    font-weight: bold;
-    font-size: .6em;
-}
-
-.condiciones {
-    font-size: .6em;
-}
-
-/*-----FOOTER-----*/
-
-.footer {
-    grid-area: footer;
-    background-color: var(--primary-color);
-    display: flex; /* Asegura que el contenido del footer esté centrado */
-    align-items: center; /* Centra verticalmente */
-    justify-content: space-between; /* Centra horizontalmente */
-    overflow:hidden;
-}
-
-.btn-calcular{
-    flex-grow: 1; /* Permite que los botones se expandan o reduzcan */    align-items: center; /* Centra el texto dentro del botón */
-    justify-content: center; /* Centra el texto horizontalmente */
-    width: 80%; /* Ajusta el ancho del botón al contenedor */
-    max-height: 10%; /* Evita que el botón crezca demasiado */
-    min-height: 0; /* Permite que se reduzca si es necesario */
-    font-size: calc(1rem + 0.2vw); /* Tamaño de fuente adaptable */
-    padding: 5px;
-    border-radius: 10px;
-    font-weight: bold;
-}
-
-.btn-calcular:active {
-    background-color: var(--color-aprobado);
-    color: #f5f5f5;
-    
-}
-
-#refresh-button { /*Boton de reiniciar*/
-    font-size: 3rem;
-}
-
-/*-----MEDIAS QUERYS-----*/
-
-/*-----Hacer Responsive para Telefonos Chicos 1 (de 320px para abajo)-----*/
-
-@media (max-width: 320px) and (min-width: 20px) {
-
-    h1{
-        margin-top: 5px;
-        font-size: 1.5rem;
-    }
-    h2 {
-        font-size: 1rem;
-    }
-    .theme-button {
-        top: 15px;
-        right: 10px;
-    }
-
-    /*footer responsive telefono chico1*/
-
-    /* Botones de desplazamiento horizontal */
-    .scrolling-buttons-container {
-        gap: 5px; /* Espacio entre los botones de desplazamiento */
-        flex-shrink: 0; /* Evita que se reduzcan demasiado */
-    }
-
-    .material-symbols-outlined {
-        font-size: 24px; /* Reduce el tamaño de los íconos de desplazamiento */
-        color: #f5f5f5; /* Color del ícono */
-        cursor: pointer;
-    }
-    .scrolling-buttons-container {
-        align-items: center;
-        justify-content: space-between;
-        gap: 5px; /* Espacio entre los botones de desplazamiento */
-        flex-shrink: 0; /* Evita que se reduzcan demasiado */
-    }
-
-}
-
-/*-----Hacer Responsive para Telefonos Chicos 2 (de 321px a 400px)-----*/
-
-@media (max-width: 400px) and ((min-width: 321px)) {
-    h1{
-        font-size: 1.9rem;
-    }
-    h2 {
-        font-size: 1.2rem;
-    }
-    .theme-button {
-        top: 0.8rem;
-        right: 0.5rem;
-    }
-}
-
-/*-----Hacer Responsive para Telefonos Estandar (de 401px a 767px)-----*/
-
-@media (min-width: 400px) and (max-width: 767px) {
-    h1{
-        font-size: 1.9rem;
-    }
-    h2 {
-        font-size: 1.2rem;
-    }
-    .theme-button {
-        top: 0.8rem;
-        right: 0.5rem;
-    }
-}
-
-/*-----Hacer Responsive para Tablets-----*/
-
-@media (min-width: 768px) {
-    .grid-container {
-        grid-template:
-            "header header" 60px
-            "sidebar main" auto
-            "footer footer" 50px /
-            200px auto;
-    }
-
-    /*header responsive tablet*/
-
-    h1{
-        font-size: 1.5rem;
-    }
-    h2 {
-        font-size: 1.2rem;
-    }
-    
-    /*sidebar responsive tablet*/
-
-    .sidebar {
-        align-items: baseline;
-        justify-content: flex-start;
-    }
-    
-    #materia-nombre {
-        padding-bottom: 15px;
-        font-size: .8em;
-    }
-    
-    .condiciones {
-        font-size: .7em;
-    }
-
-    /*main responsible tablet*/
-    
-    .main .caja-materias {
-        width: calc(100% / 3);
-        
-    }
-
-    .scrolling-buttons-container {
-        max-width: 65%;
-        max-width: 75%;
-    }
-
-    .cambiar-lista-text{
-        font-size: 1.5vw; /* Reduce el tamaño de la fuente */
-        width: 80%;
-    }    
-
-
-    /*footer responsive tablet*/
-
-    .footer {
-        justify-content: flex-end;
-    }
-
-    .material-symbols-outlined {
-        font-size: 130px;
-    }
-    .btn-calcular{
-        font-size: calc(1.2rem + 0.1vw);
-    }
-    .material-symbols-outlined {
-        font-size: 90px;
-    }
-}
-
-/*-----Hacer Responsive para Desktop-----*/
-
-@media (min-width: 992px) {
-    .grid-container {
-        grid-template:
-            "header header header" 80px
-            "sidebar main main" auto
-            "footer footer footer" 70px /
-            200px auto 200px;
-    }
-
-    /*main responsible Desktop*/
-
-    .main .caja-materias {
-        width: 25%;
-    }
-    
-    /*footer responsive Desktop*/
-
-    .footer .material-symbols-outlined {
-        display: none;
-    }
-
-    .btn-calcular{
-        font-size: calc(1rem + 0.5vw);
-        margin: 50px;
-        max-width: 300px;
-    }
-    #refresh-button { /*Boton de reiniciar*/
-        display: block;
-        font-size: 1.8rem;
-    }
-
-    .cambiar-lista-text{
-        font-size: 1.2vw; /* Reduce el tamaño de la fuente */
-        width: 80%;
-    }
-
-}
-
-/*-----Hacer Responsive cuando los telefonos esten verticalmente-----*/
-
-/*-----Hacer Responsive para Telefonos-----*/
-
-@media (orientation: landscape) and (max-height: 500px) and (min-width: 768px) {
-    .grid-container {
-        display: grid;
-        grid-template:
-            "header header" 40px
-            "sidebar main" auto
-            "footer main" 30px /
-            200px auto;
-        overflow: hidden; /* Oculta el desbordamiento para evitar la barra de desplazamiento */
-    }
-
-
-    /*Sidebar responsive telefono chico1*/
-    .sidebar {
-        padding: 5px; /* Reduce el padding para ahorrar espacio */
-        height: fit-content; /* Ajusta la altura al contenido */
-        min-height: auto; /* Elimina cualquier altura mínima fija */
-        overflow: auto; /* Permite el desplazamiento interno si es necesario */
-    }
-    
-    /*Main responsive telefono chico1*/
-
-    
-    h2 {
-        font-size: 1rem;
-    }
-    .theme-button {
-        top: 0.8rem;
-        right: 0.5rem;
-    }
-
-    /*Sidebar responsive telefono chico1*/
-    .sidebar{
-        height: 100%;
-    }
-
-    /*footer responsive telefono chico1*/
-
-    .footer {
-        justify-content: flex-start;
-    }
-
-    .material-symbols-outlined {
-        font-size: 30px; /* Reduce el tamaño de los íconos de desplazamiento */
-        color: #f5f5f5; /* Color del ícono */
-        cursor: pointer;
-    }
-    .scrolling-buttons-container {
-        align-items: center;
-        justify-content: space-between;
-        gap: 0px; /* Espacio entre los botones de desplazamiento */
-        flex-shrink: 0; /* Evita que se reduzcan demasiado */
-    }
-
-    .btn-calcular{
-        font-size: calc(0.5rem + 0.5vw); /* Tamaño de fuente adaptable */
-        
-    }
-    
-    #refresh-button { /*Boton de reiniciar*/
-        font-size: 1.8rem;
-    }
-}
-
-/*agrega una barra de desplazamiento cuando esta de manera horizontal*/
-@media (min-height: 434px){
-    .caja-materias {
-        height: 100%;
-    }    
-}
-
-/*Deja en Modo tablet al estar en modo horizontal*/
-
-@media (min-width: 768px) and (min-height: 600px) {
-    .grid-container {
-        grid-template:
-            "header header" 50px
-            "sidebar main" auto
-            "footer footer" 60px /
-            200px auto;
-    }
-    .theme-button {
-        top: 0.8rem;
-        right: 0.5rem;
-    }
-    /*Sidebar tablet horizontal*/
-    .sidebar {
-        height: 100%;
-    }
-
-    /*footer responsive telefono chico1*/
-
-    /* Botones de desplazamiento horizontal */
-    .scrolling-buttons-container {
-        gap: 5px; /* Espacio entre los botones de desplazamiento */
-        flex-shrink: 0; /* Evita que se reduzcan demasiado */
-    }
-
-    .material-symbols-outlined {
-        font-size: 80px; /* Reduce el tamaño de los íconos de desplazamiento */
-        color: #f5f5f5; /* Color del ícono */
-        cursor: pointer;
-    }
-    .scrolling-buttons-container {
-        align-items: center;
-        justify-content: space-between;
-        gap: 5px; /* Espacio entre los botones de desplazamiento */
-        flex-shrink: 0; /* Evita que se reduzcan demasiado */
-    }
-
-    .btn-calcular{
-        font-size: calc(1rem + 0.9vw); /* Tamaño de fuente adaptable */
-        padding: 5px;
-    }
-    
-    #refresh-button { /*Boton de reiniciar*/
-        font-size: 3rem;
-    }
-}
-@media (orientation: landscape) and (max-height: 500px) and (min-width: 992px) {
-    /*footer responsive telefono chico1*/
-
-    .footer {
-        justify-content: space-around;
-    }
-
-    .material-symbols-outlined {
-        font-size: 30px; /* Reduce el tamaño de los íconos de desplazamiento */
-        color: #f5f5f5; /* Color del ícono */
-        cursor: pointer;
-    }
-    .scrolling-buttons-container {
-        align-items: center;
-        justify-content: left;
-        gap: 2px; /* Espacio entre los botones de desplazamiento */
-        flex-shrink: 0; /* Evita que se reduzcan demasiado */
-    }
-
-    .btn-calcular{
-        font-size: calc(0.5rem + 0.5vw); /* Tamaño de fuente adaptable */
-        margin: 0;
-    }
-    
-    #refresh-button { /*Boton de reiniciar*/
-        font-size: 1.8rem;
-    }
+    top: 70px; /* Ajusta según la altura de la barra lateral */
+    left: 0;
+    right: 0;
+    margin-left: 0; /* Ocupa todo el espacio disponible */
+    z-index: 90; /* Asegura que esté por encima de la barra lateral */
+    padding: 20px; /* Añade padding si es necesario */
+    background: #fff; /* Fondo para que cubra la barra lateral */
+  }
+
+  .sidebar {
+    z-index: 100; /* Asegura que la barra lateral esté debajo del contenido */
+  }
 }

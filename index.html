@@ -1,1035 +1,150 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/logos/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/logos/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/logos/favicon-16x16.png">
-    <link rel="manifest" href="assets/logos/site.webmanifest">
-
-    <title>Informática</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculativa</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0">
 </head>
-<body class="grid-container">
-    <header class="header">
-        <h1>informática</h1>
-        <nav class="navbar">
-            <button id="theme-toggle" class="theme-button" aria-label="Cambiar tema">🖥️</button>
-
-            
-        </nav>
+<body>
+  <!-- Barra Lateral -->
+  <aside class="sidebar">
+    <!-- Sidebar header -->
+    <header class="sidebar-header">
+      <a href="#" class="header-logo">
+        <img src="assets/img/Logo-Circular.png" alt="CodingNepal">
+      </a>
+      <button class="toggler sidebar-toggler">
+        <span class="material-symbols-rounded">chevron_left</span>
+      </button>
+      <button class="toggler menu-toggler">
+        <span class="material-symbols-rounded">menu</span>
+      </button>
     </header>
 
-    <article class="main">
-        <div class="caja-cursado">
-            <!-- Año 1 -->
-            <div class="caja-materias">
-                <h2>Primero</h2>
-                <div class="botones-materias">
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">1-Relación Estado-Sociedad</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 1" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 1" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 1" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                
-                    <!-- Materia 2 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 2</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 2" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 2" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 2" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                
-                    <!-- Materia 3 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 3</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 3" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 3" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 3" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia 4 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 4</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 4" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 4" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 4" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                
-                    <!-- Materia 5 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 5</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 5" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 5" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 5" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                
-                    <!-- Materia 6 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 6</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 6" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 6" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 6" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                
-                    <!-- Materia 7 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 7</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 7" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 7" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 7" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                
-                    <!-- Materia 8 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 8</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 8" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 8" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 8" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                
-                    <!-- Materia 9 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 9</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 9" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 9" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 9" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia none -->
-                    <div class="materia-none">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia none</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia none" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia none" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia none" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="caja-cambiador">
-                    <span class="cambiar-lista-text">Cambiar Lista 1°</span>
-                    <div class="materia-checkboxes">
-                        <label class="custom-checkbox">
-                            <input type="checkbox" class="checkbox-materia" data-materia="Materia 50" data-checkbox="1">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" class="checkbox-materia" data-materia="Materia 50" data-checkbox="2">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" class="checkbox-materia" data-materia="Materia 50" data-checkbox="3">
-                            <span class="checkmark"></span>
-                        </label>
-                    </div>
-                </div>
-            </div>
+    <nav class="sidebar-nav">
+      <!-- Primary top nav -->
+      <ul class="nav-list primary-nav">
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <span class="nav-icon material-symbols-rounded">dashboard</span>
+            <span class="nav-label">Dashboard</span>
+          </a>
+          <span class="nav-tooltip">Dashboard</span>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <span class="nav-icon material-symbols-rounded">calendar_today</span>
+            <span class="nav-label">Calendar</span>
+          </a>
+          <span class="nav-tooltip">Calendar</span>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <span class="nav-icon material-symbols-rounded">notifications</span>
+            <span class="nav-label">Notifications</span>
+          </a>
+          <span class="nav-tooltip">Notifications</span>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <span class="nav-icon material-symbols-rounded">group</span>
+            <span class="nav-label">Team</span>
+          </a>
+          <span class="nav-tooltip">Team</span>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <span class="nav-icon material-symbols-rounded">insert_chart</span>
+            <span class="nav-label">Analytics</span>
+          </a>
+          <span class="nav-tooltip">Analytics</span>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <span class="nav-icon material-symbols-rounded">star</span>
+            <span class="nav-label">Bookmarks</span>
+          </a>
+          <span class="nav-tooltip">Bookmarks</span>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <span class="nav-icon material-symbols-rounded">settings</span>
+            <span class="nav-label">Settings</span>
+          </a>
+          <span class="nav-tooltip">Settings</span>
+        </li>
+      </ul>
 
-            <!-- Año 2 -->
-            <div class="caja-materias">
-                <h2>Segundo</h2>
-                <div class="botones-materias">
-                    <!-- Materia 10 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 10</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 10" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 10" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 10" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia 11 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 11</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 11" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 11" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 11" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia 12 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 12</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 12" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 12" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 12" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia 13 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 13</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 13" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 13" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 13" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia 14 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 14</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 14" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 14" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 14" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia 15 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 15</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 15" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 15" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 15" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia 16 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 16</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 16" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 16" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 16" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia 17 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 17</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 17" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 17" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 17" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia none -->
-                    <div class="materia-none">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia none</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia none" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia none" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia none" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia none -->
-                    <div class="materia-none">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia none</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia none" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia none" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia none" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="caja-cambiador">
-                    <span class="cambiar-lista-text">Cambiar Lista 2°</span>
-                    <div class="materia-checkboxes">
-                        <label class="custom-checkbox">
-                            <input type="checkbox" class="checkbox-materia" data-materia="Materia 51" data-checkbox="1">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" class="checkbox-materia" data-materia="Materia 51" data-checkbox="2">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" class="checkbox-materia" data-materia="Materia 51" data-checkbox="3">
-                            <span class="checkmark"></span>
-                        </label>
-                    </div>
-                </div>
-            </div>
+      <!-- Secondary bottom nav -->
+      <ul class="nav-list secondary-nav">
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <span class="nav-icon material-symbols-rounded">account_circle</span>
+            <span class="nav-label">Profile</span>
+          </a>
+          <span class="nav-tooltip">Profile</span>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <span class="nav-icon material-symbols-rounded">logout</span>
+            <span class="nav-label">Logout</span>
+          </a>
+          <span class="nav-tooltip">Logout</span>
+        </li>
+      </ul>
+    </nav>
+  </aside>
 
-            <!-- Año 3 -->
-            <div class="caja-materias">
-                <h2>Tercero</h2>
-                <div class="botones-materias">
-                    <!-- Materia 18 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 18</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 18" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 18" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 18" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+  <!-- Contenido Principal -->
+  <div class="main-content">
+    <!-- Header -->
+    <header class="main-header">
+      <h1>Calculativa</h1>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="#">Inicio</a></li>
+          <li><a href="#">Acerca de</a></li>
+          <li><a href="#">Servicios</a></li>
+          <li><a href="#">Contacto</a></li>
+        </ul>
+      </nav>
+    </header>
 
-                    <!-- Materia 19 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 19</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 19" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 19" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 19" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia 20 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 20</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 20" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 20" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 20" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia 21 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 21</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 21" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 21" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 21" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia 22 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 22</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 22" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 22" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 22" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia 23 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 23</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 23" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 23" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 23" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia 24 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 24</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 24" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 24" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 24" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia 25 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 25</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 25" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 25" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 25" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia none -->
-                    <div class="materia-none">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia none</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia none" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia none" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia none" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia none -->
-                    <div class="materia-none">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia none</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia none" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia none" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia none" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+    <!-- Main -->
+    <main class="main">
+      <section class="intro">
+        <h2>Bienvenido a Calculativa</h2>
+        <p>Explora nuestras herramientas de cálculo y optimiza tus tareas diarias.</p>
+      </section>
 
-                </div>
-                <div class="caja-cambiador">
-                    <span class="cambiar-lista-text">Cambiar Lista 3°</span>
-                    <div class="materia-checkboxes">
-                        <label class="custom-checkbox">
-                            <input type="checkbox" class="checkbox-materia" data-materia="Materia 52" data-checkbox="1">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" class="checkbox-materia" data-materia="Materia 52" data-checkbox="2">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" class="checkbox-materia" data-materia="Materia 52" data-checkbox="3">
-                            <span class="checkmark"></span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <!-- Año 4 -->
-            <div class="caja-materias">
-                <h2>Cuarto</h2>
-                <div class="botones-materias">
-                    <!-- Materia 30 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 30</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 30" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 30" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 30" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia 31 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 31</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 31" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 31" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 31" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia 32 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 32</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 32" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 32" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 32" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia 33 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 33</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 33" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 33" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 33" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia 34 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 34</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 34" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 34" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 34" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia 35 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 35</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 35" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 35" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 35" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia 36 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 36</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 36" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 36" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 36" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia 37 -->
-                    <div class="materia-linea">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia 37</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 37" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 37" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia 37" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia none -->
-                    <div class="materia-none">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia none</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia none" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia none" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia none" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Materia none -->
-                    <div class="materia-none">
-                        <div class="materia-contenedor">
-                            <div class="materia-boton">
-                                <button class="materia-btn">Materia none</button>
-                            </div>
-                            <div class="materia-checkboxes">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia none" data-checkbox="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia none" data-checkbox="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="checkbox-materia" data-materia="Materia none" data-checkbox="3">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <div class="caja-cambiador">
-                <span class="cambiar-lista-text">Cambiar Lista 4°</span>
-                <div class="materia-checkboxes">
-                    <label class="custom-checkbox">
-                        <input type="checkbox" class="checkbox-materia" data-materia="Materia 53" data-checkbox="1">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="custom-checkbox">
-                        <input type="checkbox" class="checkbox-materia" data-materia="Materia 53" data-checkbox="2">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="custom-checkbox">
-                        <input type="checkbox" class="checkbox-materia" data-materia="Materia 53" data-checkbox="3">
-                        <span class="checkmark"></span>
-                    </label>
-                </div>
-            </div>
+      <section class="features">
+        <h2>Características Principales</h2>
+        <div class="feature-list">
+          <div class="feature">
+            <h3>Calculadora Básica</h3>
+            <p>Realiza operaciones matemáticas simples como suma, resta, multiplicación y división.</p>
+          </div>
+          <div class="feature">
+            <h3>Calculadora Científica</h3>
+            <p>Funciones avanzadas como logaritmos, potencias, trigonometría y más.</p>
+          </div>
+          <div class="feature">
+            <h3>Calculadora Financiera</h3>
+            <p>Calcula intereses, préstamos, amortizaciones y otros conceptos financieros.</p>
+          </div>
         </div>
-    </article>
+      </section>
+    </main>
 
-    <aside class="sidebar">
-        <h3 id="materia-nombre">Selecciona una materia</h3>
-        <div class="condiciones">
-            <p id="condicion-1">*Condicion1*</p>
-            <p id="condicion-2">*Condicion2*</p>
-        </div>
-    </aside>
-
+    <!-- Footer -->
     <footer class="footer">
-        
-        <div class="scrolling-buttons-container">
-            <span id="scrolling-button-left" class="material-symbols-outlined">arrow_left</span>
-            <button class="btn-calcular">Cursar</button>
-            <span id="refresh-button" class="material-symbols-outlined">refresh</span>
-            <button class="btn-calcular">Rendir</button>
-            <span id="scrolling-button-right" class="material-symbols-outlined">arrow_right</span>
-        </div>
+      <p>&copy; 2025 Calculativa. Todos los derechos reservados.</p>
     </footer>
-    <script src="js/theme.js" defer></script>
-    <script src="js/main.js" defer></script>
+  </div>
 
+  <!-- Script -->
+  <script src="assets/js/slidebar.js"></script>
 </body>
 </html>
