@@ -9,83 +9,55 @@
   font-family: "Poppins", sans-serif;
 }
 
-
-/* Estilos para el Dark Mode Toggle (Botón) */
-.dark-mode-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 12px;
-  padding: 12px 15px; /* Misma cantidad de padding que los demás botones */
-  border: none;
-  background-color: transparent;
-  color: #fff;
-  cursor: pointer;
-  width: 100%;
-  border-radius: 8px; /* Misma cantidad de border-radius que los demás botones */
-  margin-top: 4px; /* Agrega un margen superior para separarlo del botón "Settings" */
+/* Modo Light (por defecto) */
+:root {
+  --bg-color: #f9f9f9;
+  --text-color: #333333;
+  --header-color: #151A2D;
+  --border-color: #DDDDDD;
+  --primary-color: #3f5adf;
+  --hover-color: #0300b3;
+  --sidebar-bg: #151A2D;
+  --sidebar-text: #FFFFFF;
+  --sidebar-hover-bg: #FFFFFF;
+  --sidebar-hover-text: #151A2D;
+  --footer-bg: #FFFFFF;
+  --footer-text: #555555;
+  --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.dark-mode-toggle:hover {
-  color: #151A2D;
-  background: #fff;
+/* Modo Dark */
+.dark-mode {
+  --bg-color: #121212;
+  --text-color: #E0E0E0;
+  --header-color: #FFFFFF;
+  --border-color: #444444;
+  --primary-color: #3f5adf;
+  --hover-color: #3700B3;
+  --sidebar-bg: #1e1e1e;
+  --sidebar-text: #E0E0E0;
+  --sidebar-hover-bg: #333333;
+  --sidebar-hover-text: #E0E0E0;
+  --footer-bg: #1e1e1e;
+  --footer-text: #E0E0E0;
+  --box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
 }
 
-.dark-mode-toggle span {
-  font-size: 1rem;
-}
-
-/* Temas de color (igual que antes) */
+/* Estilos generales */
 body {
-  background-color: #f9f9f9;
-  color: #333;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
-body.dark-mode {
-  background-color: #121212;
-  color: #eee;
-}
-
-/* Puedes agregar más estilos específicos para el modo oscuro */
-.dark-mode .sidebar {
-  background-color: #212121;
-}
-
-.dark-mode .sidebar-nav .nav-link {
-  color: #eee;
-}
-
-/* Estilos para el modo sistema (opcional) */
-@media (prefers-color-scheme: dark) {
-  body.system-mode {
-      background-color: #121212;
-      color: #eee;
-  }
-
-  .system-mode .sidebar {
-      background-color: #212121;
-  }
-
-  .system-mode .sidebar-nav .nav-link {
-      color: #eee;
-  }
-}
-
-.main-content {
-  margin-left: 302px;
-  flex: 1;
-  padding: 20px;
-  transition: margin 0.4s ease;
-  min-height: calc(100vh - 120px); /* Ajusta el valor según la altura de tu header y footer */
-}
-
+/* Barra lateral (sin cambios) */
 .sidebar {
   position: fixed;
   width: 270px;
   margin: 16px;
   border-radius: 16px;
   background: #151A2D;
-  height: calc(100dvh - 32px);
+  height: calc(100vh - 32px);
   transition: all 0.4s ease;
 }
 
@@ -93,7 +65,6 @@ body.dark-mode {
   width: 85px;
 }
 
-/* Estilos de la barra lateral (ya existentes) */
 .sidebar .sidebar-header {
   display: flex;
   position: relative;
@@ -231,7 +202,34 @@ body.dark-mode {
   width: 100%;
 }
 
-/* Responsive para telefonos y tablets (Slidebar)*/
+/* Estilos para el botón de cambio de modo claro/oscuro */
+.dark-mode-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 12px 15px; /* Mismo padding que los demás botones */
+  border: 2px solid var(--primary-color); /* Borde llamativo */
+  background-color: transparent; /* Fondo transparente */
+  color: var(--sidebar-text); /* Color del texto */
+  cursor: pointer;
+  width: 100%;
+  border-radius: 8px; /* Mismo border-radius que los demás botones */
+  margin-top: 4px; /* Espacio superior para separarlo del botón "Settings" */
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.dark-mode-toggle:hover {
+  background-color: var(--sidebar-hover-bg); /* Fondo al pasar el mouse */
+  color: var(--sidebar-hover-text); /* Color del texto al pasar el mouse */
+  border-color: var(--hover-color); /* Cambia el color del borde al pasar el mouse */
+}
+
+.dark-mode-toggle span {
+  font-size: 1rem; /* Tamaño del ícono */
+}
+
+/* Responsive para telefonos y tablets */
 @media (max-width: 1024px) {
   .sidebar {
     height: 56px;
@@ -302,7 +300,8 @@ body.dark-mode {
   flex: 1;
   padding: 20px;
   transition: margin 0.4s ease;
-  
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
 .sidebar.collapsed + .main-content {
@@ -310,16 +309,16 @@ body.dark-mode {
 }
 
 .main-header {
-  background-color: #fff;
+  background-color: var(--bg-color);
   padding: 20px;
   border-radius: 16px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box-shadow);
   margin-bottom: 20px;
 }
 
 .main-header h1 {
   font-size: 24px;
-  color: #151A2D;
+  color: var(--header-color);
   margin: 0;
 }
 
@@ -332,21 +331,21 @@ body.dark-mode {
 }
 
 .main-nav ul li a {
-  color: #151A2D;
+  color: var(--header-color);
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease;
 }
 
 .main-nav ul li a:hover {
-  color: #007BFF;
+  color: var(--hover-color);
 }
 
 .main {
-  background-color: #fff;
+  background-color: var(--bg-color);
   padding: 20px;
   border-radius: 16px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box-shadow);
 }
 
 .intro {
@@ -356,71 +355,82 @@ body.dark-mode {
 
 .intro h2 {
   font-size: 28px;
-  color: #151A2D;
+  color: var(--header-color);
   margin-bottom: 10px;
 }
 
 .intro p {
   font-size: 16px;
-  color: #555;
+  color: var(--text-color);
+}
+
+/* Estilos para las instituciones */
+.instituciones {
+  margin-top: 20px;
+}
+
+.institucion-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .institucion {
-  background-color: #f9f9f9;
+  background-color: var(--bg-color);
   padding: 20px;
   border-radius: 12px;
   flex: 1 1 calc(33.333% - 40px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box-shadow);
   transition: transform 0.3s ease;
-  cursor: pointer; /* Agrega cursor de puntero */
-  margin: 10px 0;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
 }
 
 .institucion:hover {
   transform: translateY(-5px);
-  transform: scale(1.05); /* Agrega un ligero aumento de tamaño */
-  transition: transform 0.3s ease-in-out; /* Agrega una transición suave */
+  background-color: var(--sidebar-hover-bg);
 }
 
 .institucion h3 {
   font-size: 20px;
-  color: #151A2D;
+  color: var(--header-color);
   margin-bottom: 10px;
 }
 
 .institucion p {
   font-size: 14px;
-  color: #555;
+  color: var(--text-color);
 }
 
 .footer {
-  background: #fff;
+  background-color: var(--footer-bg);
   padding: 20px;
   border-radius: 16px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box-shadow);
   text-align: center;
   margin-top: auto;
 }
 
 .footer p {
   font-size: 14px;
-  color: #555;
+  color: var(--footer-text);
   margin: 0;
 }
 
+/* Responsive para móviles */
 @media (max-width: 1024px) {
   .main-content {
     position: absolute;
-    top: 70px; /* Ajusta según la altura de la barra lateral */
+    top: 70px;
     left: 0;
     right: 0;
-    margin-left: 0; /* Ocupa todo el espacio disponible */
-    z-index: 90; /* Asegura que esté por encima de la barra lateral */
-    padding: 20px; /* Añade padding si es necesario */
-    background: #fff; /* Fondo para que cubra la barra lateral */
+    margin-left: 0;
+    z-index: 90;
+    padding: 20px;
+    background-color: var(--bg-color);
   }
 
   .sidebar {
-    z-index: 100; /* Asegura que la barra lateral esté debajo del contenido */
+    z-index: 100;
   }
 }
