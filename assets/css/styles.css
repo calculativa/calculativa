@@ -17,10 +17,10 @@
   --border-color: #DDDDDD;
   --primary-color: #3f5adf;
   --hover-color: #0300b3;
-  --sidebar-bg: #151A2D;
-  --sidebar-text: #FFFFFF;
-  --sidebar-hover-bg: #FFFFFF;
-  --sidebar-hover-text: #151A2D;
+  --sidebar-bg: #FFFFFF; /* Fondo del menú lateral en modo claro (blanco) */
+  --sidebar-text: #151A2D; /* Texto del menú lateral en modo claro */
+  --sidebar-hover-bg: #f0f0f0; /* Fondo al pasar el mouse en modo claro */
+  --sidebar-hover-text: #151A2D; /* Texto al pasar el mouse en modo claro */
   --footer-bg: #FFFFFF;
   --footer-text: #555555;
   --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -28,35 +28,37 @@
 
 /* Modo Dark */
 .dark-mode {
-  --bg-color: #121212;
+  --bg-color: #282a2c;
   --text-color: #E0E0E0;
   --header-color: #FFFFFF;
   --border-color: #444444;
   --primary-color: #3f5adf;
   --hover-color: #3700B3;
-  --sidebar-bg: #1e1e1e;
-  --sidebar-text: #E0E0E0;
-  --sidebar-hover-bg: #333333;
-  --sidebar-hover-text: #E0E0E0;
-  --footer-bg: #1e1e1e;
+  --sidebar-bg: #151A2D; /* Conserva el azul fuerte en modo oscuro */
+  --sidebar-text: #E0E0E0; /* Texto del menú lateral en modo oscuro */
+  --sidebar-hover-bg: #333333; /* Fondo al pasar el mouse en modo oscuro */
+  --sidebar-hover-text: #E0E0E0; /* Texto al pasar el mouse en modo oscuro */
+  --footer-bg: #282a2c;
   --footer-text: #E0E0E0;
   --box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
 }
 
 /* Estilos generales */
 body {
+  position: relative; /* Asegura que el body sea un contenedor posicionado */
+  min-height: 100vh; /* Asegura que el body ocupe al menos toda la altura de la ventana */
   background-color: var(--bg-color);
   color: var(--text-color);
-  transition: background-color 0.5s ease, color 0.5s ease;
+  overflow-y: auto;
 }
 
-/* Barra lateral (sin cambios) */
+/* Barra lateral */
 .sidebar {
   position: fixed;
   width: 270px;
   margin: 16px;
   border-radius: 16px;
-  background: #151A2D;
+  background: var(--sidebar-bg); /* Usa la variable para el fondo */
   height: calc(100vh - 32px);
   transition: all 0.4s ease;
 }
@@ -84,11 +86,11 @@ body {
 .sidebar-header .toggler {
   height: 35px;
   width: 35px;
-  color: #151A2D;
+  color: var(--text-color);
   border: none;
   cursor: pointer;
   display: flex;
-  background: #fff;
+  background: var(--bg-color);
   align-items: center;
   justify-content: center;
   border-radius: 8px;
@@ -104,12 +106,21 @@ body {
   display: none;
 }
 
+.sidebar.collapsed .dark-mode-toggle span:not(.material-symbols-rounded) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sidebar.collapsed .dark-mode-toggle {
+  width: 50px; /* Ajusta el ancho según sea necesario */
+}
+
 .sidebar.collapsed .sidebar-header .toggler {
   transform: translate(-4px, 65px);
 }
 
 .sidebar-header .toggler:hover {
-  background: #dde4fb;
+  ackground: var(--sidebar-hover-bg);
 }
 
 .sidebar-header .toggler span {
@@ -131,12 +142,14 @@ body {
   transition: 0.4s ease;
 }
 
+
+
 .sidebar.collapsed .sidebar-nav .primary-nav {
   transform: translateY(65px);
 }
 
 .sidebar-nav .nav-link {
-  color: #fff;
+  color: var(--sidebar-text); /* Usa la variable para el color del texto */
   display: flex;
   gap: 12px;
   white-space: nowrap;
@@ -161,8 +174,8 @@ body {
 }
 
 .sidebar-nav .nav-link:hover {
-  color: #151A2D;
-  background: #fff;
+  color: var(--sidebar-hover-text); /* Usa la variable para el texto al pasar el mouse */
+  background: var(--sidebar-hover-bg); /* Usa la variable para el fondo al pasar el mouse */
 }
 
 .sidebar-nav .nav-item {
@@ -173,13 +186,13 @@ body {
   position: absolute;
   top: -10px;
   opacity: 0;
-  color: #151A2D;
   display: none;
   pointer-events: none;
   padding: 6px 12px;
   border-radius: 8px;
   white-space: nowrap;
-  background: #fff;
+  color: var(--header-color);
+  background: var(--sidebar-bg);
   left: calc(100% + 25px);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   transition: 0s;
@@ -249,7 +262,7 @@ body {
     top: 0;
     z-index: 20;
     border-radius: 16px;
-    background: #151A2D;
+    background: var(--header-color);
     padding: 8px 10px;
   }
 
@@ -296,8 +309,10 @@ body {
 
 /* Nuevos estilos para el contenido principal */
 .main-content {
-  margin-left: 302px; /* Ancho de la barra lateral + margen */
-  flex: 1;
+  margin-left: 302px;
+  height: 100vh; /* Ocupa toda la altura de la pantalla */
+  display: flex;
+  flex-direction: column;
   padding: 20px;
   transition: margin 0.4s ease;
   background-color: var(--bg-color);
@@ -306,6 +321,11 @@ body {
 
 .sidebar.collapsed + .main-content {
   margin-left: 117px; /* Ancho de la barra lateral colapsada + margen */
+}
+
+main.main {
+  flex: 1; /* Ocupa el espacio sobrante */
+  margin-bottom: 20px;
 }
 
 .main-header {
@@ -334,11 +354,12 @@ body {
   color: var(--header-color);
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.3s ease;
+  transition: color 0.4s ease; /* Transición sincronizada */
 }
 
 .main-nav ul li a:hover {
   color: var(--hover-color);
+  transition: color 0.4s ease; /* Transición sincronizada */
 }
 
 .main {
@@ -408,19 +429,23 @@ body {
   border-radius: 16px;
   box-shadow: var(--box-shadow);
   text-align: center;
-  margin-top: auto;
+}
+
+.sidebar.collapsed + .footer {
+    margin-left: 117px; /* Margen izquierdo cuando la barra lateral está colapsada */
 }
 
 .footer p {
   font-size: 14px;
   color: var(--footer-text);
-  margin: 0;
+  margin-top: auto;
 }
 
 /* Responsive para móviles */
 @media (max-width: 1024px) {
   .main-content {
     position: absolute;
+    height: calc(100vh - 60px); /* Ocupa toda la altura de la pantalla */
     top: 70px;
     left: 0;
     right: 0;
@@ -428,6 +453,7 @@ body {
     z-index: 90;
     padding: 20px;
     background-color: var(--bg-color);
+    padding-top: 20px; /* Ajusta el padding superior para evitar superposición con la barra lateral */
   }
 
   .sidebar {
