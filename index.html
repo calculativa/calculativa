@@ -78,10 +78,12 @@
         <!-- Alternar modo oscuro o claro -->
         <li class="nav-item">
           <button id="dark-mode-toggle" class="nav-link dark-mode-toggle">
-              <span class="material-symbols-rounded" id="dark-mode-icon">computer</span>
-              <span id="dark-mode-label">Sistema</span>
+            <span class="material-symbols-rounded" id="dark-mode-icon">computer</span>
+            <span id="dark-mode-label">Sistema</span>
+            <!-- Añade este tooltip -->
+            <span class="nav-tooltip">Cambiar tema</span>
           </button>
-      </li>
+        </li>
       </ul>
 
       <!-- Ultimos 2 botones del la barra lateral -->
@@ -123,26 +125,61 @@
     <!-- Main -->
     <main class="main">
       <section class="intro">
-        <h2>Bienvenido a Calculativa</h2>
-        <p>es una herramienta diseñada para gestionar y visualizar correlativas académicas de manera eficiente. Permite a las instituciones educativas y estudiantes planificar su trayectoria académica con facilidad.</p>
+        <p>Es una herramienta diseñada para gestionar y visualizar correlativas académicas de manera eficiente. Permite a las instituciones educativas y estudiantes planificar su trayectoria académica con facilidad.</p>
       </section>
     
         <section class="instituciones">
             <h2>Instituciones</h2>
-            
             <div class="institucion-list">
-                <div class="institucion">
-                    <h3>ISFD Bella Vista</h3>
-                    <p>isfd-bella-vista</p>
+              <div class="institucion" data-id="isfd-bella-vista">
+                <div class="institucion-header">
+                  <h3>ISFD Bella Vista</h3>
+                  <span class="material-symbols-rounded star-icon">star</span>
                 </div>
-                <div class="institucion">
-                    <h3>ISFD Mercedes</h3>
-                    <p>isfd-mercedes</p>
+                <p>isfd-bella-vista</p>
+              </div>
+              <div class="institucion" data-id="isfd-ituzaingo">
+                <div class="institucion-header">
+                  <h3>ISFD Ituzaingó</h3>
+                  <span class="material-symbols-rounded star-icon">star</span>
                 </div>
-                <div class="institucion">
-                    <h3>ISFD Santa Lucía</h3>
-                    <p>isfd-santa-lucia</p>
+                <p>isfd-ituzaingo</p>
+              </div>
+              <div class="institucion" data-id="isfd-jose-manuel-estrada">
+                <div class="institucion-header">
+                  <h3>ISFD José Manuel Estrada</h3>
+                  <span class="material-symbols-rounded star-icon">star</span>
                 </div>
+                <p>isfd-jose-manuel-estrada</p>
+              </div>
+              <div class="institucion" data-id="isfd-mburucuya">
+                <div class="institucion-header">
+                  <h3>ISFD Mburucuyá</h3>
+                  <span class="material-symbols-rounded star-icon">star</span>
+                </div>
+                <p>isfd-mburucuya</p>
+              </div>
+              <div class="institucion" data-id="isfd-mercedes">
+                <div class="institucion-header">
+                  <h3>ISFD Mercedes</h3>
+                  <span class="material-symbols-rounded star-icon">star</span>
+                </div>
+                <p>isfd-mercedes</p>
+              </div>
+              <div class="institucion" data-id="isfd-santa-lucia">
+                <div class="institucion-header">
+                  <h3>ISFD Santa Lucía</h3>
+                  <span class="material-symbols-rounded star-icon">star</span>
+                </div>
+                <p>isfd-santa-lucia</p>
+              </div>
+              <div class="institucion" data-id="instituto-superior-goya">
+                <div class="institucion-header">
+                  <h3>Instituto Superior Goya</h3>
+                  <span class="material-symbols-rounded star-icon">star</span>
+                </div>
+                <p>instituto-superior-goya</p>
+              </div>
             </div>
         </section>  
       </main>
@@ -154,5 +191,6 @@
   <!-- Script -->
   <script src="assets/js/slidebar.js"></script>
   <script src="assets/js/theme.js"></script>
+  <script src="assets/js/favoritos.js"></script>
 </body>
 </html>

@@ -32,3 +32,23 @@ window.addEventListener("resize", () => {
     toggleMenu(sidebar.classList.contains("menu-active"));
   }
 });
+
+// Aparicion de nombre de tema al pasar el mouse
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('mouseenter', () => {
+    const tooltip = item.querySelector('.nav-tooltip');
+    if (tooltip) {
+      tooltip.style.opacity = '1';
+      tooltip.style.pointerEvents = 'auto';
+      tooltip.style.transform = 'translateY(50%)';
+    }
+  });
+  
+  item.addEventListener('mouseleave', () => {
+    const tooltip = item.querySelector('.nav-tooltip');
+    if (tooltip) {
+      tooltip.style.opacity = '0';
+      tooltip.style.pointerEvents = 'none';
+    }
+  });
+});
