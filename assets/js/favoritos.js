@@ -1,126 +1,172 @@
 document.addEventListener('DOMContentLoaded', function() {
-  const container = document.querySelector('.institucion-list');
-  let institucionFavorita = null;
+    const container = document.querySelector('.institucion-list');
+    let lastTapTime = 0;
+    const TAP_DELAY = 300; // ms para prevenir doble toque
+    const SCROLL_THRESHOLD = 10; // Píxeles de movimiento para considerar scroll
+    
+    // Variables para control de scroll táctil
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let currentFavorite = null;
 
-  // Cargar favorito guardado SIN mostrar toast
-  const favoritoGuardado = localStorage.getItem('institucionFavorita');
-  if (favoritoGuardado) {
-      const favorita = document.querySelector(`.institucion[data-id="${favoritoGuardado}"]`);
-      if (favorita) {
-          // Carga silenciosa con efecto visual sutil
-          favorita.classList.add('favorita-loading');
-          setTimeout(() => {
-              setFavorita(favorita, false); // false = no mostrar toast
-              favorita.classList.remove('favorita-loading');
-          }, 300);
-      }
-  }
+    // 1. Primero ordenar alfabéticamente
+    ordenarAlfabeticamente();
 
-  // Event Delegation para clics/touch
-  container.addEventListener('click', function(e) {
-      const star = e.target.closest('.star-icon');
-      if (!star) return;
-      e.stopPropagation();
-      toggleFavorita(star.closest('.institucion'));
-  });
+    // 2. Luego cargar favorito guardado si existe
+    const favoritoGuardado = localStorage.getItem('institucionFavorita');
+    if (favoritoGuardado) {
+        currentFavorite = document.querySelector(`.institucion[data-id="${favoritoGuardado}"]`);
+        if (currentFavorite) {
+            setFavorita(currentFavorite, false); // Carga silenciosa
+        }
+    }
 
-  // Manejo táctil optimizado
-  let touchStartY;
-  container.addEventListener('touchstart', function(e) {
-      touchStartY = e.touches[0].clientY;
-  }, { passive: true });
+    // Event listeners
+    container.addEventListener('touchstart', handleTouchStart, { passive: true });
+    container.addEventListener('touchend', handleTouchEnd, { passive: false });
+    container.addEventListener('click', handleFavoriteAction);
 
-  container.addEventListener('touchend', function(e) {
-      const star = e.target.closest('.star-icon');
-      if (star && Math.abs(e.changedTouches[0].clientY - touchStartY) < 10) {
-          e.preventDefault();
-          toggleFavorita(star.closest('.institucion'));
-      }
-  }, { passive: true });
+    // Manejar clics en las tarjetas (no estrellas)
+    document.querySelectorAll('.institucion').forEach(card => {
+        card.addEventListener('click', function(e) {
+            if (e.target.closest('.star-icon')) return;
+            window.location.href = `/institucion/${this.dataset.id}`;
+        });
+    });
 
-  function toggleFavorita(institucion) {
-      if (institucion === institucionFavorita) {
-          quitarFavorita();
-      } else {
-          if (institucionFavorita) quitarFavorita();
-          setFavorita(institucion, true); // true = mostrar toast
-      }
-  }
+    function handleTouchStart(e) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    }
 
-  function setFavorita(institucion, showToast = true) {
-      // Resetear todas las favoritas primero
-      document.querySelectorAll('.institucion').forEach(item => {
-          item.classList.remove('favorita');
-          const star = item.querySelector('.star-icon');
-          if (star) star.classList.remove('favorita');
-      });
+    function handleTouchEnd(e) {
+        const star = e.target.closest('.star-icon');
+        if (!star) return;
+        
+        const touchEndX = e.changedTouches[0].clientX;
+        const touchEndY = e.changedTouches[0].clientY;
+        const deltaX = Math.abs(touchEndX - touchStartX);
+        const deltaY = Math.abs(touchEndY - touchStartY);
+        
+        // Prevenir doble toque rápido
+        const currentTime = new Date().getTime();
+        if (currentTime - lastTapTime < TAP_DELAY) return;
+        lastTapTime = currentTime;
+        
+        // Si el movimiento fue mayor al umbral, es un scroll
+        if (deltaX > SCROLL_THRESHOLD || deltaY > SCROLL_THRESHOLD) {
+            return; // Ignorar si fue scroll
+        }
+        
+        e.preventDefault();
+        processFavoriteAction(star);
+    }
 
-      // Aplicar nueva favorita
-      const star = institucion.querySelector('.star-icon');
-      star.classList.add('favorita');
-      institucion.classList.add('favorita');
-      institucionFavorita = institucion;
-      localStorage.setItem('institucionFavorita', institucion.dataset.id);
-      ordenarInstituciones();
-      
-      // Mostrar toast solo si es interacción directa
-      if (showToast) mostrarFeedback('⭐ ¡Favorita guardada!');
-  }
+    function handleFavoriteAction(e) {
+        const star = e.target.closest('.star-icon');
+        if (!star) return;
+        
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Prevenir doble clic rápido
+        const currentTime = new Date().getTime();
+        if (currentTime - lastTapTime < TAP_DELAY) return;
+        lastTapTime = currentTime;
+        
+        processFavoriteAction(star);
+    }
 
-  function quitarFavorita() {
-      if (!institucionFavorita) return;
-      const star = institucionFavorita.querySelector('.star-icon');
-      star.classList.remove('favorita');
-      institucionFavorita.classList.remove('favorita');
-      localStorage.removeItem('institucionFavorita');
-      institucionFavorita = null;
-      ordenarAlfabeticamente();
-      mostrarFeedback('🌟 Favorito eliminado'); // Siempre mostrar al quitar
-  }
+    function processFavoriteAction(star) {
+        // Feedback visual inmediato
+        star.style.transform = 'scale(1.2)';
+        setTimeout(() => star.style.transform = '', 150);
+        
+        const institucion = star.closest('.institucion');
+        
+        if (institucion === currentFavorite) {
+            quitarFavorita(institucion);
+        } else {
+            setFavorita(institucion, true);
+        }
+    }
 
-  function ordenarInstituciones() {
-      const items = Array.from(container.children);
-      items.sort((a, b) => {
-          if (a === institucionFavorita) return -1;
-          if (b === institucionFavorita) return 1;
-          return a.querySelector('h3').textContent.localeCompare(
-              b.querySelector('h3').textContent
-          );
-      });
-      items.forEach(item => container.appendChild(item));
-  }
+    function setFavorita(institucion, showToast = true) {
+        // Remover favorito actual si existe
+        if (currentFavorite) {
+            currentFavorite.classList.remove('favorita');
+            const star = currentFavorite.querySelector('.star-icon');
+            if (star) star.classList.remove('favorita');
+        }
 
-  function ordenarAlfabeticamente() {
-      const items = Array.from(container.children);
-      items.sort((a, b) =>
-          a.querySelector('h3').textContent.localeCompare(
-              b.querySelector('h3').textContent
-          )
-      );
-      items.forEach(item => container.appendChild(item));
-  }
+        // Establecer nuevo favorito
+        const star = institucion.querySelector('.star-icon');
+        star.classList.add('favorita');
+        institucion.classList.add('favorita');
+        currentFavorite = institucion;
+        localStorage.setItem('institucionFavorita', institucion.dataset.id);
+        ordenarInstituciones();
+        
+        if (showToast) mostrarFeedback('⭐ ¡Favorito guardado!');
+    }
 
-  function mostrarFeedback(mensaje) {
-      // Eliminar toast existente si hay uno
-      const toastExistente = document.querySelector('.feedback-toast');
-      if (toastExistente) toastExistente.remove();
+    function quitarFavorita(institucion) {
+        const star = institucion.querySelector('.star-icon');
+        star.classList.remove('favorita');
+        institucion.classList.remove('favorita');
+        currentFavorite = null;
+        localStorage.removeItem('institucionFavorita');
+        ordenarAlfabeticamente();
+        mostrarFeedback('🌟 Favorito eliminado');
+    }
 
-      const toast = document.createElement('div');
-      toast.className = 'feedback-toast';
-      toast.textContent = mensaje;
-      document.body.appendChild(toast);
-      
-      setTimeout(() => {
-          toast.style.opacity = '0';
-          setTimeout(() => toast.remove(), 300);
-      }, 2700);
-  }
+    function ordenarInstituciones() {
+        if (!currentFavorite) {
+            ordenarAlfabeticamente();
+            return;
+        }
 
-  // Eventos para clics en tarjetas (no estrellas)
-  document.querySelectorAll('.institucion').forEach(card => {
-      card.addEventListener('click', function(e) {
-          if (e.target.closest('.star-icon')) return;
-          window.location.href = `/institucion/${this.dataset.id}`;
-      });
-  });
+        const items = Array.from(container.children);
+        
+        items.sort((a, b) => {
+            if (a === currentFavorite) return -1;
+            if (b === currentFavorite) return 1;
+            return getInstitucionName(a).localeCompare(getInstitucionName(b));
+        });
+        
+        reordenarItems(items);
+    }
+    
+    function ordenarAlfabeticamente() {
+        const items = Array.from(container.children);
+        items.sort((a, b) => getInstitucionName(a).localeCompare(getInstitucionName(b)));
+        reordenarItems(items);
+    }
+    
+    function getInstitucionName(item) {
+        return item.querySelector('h3').textContent.toLowerCase();
+    }
+    
+    function reordenarItems(items) {
+        // Usamos DocumentFragment para mejor rendimiento
+        const fragment = document.createDocumentFragment();
+        items.forEach(item => fragment.appendChild(item));
+        container.innerHTML = ''; // Limpiar contenedor
+        container.appendChild(fragment); // Agregar items ordenados
+    }
+
+    function mostrarFeedback(mensaje) {
+        const toastExistente = document.querySelector('.feedback-toast');
+        if (toastExistente) toastExistente.remove();
+
+        const toast = document.createElement('div');
+        toast.className = 'feedback-toast';
+        toast.textContent = mensaje;
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 300);
+        }, 2000);
+    }
 });

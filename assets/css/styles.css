@@ -64,7 +64,7 @@ body {
   background: var(--header-color);
   height: calc(100vh - 32px);
   transition: all 0.4s ease;
-  
+  z-index: 1000;
 }
 
 .sidebar.collapsed {
@@ -146,8 +146,6 @@ body {
   transition: 0.4s ease;
 }
 
-
-
 .sidebar.collapsed .sidebar-nav .primary-nav {
   transform: translateY(65px);
 }
@@ -184,6 +182,10 @@ body {
 
 .sidebar-nav .nav-item {
   position: relative;
+}
+
+.nav-tooltip {
+  z-index: 1001; /* Mayor que el sidebar */
 }
 
 .sidebar-nav .nav-tooltip {
@@ -280,7 +282,7 @@ body {
   .sidebar-nav .nav-item:hover .nav-tooltip {
     display: none;
   }
-  
+
   .sidebar-header .menu-toggler {
     display: flex;
     height: 30px;
@@ -406,15 +408,56 @@ main.main {
 }
 
 .institucion {
+  position: relative;
   background-color: var(--bg-color);
   padding: 20px;
   border-radius: 12px;
   box-shadow: var(--box-shadow);
   transition: transform 0.3s ease;
-  cursor: pointer;
   border: 1px solid var(--border-color);
   min-height: 120px;
   will-change: transform, grid-column;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Contenedor del contenido (título y descripción) */
+.institucion-content {
+  width: 80%; /* Ocupa el 80% del ancho */
+  padding-right: 20px; /* Espacio para la estrella */
+  
+}
+
+/* Área de favoritos */
+.institucion-favorite-area {
+  position: absolute;
+  right: 20px; /* Igual al padding derecho de la caja */
+  top: 50%;
+  transform: translateY(-50%);
+  width: auto; /* Ancho automático en lugar de porcentaje */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-left: 1px solid #444;
+  z-index: 5;
+}
+
+/* Estilos para el título y descripción */
+.institucion h3,
+.institucion p {
+  width: 100%; /* Ocupan todo el ancho disponible del contenedor */
+  margin: 0;
+  padding: 0;
+}
+
+.institucion h3 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.institucion p {
+  font-size: 14px;
+  line-height: 1.4;
 }
 
 .institucion:hover {
@@ -422,21 +465,48 @@ main.main {
   background-color: var(--sidebar-hover-bg);
 }
 
-.institucion h3 {
+.institucion-info {
+  flex-grow: 1; /* Ocupa el 80% restante (aproximadamente) */
+  cursor: pointer; /* Indica que es clickeable para ir al instituto */
+  padding-right: 10px; /* Espacio entre el texto y el área de favorito */
+}
+
+.institucion-info h3 {
   font-size: 20px;
   color: var(--text-color);
   margin-bottom: 10px;
 }
 
-.institucion p {
+.institucion-info p {
   font-size: 14px;
   color: var(--text-color);
 }
 
-/* Media query para 2 columnas en pantallas medianas */
-@media (min-width: 600px) {
-  .institucion-list {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+.institucion-favorite {
+  width: 80px; /* Aproximadamente el 20% del ancho mínimo (280px) */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer; /* Indica que es clickeable para el favorito */
+}
+
+/* Versión móvil */
+@media (max-width: 768px) {
+  .institucion-favorite-area {
+    width: 25%; /* Área más grande en móviles */
+  }
+  
+  .star-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.8rem;
+    
+    &::after {
+      width: 200%;
+      height: 200%;
+      top: -50%;
+      left: -50%;
+    }
   }
 }
 
@@ -445,6 +515,10 @@ main.main {
   .institucion-list {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   }
+
+  .institucion-favorite {
+    width: 56px; /* Ajustar según el nuevo minmax */
+  }
 }
 
 /* Media query para 4 columnas en pantallas grandes */
@@ -452,17 +526,22 @@ main.main {
   .institucion-list {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
+
+  .institucion-favorite {
+    width: 50px; /* Ajustar según el nuevo minmax */
+  }
 }
 
-/* Estilos mejorados para las estrellas - Versión móvil/desktop */
+/* Estilos para la estrella */
 .star-icon {
+  position: relative;
   display: flex !important;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
   margin: 0;
   padding: 0;
+  width: 44px;
+  height: 44px;
   font-variation-settings: 'FILL' 0;
   color: #777;
   cursor: pointer;
@@ -470,8 +549,18 @@ main.main {
   font-size: 1.5rem;
   background: transparent;
   border-radius: 50%;
-  position: relative;
-  z-index: 2;
+  z-index: 10;
+  pointer-events: auto; /* Solo la estrella recibe eventos táctiles */
+  
+  /* Área de toque ampliada */
+  &::after {
+    content: '';
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    top: -25%;
+    left: -25%;
+  }
 }
 
 .star-icon::after {
@@ -533,29 +622,43 @@ main.main {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
-@media (max-width: 768px) {
+/* Estilos para la estrella */
+.star-icon {
+  position: relative;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  font-variation-settings: 'FILL' 0;
+  color: #777;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.5rem;
+  background: transparent;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+/* Mejoras específicas para táctiles */
+@media (pointer: coarse) {
   .institucion {
-    position: relative;
-    padding-right: 70px !important;
+    user-select: none; /* Evitar selección de texto */
+    -webkit-tap-highlight-color: transparent; /* Eliminar resaltado azul al tocar */
   }
-
+  
   .star-icon {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 2rem;
-    padding: 8px;
+    /* Efecto visual al tocar */
+    &:active {
+      transform: scale(1.2);
+      background-color: rgba(255, 215, 0, 0.3) !important;
+    }
   }
-
-  @media (pointer: coarse) {
-    .star-icon:hover {
-      transform: translateY(-50%) scale(1) !important;
-    }
-
-    .star-icon:active {
-      transform: translateY(-50%) scale(1.2) !important;
-    }
+  
+  /* Asegurar que no haya superposición de eventos */
+  .institucion-info, 
+  .institucion p {
+    pointer-events: auto;
   }
 }
 
@@ -615,6 +718,45 @@ main.main {
   0% { transform: scale(1); }
   50% { transform: scale(1.02); }
   100% { transform: scale(1); }
+}
+
+/*RESPONSIVE para telefonos chicos (Caja instituciones)*/
+
+@media (max-width: 360px) {
+  .institucion-list {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .institucion {
+    padding: 15px;
+    min-height: auto;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .institucion-content {
+    width: 100%;
+    padding-right: 0;
+    margin-bottom: 10px;
+  }
+  
+  .institucion-favorite-area {
+    position: static;
+    transform: none;
+    width: 100%;
+    justify-content: flex-end;
+    border-left: none;
+    border-top: 1px solid var(--border-color);
+    padding-top: 10px;
+    margin-top: 10px;
+  }
+  
+  .star-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 1.5rem;
+  }
 }
 
 .footer {
