@@ -130,6 +130,15 @@
     
       <section class="instituciones">
         <h2>Instituciones</h2>
+
+        <div class="search-container" style="position: relative;">
+          <span class="material-symbols-rounded">search</span>
+          <input type="text" id="search-input" placeholder="Buscar instituciones...">
+          <button id="clear-search" class="clear-button" style="display: none;">
+              <span class="material-symbols-rounded">close</span>
+          </button>
+        </div>
+
         <div class="institucion-list">
             <!-- ISFD Bella Vista -->
             <div class="institucion" data-id="isfd-bella-vista">
@@ -215,9 +224,16 @@
       <p>Calculativa 2025 - todos los derechos reservados</p>
     </footer>
   </div>
+
+  <!-- Notificaciones -->
+  <div id="notification-container" class="notification-container"></div>
+  
   <!-- Script -->
   <script src="assets/js/slidebar.js"></script>
   <script src="assets/js/theme.js"></script>
+  <script src="assets/js/notification.js"></script>
   <script src="assets/js/favoritos.js"></script>
+  <script src="assets/js/search.js"></script>
+
 </body>
 </html>

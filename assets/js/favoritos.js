@@ -107,7 +107,16 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('institucionFavorita', institucion.dataset.id);
         ordenarInstituciones();
         
-        if (showToast) mostrarFeedback('⭐ ¡Favorito guardado!');
+        // Notificación de favorito añadido
+        if (showToast) {
+            const nombre = institucion.querySelector('h3').textContent;
+            if (typeof mostrarNotificacion === 'function') {
+                mostrarNotificacion(`⭐ ${nombre} añadido a favoritos`, 'star');
+            } else {
+                console.log('Función mostrarNotificacion no está disponible');
+                // Opcional: Mostrar un toast alternativo si es necesario
+            }
+        }
     }
 
     function quitarFavorita(institucion) {
@@ -117,7 +126,14 @@ document.addEventListener('DOMContentLoaded', function() {
         currentFavorite = null;
         localStorage.removeItem('institucionFavorita');
         ordenarAlfabeticamente();
-        mostrarFeedback('🌟 Favorito eliminado');
+        
+        // Notificación de favorito eliminado
+        const nombre = institucion.querySelector('h3').textContent;
+        if (typeof mostrarNotificacion === 'function') {
+            mostrarNotificacion(`❌ ${nombre} removido de favoritos`, 'close');
+        } else {
+            console.log('Función mostrarNotificacion no está disponible');
+        }
     }
 
     function ordenarInstituciones() {
@@ -153,20 +169,5 @@ document.addEventListener('DOMContentLoaded', function() {
         items.forEach(item => fragment.appendChild(item));
         container.innerHTML = ''; // Limpiar contenedor
         container.appendChild(fragment); // Agregar items ordenados
-    }
-
-    function mostrarFeedback(mensaje) {
-        const toastExistente = document.querySelector('.feedback-toast');
-        if (toastExistente) toastExistente.remove();
-
-        const toast = document.createElement('div');
-        toast.className = 'feedback-toast';
-        toast.textContent = mensaje;
-        document.body.appendChild(toast);
-        
-        setTimeout(() => {
-            toast.style.opacity = '0';
-            setTimeout(() => toast.remove(), 300);
-        }, 2000);
     }
 });
