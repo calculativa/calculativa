@@ -425,10 +425,11 @@ body {
   height: 100vh; /* Ocupa toda la altura de la pantalla */
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 15px;
   transition: margin 0.4s ease;
   background-color: var(--bg-body-color);
   color: var(--text-color);
+  overflow-x: hidden;
 }
 
 .sidebar.collapsed + .main-content {
@@ -506,10 +507,9 @@ main.main {
 
 .institucion-list {
   display: grid;
-  gap: 20px;
+  gap: 15px;
   width: 100%;
-  /* Estilo base para pantallas pequeñas (1 columna) */
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* Valor base reducido */
 }
 
 .institucion {
@@ -524,6 +524,11 @@ main.main {
   will-change: transform, grid-column;
   display: flex;
   flex-direction: column;
+
+  min-width: 0; /* Rompe el límite mínimo heredado */
+  width: 100%; /* Ocupa el ancho disponible */
+  padding: 15px; /* Padding relativo */
+  box-sizing: border-box; /* Asegura que el padding no sume al ancho */
 }
 
 /* Contenedor del contenido (título y descripción) */
@@ -597,21 +602,19 @@ main.main {
 
 /* Versión móvil */
 @media (max-width: 768px) {
-  .institucion-favorite-area {
-    width: 25%; /* Área más grande en móviles */
-  }
-  
   .star-icon {
     width: 50px;
     height: 50px;
     font-size: 1.8rem;
-    
-    &::after {
-      width: 200%;
-      height: 200%;
-      top: -50%;
-      left: -50%;
-    }
+  }
+  .institucion-list {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Más estrecho */
+    gap: 12px;
+  }
+  
+  .institucion {
+    padding: 15px; /* Padding reducido */
+    min-height: auto; /* Altura flexible */
   }
 }
 
@@ -656,25 +659,15 @@ main.main {
   border-radius: 50%;
   z-index: 10;
   pointer-events: auto; /* Solo la estrella recibe eventos táctiles */
-  
-  /* Área de toque ampliada */
-  &::after {
-    content: '';
-    position: absolute;
-    width: 150%;
-    height: 150%;
-    top: -25%;
-    left: -25%;
-  }
 }
 
 .star-icon::after {
   content: '';
   position: absolute;
-  width: 300%;
+  width: 150%;
   height: 300%;
   top: -100%;
-  left: -100%;
+  left: -1%; /*Reduce la linea de separacion de favoritos*/
 }
 
 .star-icon.favorita {
@@ -828,39 +821,45 @@ main.main {
 /*RESPONSIVE para telefonos chicos (Caja instituciones)*/
 
 @media (max-width: 360px) {
-  .institucion-list {
-    grid-template-columns: 1fr;
-    gap: 12px;
+  /* Ajustes para el área de favoritos */
+  .institucion-favorite-area {
+    width: 100% !important; /* Ocupa todo el ancho disponible */
+    position: static !important; /* Elimina posicionamiento absoluto */
+    transform: none !important;
+    justify-content: flex-end;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-color);
+    border-left: none !important;
   }
-  
+
+  /* Área táctil ultra-grande para móviles */
+  .star-icon::after {
+    width: 200% !important;
+    height: 160% !important;
+    top: -20% !important;
+    left: -50% !important;
+  }
+
+  /* Resetear estructura de la tarjeta */
   .institucion {
-    padding: 15px;
-    min-height: auto;
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .institucion-content {
-    width: 100%;
+    width: 100% !important;
+    padding-right: 0 !important;
+  }
+
+  .institucion-content {
+    width: 100%; /* Ocupa todo el ancho */
     padding-right: 0;
-    margin-bottom: 10px;
   }
   
-  .institucion-favorite-area {
-    position: static;
-    transform: none;
-    width: 100%;
-    justify-content: flex-end;
-    border-left: none;
-    border-top: 1px solid var(--border-color);
-    padding-top: 10px;
-    margin-top: 10px;
-  }
-  
-  .star-icon {
-    width: 36px;
-    height: 36px;
-    font-size: 1.5rem;
+  .institucion h3 {
+    font-size: 18px; /* Texto más pequeño */
+    white-space: normal; /* Permite múltiples líneas */
   }
 }
 
@@ -889,13 +888,19 @@ main.main {
     top: 60px;
     left: 0;
     right: 0;
-    margin-left: 0;
+    margin: 0;
     z-index: 90;
-    padding: 20px;
+    padding: 10px;
     padding-top: 20px;
   }
-
   .sidebar {
+    width: calc(100% - 26px) !important; /* Ocupa todo el ancho menos el margen */
+    margin: 13px; /* Mantenemos el margen */
+    height: 56px;
     z-index: 100;
+  }
+  .main-content {
+    width: 100%;
+    margin-left: 0;
   }
 }
