@@ -66,7 +66,9 @@ body {
   height: calc(100vh - 32px);
   transition: all 0.4s ease;
   z-index: 1000;
-  overflow-x: hidden;
+  display: flex;
+  flex-direction: column; 
+  overflow: hidden;
 }
 
 .sidebar.collapsed {
@@ -148,16 +150,24 @@ body {
 /*SCROLL EN EL SLIDEBAR*/
 
 .sidebar-nav {
-  height: calc(100% - 280px); /* Resta el espacio de header + botones inferiores */
+  height: 100%; /* Ocupa todo el alto del sidebar */
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Organiza uno debajo del otro */
+  justify-content: space-between; /* Empuja el contenido */
+  padding-bottom: 20px;
+  overflow: hidden; /* Limpieza general */
+  padding-bottom: 0; /* Quitamos padding extra si molesta */
 }
 
 .primary-nav {
-  overflow-y: auto; /* Habilita scroll */
-  flex-grow: 1; /* Ocupa el espacio disponible */
-  scrollbar-width: thin; /* Firefox */
-  scrollbar-color: var(--hover-color) transparent; /* Firefox */
+  flex: 1; /* Ocupa todo el espacio libre entre el Header y el Footer */
+  overflow-y: auto; /* Aquí vive el scroll */
+  overflow-x: hidden;
+  /* Ajuste visual */
+  padding-bottom: 10px; 
+  /* Estilos de barra de desplazamiento fina */
+  scrollbar-width: thin;
+  scrollbar-color: var(--hover-color) transparent;
 }
 
 /* Estilo para la barra de scroll (Chrome/Safari) */
@@ -171,8 +181,13 @@ body {
 }
 
 .secondary-nav {
-  margin-top: auto; /* Fija los botones abajo */
-  padding-bottom: 20px; /* Espacio adicional */
+  flex-shrink: 0; /* IMPORTANTE: Impide que se achique o desaparezca */
+  margin-top: auto; /* Empuja hacia abajo por seguridad */
+  width: 100%;
+  background: var(--header-color); /* Fondo sólido para tapar el scroll del menú de arriba */
+  padding-bottom: 20px; /* Un poco de aire abajo */
+  padding-top: 10px; /* Separación visual */
+  z-index: 10;
 }
 
 /*-----------------------------------------*/
@@ -188,7 +203,49 @@ body {
 }
 
 .sidebar.collapsed .sidebar-nav .primary-nav {
-  transform: translateY(65px);
+  transform: none; 
+  padding-top: 65px;
+  
+  /* 1. Reactivamos el scroll */
+  overflow-y: auto; 
+  overflow-x: hidden;
+  
+  /* 2. Ocultamos la barra de scroll visualmente para que quede limpio */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Ocultar barra en Chrome/Edge/Safari */
+.sidebar.collapsed .sidebar-nav .primary-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.sidebar.collapsed .nav-tooltip {
+  display: block;
+  
+  /* TRUCO: Fixed nos permite "escapar" de la caja con scroll */
+  position: fixed; 
+  left: 90px; /* Separación desde la izquierda */
+  
+  /* IMPORTANTE: No definimos 'top'. Dejamos que el navegador decida la altura */
+  margin-top: -10px; /* Ajuste manual fino para centrarlo con el icono */
+  
+  opacity: 0; 
+  pointer-events: none;
+  z-index: 99999;
+  
+  /* Estilos visuales */
+  background: var(--sidebar-bg);
+  color: var(--text-color); /* Asegúrate que el texto se lea */
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  padding: 6px 12px;
+  width: max-content;
+}
+
+.sidebar.collapsed .sidebar-nav .nav-item:hover .nav-tooltip {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none; /* Evita que salte de posición al aparecer */
 }
 
 .sidebar-nav .nav-link {
@@ -234,11 +291,6 @@ body {
   z-index: 1001; /* Mayor que el sidebar */
 }
 
-.sidebar.collapsed .primary-nav,
-.sidebar.collapsed {
-  overflow: visible; 
-}
-
 .sidebar-nav .nav-tooltip {
   position: absolute;
   top: -10px;
@@ -268,9 +320,11 @@ body {
 }
 
 .sidebar-nav .secondary-nav {
-  position: absolute;
   bottom: 30px;
   width: 100%;
+  padding-bottom: 30px;
+  border-top: 2px solid var(--border-color);
+
 }
 
 /* Estilos para el botón de cambio de modo claro/oscuro */
@@ -303,17 +357,20 @@ body {
 /* Responsive para telefonos y tablets */
 @media (max-width: 1024px) {
   .sidebar {
-    height: 56px;
+    height: 56px; 
+    width: calc(100% - 26px) !important;
+    display: block; /* Importante: quitamos el flex column aquí para que funcione tu JS */
+    overflow-y: hidden; /* Ocultamos el contenido extra */
+    
+    /* Mantenemos tus márgenes */
     margin: 13px;
-    margin-left: 20px;
-    overflow-y: hidden;
-    scrollbar-width: none;
-    width: calc(100% - 40px);
-    max-height: calc(100vh - 26px);
   }
 
   .sidebar.menu-active {
-    overflow-y: auto;
+    height: calc(100vh - 26px); /* Altura completa */
+    display: flex; /* Activamos flex para organizar el contenido */
+    flex-direction: column;
+    overflow-y: auto; /* Permitimos scroll general */
   }
 
   .sidebar .sidebar-header {
@@ -347,6 +404,16 @@ body {
 
   .sidebar .sidebar-nav .nav-list {
     padding: 0 10px;
+  }
+  
+  .primary-nav {
+    flex: none; /* Quitamos la elasticidad en móvil */
+  }
+
+  .sidebar-nav {
+    display: block; /* En móvil dejamos que fluya normal */
+    height: auto;
+    overflow: visible;
   }
 
   .sidebar-nav .nav-link {
