@@ -66,6 +66,7 @@ body {
   height: calc(100vh - 32px);
   transition: all 0.4s ease;
   z-index: 1000;
+  overflow-x: hidden;
 }
 
 .sidebar.collapsed {
@@ -116,9 +117,15 @@ body {
   pointer-events: none;
   user-select: none;
 }
+/* Ocultar el texto "Sistema" para que no ocupe espacio invisible */
+.sidebar.collapsed .dark-mode-toggle #dark-mode-label {
+  display: none;
+}
 
 .sidebar.collapsed .dark-mode-toggle {
-  width: 50px; /* Ajusta el ancho según sea necesario */
+  justify-content: center; /* Centra el icono */
+  padding-left: 0;         /* Quita relleno extra */
+  padding-right: 0;
 }
 
 .sidebar.collapsed .sidebar-header .toggler {
@@ -137,6 +144,38 @@ body {
 .sidebar.collapsed .sidebar-header .toggler span {
   transform: rotate(180deg);
 }
+
+/*SCROLL EN EL SLIDEBAR*/
+
+.sidebar-nav {
+  height: calc(100% - 280px); /* Resta el espacio de header + botones inferiores */
+  display: flex;
+  flex-direction: column;
+}
+
+.primary-nav {
+  overflow-y: auto; /* Habilita scroll */
+  flex-grow: 1; /* Ocupa el espacio disponible */
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: var(--hover-color) transparent; /* Firefox */
+}
+
+/* Estilo para la barra de scroll (Chrome/Safari) */
+.primary-nav::-webkit-scrollbar {
+  width: 6px;
+}
+
+.primary-nav::-webkit-scrollbar-thumb {
+  background-color: var(--hover-color);
+  border-radius: 3px;
+}
+
+.secondary-nav {
+  margin-top: auto; /* Fija los botones abajo */
+  padding-bottom: 20px; /* Espacio adicional */
+}
+
+/*-----------------------------------------*/
 
 .sidebar-nav .nav-list {
   list-style: none;
@@ -166,6 +205,10 @@ body {
 
 .sidebar.collapsed .sidebar-nav .nav-link {
   border-radius: 12px;
+  justify-content: center; /* Centra el icono horizontalmente */
+  gap: 0; /* Elimina el espacio entre icono y texto invisible */
+  padding-left: 0; /* Elimina paddings laterales para asegurar el centro */
+  padding-right: 0;
 }
 
 .sidebar .sidebar-nav .nav-link .nav-label {
@@ -175,6 +218,7 @@ body {
 .sidebar.collapsed .sidebar-nav .nav-link .nav-label {
   opacity: 0;
   pointer-events: none;
+  display: none;
 }
 
 .sidebar-nav .nav-link:hover {
@@ -188,6 +232,11 @@ body {
 
 .nav-tooltip {
   z-index: 1001; /* Mayor que el sidebar */
+}
+
+.sidebar.collapsed .primary-nav,
+.sidebar.collapsed {
+  overflow: visible; 
 }
 
 .sidebar-nav .nav-tooltip {
@@ -204,6 +253,7 @@ body {
   left: calc(100% + 25px);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   transition: 0s;
+  z-index: 9999;
 }
 
 .sidebar.collapsed .sidebar-nav .nav-tooltip {
@@ -313,6 +363,15 @@ body {
     position: relative;
     bottom: 0;
     margin: 40px 0 30px;
+  }
+
+  .sidebar.menu-active {
+    max-height: 80vh; /* Limita la altura máxima en móviles */
+    overflow-y: auto; /* Permite scroll general si el contenido es muy largo */
+  }
+  
+  .sidebar.menu-active .primary-nav {
+    overflow-y: visible; /* Desactiva scroll interno en móvil (opcional) */
   }
 }
 
@@ -451,7 +510,7 @@ main.main {
 }
 
 .main-header h1 {
-  font-size: 24px;
+  font-size: 2.3rem;
   margin: 0;
   text-transform:uppercase;
 }
@@ -509,13 +568,14 @@ main.main {
   display: grid;
   gap: 15px;
   width: 100%;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* Valor base reducido */
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Valor base reducido */
 }
 
 .institucion {
   position: relative;
   background-color: var(--bg-color);
-  padding: 20px;
+  padding-right: 50px; /* Reserva espacio para el favorito */
+
   border-radius: 12px;
   box-shadow: var(--box-shadow);
   transition: transform 0.3s ease;
@@ -529,13 +589,29 @@ main.main {
   width: 100%; /* Ocupa el ancho disponible */
   padding: 15px; /* Padding relativo */
   box-sizing: border-box; /* Asegura que el padding no sume al ancho */
+
+  align-items: center; /* Centrado vertical */
+
+}
+
+/* Estilos para el logo */
+.institucion-logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  border-radius: 8px;
+  flex-shrink: 0;
+  
 }
 
 /* Contenedor del contenido (título y descripción) */
 .institucion-content {
-  width: 80%; /* Ocupa el 80% del ancho */
-  padding-right: 20px; /* Espacio para la estrella */
-  
+  flex: 1; /* Ocupa todo el espacio disponible */
+  min-width: 0; /* Permite que el texto se ajuste */
+  max-width: calc(100% - 70px); /* Ajusta este valor según necesites */
+  padding-right: 10px; /* Espacio de seguridad */
+  align-self: center; /* Asegura centrado */
+
 }
 
 /* Área de favoritos */
@@ -600,6 +676,32 @@ main.main {
   cursor: pointer; /* Indica que es clickeable para el favorito */
 }
 
+@media (max-width: 480px) {
+  .institucion-header {
+      gap: 10px;
+  }
+  .institucion-logo {
+      width: 36px;
+      height: 36px;
+  }
+
+  .institucion-content h3, .institucion-content p {
+    white-space: normal !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+    padding-right: 20px;
+    padding-bottom: 5px;
+  }
+
+  /* Área táctil para móviles */
+  .star-icon::after {
+    width: 150% !important;
+    height: 220% !important;
+    top: -60% !important;
+    left: -8% !important;
+  }
+}
+
 /* Versión móvil */
 @media (max-width: 768px) {
   .star-icon {
@@ -607,36 +709,97 @@ main.main {
     height: 50px;
     font-size: 1.8rem;
   }
-  .institucion-list {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Más estrecho */
-    gap: 12px;
-  }
   
   .institucion {
     padding: 15px; /* Padding reducido */
     min-height: auto; /* Altura flexible */
   }
+  .institucion-logo {
+    width: 80px;
+    height: 80px;
+  }
+
+  .institucion-content h3, .institucion-content p {
+    white-space: normal !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+    padding-right: 20px;
+    padding-bottom: 5px;
+  }
+
+  /* Área táctil para móviles */
+  .star-icon::after {
+    width: 150% !important;
+    height: 220% !important;
+    top: -60% !important;
+    left: -8% !important;
+  }
 }
 
 /* Media query para 3 columnas en pantallas más grandes */
-@media (min-width: 900px) {
-  .institucion-list {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  }
+@media (max-width: 900px) {
 
   .institucion-favorite {
     width: 56px; /* Ajustar según el nuevo minmax */
   }
+
+  .institucion-content h3, .institucion-content p {
+    white-space: normal !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+    padding-right: 20px;
+    padding-bottom: 5px;
+  }
+
+  /* Área táctil para móviles */
+  .star-icon::after {
+    width: 150% !important;
+    height: 260% !important;
+    top: -80% !important;
+    left: -8% !important;
+  }
 }
 
 /* Media query para 4 columnas en pantallas grandes */
-@media (min-width: 1200px) {
-  .institucion-list {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+@media (max-width: 1200px) {
+
+  .institucion-logo {
+    height: 80px;
+    width: 80px;
   }
 
   .institucion-favorite {
     width: 50px; /* Ajustar según el nuevo minmax */
+  }
+
+  .institucion-content h3, .institucion-content p {
+    white-space: normal !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+    padding-right: 20px;
+    padding-bottom: 5px;
+  }
+
+  /* Área táctil para móviles */
+  .star-icon::after {
+    width: 150% !important;
+    height: 260% !important;
+    top: -80% !important;
+    left: -8% !important;
+  }
+}
+
+@media (min-width: 1201px) {
+  .institucion-content h3, .institucion-content p {
+    white-space: normal !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+    padding-right: 20px;
+    padding-bottom: 5px;
+  }
+  .institucion-logo {
+    height: 80px;
+    width: 80px;
   }
 }
 
@@ -771,6 +934,9 @@ main.main {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
+  gap: 5px;
+  max-width: calc(100% - 50px);
+  width: 100%; /* Ocupa todo el espacio permitido */
 }
 
 .feedback-toast {
@@ -818,48 +984,75 @@ main.main {
   100% { transform: scale(1); }
 }
 
-/*RESPONSIVE para telefonos chicos (Caja instituciones)*/
+/*RESPONSIVE para telefonos Super chicos (Caja instituciones miniaturas)*/
 
 @media (max-width: 360px) {
-  /* Ajustes para el área de favoritos */
-  .institucion-favorite-area {
-    width: 100% !important; /* Ocupa todo el ancho disponible */
-    position: static !important; /* Elimina posicionamiento absoluto */
-    transform: none !important;
-    justify-content: flex-end;
-    margin-top: 12px;
-    padding-top: 12px;
-    border-top: 1px solid var(--border-color);
-    border-left: none !important;
+  /* Propiedades combinadas */
+  .institucion {
+    width: 100%;
+    max-width: 400px;
+    min-width: 200px;
+    margin: 0 auto;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-right: 0 !important;
   }
 
-  /* Área táctil ultra-grande para móviles */
+  .institucion-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+    justify-content: center;
+  }
+
+  /* Combinación de .institucion-favorite-area */
+  .institucion-favorite-area {
+    position: static !important;
+    justify-content: flex-end;
+    width: 95% !important;
+    max-width: calc(100vw - 50px);
+    border-left: none !important;
+    border-top: 1px solid var(--border-color);
+    margin-top: 24px;
+    padding-top: 24px;
+  }
+
+  /* Combinación de .star-icon */
+  .star-icon {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 1.2rem !important;
+    margin-top: 10px;
+    margin-bottom: -12px;
+    margin-right: 10px;
+    padding: 12px !important;
+  }
+
+  /* Propiedades únicas del primer bloque */
   .star-icon::after {
     width: 200% !important;
     height: 160% !important;
-    top: -20% !important;
+    top: -50% !important;
     left: -50% !important;
   }
 
-  /* Resetear estructura de la tarjeta */
-  .institucion {
-    flex-direction: column;
-    align-items: flex-start;
+  /* Propiedades únicas del segundo bloque */
+  .institucion-header {
+    width: 100% !important;
+    max-width: none !important;
   }
 
   .institucion-content {
     width: 100% !important;
     padding-right: 0 !important;
+    transition: all 0.3s ease;
   }
 
-  .institucion-content {
-    width: 100%; /* Ocupa todo el ancho */
-    padding-right: 0;
-  }
-  
-  .institucion h3 {
-    font-size: 18px; /* Texto más pequeño */
-    white-space: normal; /* Permite múltiples líneas */
+  .institucion-content h3, .institucion-content p {
+    white-space: normal !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+    padding-right: 20px;
+    padding-bottom: 5px;
   }
 }
 
@@ -902,5 +1095,25 @@ main.main {
   .main-content {
     width: 100%;
     margin-left: 0;
+  }
+
+  .institucion-list {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Valor base reducido */
+  }
+
+  .institucion-content h3, .institucion-content p {
+    white-space: normal !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+    padding-right: 20px;
+    padding-bottom: 5px;
+  }
+
+  /* Área táctil para móviles */
+  .star-icon::after {
+    width: 150% !important;
+    height: 260% !important;
+    top: -80% !important;
+    left: -8% !important;
   }
 }
