@@ -6,8 +6,11 @@
   <title>Calculativa</title>
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0">
+  <link rel="manifest" href="/2-Calculativa/manifest.json">
 </head>
 <body>
+
+  <button id="install-button" style="display: none;">📲 Instalar App</button>
   <!-- Barra Lateral -->
   <aside class="sidebar">
     <!-- Sidebar header -->
@@ -266,6 +269,16 @@
       <p>Calculativa 2025 - todos los derechos reservados</p>
     </footer>
   </div>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/2-Calculativa/sw.js')
+          .then(reg => console.log('✅ Service Worker registrado:', reg.scope))
+          .catch(err => console.error('❌ Error al registrar SW:', err));
+      });
+    }
+  </script>
 
   <!-- Notificaciones -->
   <div id="notification-container" class="notification-container"></div>
