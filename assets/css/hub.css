@@ -1,0 +1,125 @@
+/* assets/css/hub.css */
+
+/* --- BANNER DEL INSTITUTO --- */
+.institucion-banner {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); /* Azul Institucional */
+    color: white;
+    border-radius: 16px;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 20px rgba(30, 60, 114, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.banner-logo {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    background: white;
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    z-index: 2;
+}
+
+.banner-info {
+    z-index: 2;
+}
+
+.banner-info h2 {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.banner-info p {
+    font-size: 1rem;
+    opacity: 0.9;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* --- GRILLA DE SERVICIOS --- */
+.servicios-grid {
+    display: grid;
+    /* Esto crea columnas automáticas: Mínimo 280px de ancho, Máximo lo que quepa */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    padding-bottom: 40px;
+}
+
+/* --- TARJETAS (CARDS) --- */
+.servicio-card {
+    background: var(--bg-color); /* Se adapta a modo oscuro/claro */
+    border-radius: 16px;
+    text-decoration: none;
+    color: var(--text-color);
+    box-shadow: var(--box-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    border: 1px solid transparent;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.servicio-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    border-color: #2a5298; /* Borde azul al pasar el mouse */
+}
+
+/* Cabecera de la tarjeta */
+.card-header {
+    background: rgba(0,0,0,0.03);
+    padding: 15px 20px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    color: #666;
+}
+
+/* Cuerpo de la tarjeta */
+.card-body {
+    padding: 25px;
+    display: flex;
+    align-items: flex-start; /* Alineado arriba */
+    gap: 20px;
+    flex-grow: 1;
+}
+
+.card-icon {
+    font-size: 40px; /* Tamaño del icono */
+    color: #2a5298; /* Color azul por defecto */
+    padding: 10px;
+    background: rgba(42, 82, 152, 0.1);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.servicio-card:hover .card-icon {
+    background: #2a5298;
+    color: white;
+}
+
+.card-text p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+/* Ajustes para iconos de imagen si usas PNG en vez de FontIcon */
+.card-icon-img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+

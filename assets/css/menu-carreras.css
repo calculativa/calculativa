@@ -1,0 +1,134 @@
+/* assets/css/menu-carreras.css */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.header-institution-logo {
+    height: 60px;
+    object-fit: contain;
+    opacity: 0.8;
+}
+
+.grupo-carreras {
+    margin-bottom: 50px;
+}
+
+.grupo-titulo {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin-bottom: 20px;
+    border-left: 4px solid var(--header-color); /* Usa el color del tema */
+    padding-left: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* --- GRILLA --- */
+.carreras-grid {
+    display: grid;
+    /* Tarjetas responsivas: mínimo 260px de ancho */
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+/* --- TARJETA --- */
+.card-carrera {
+    background: var(--bg-color);
+    border-radius: 12px;
+    padding: 20px;
+    text-decoration: none;
+    color: var(--text-color);
+    box-shadow: var(--box-shadow);
+    transition: all 0.3s ease;
+    
+    /* El borde superior usa la variable de color */
+    border-top: 5px solid var(--card-color, #999);
+    
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+    overflow: hidden;
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.card-carrera:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Icono */
+.card-icon {
+    width: 50px;
+    height: 50px;
+    min-width: 50px; /* Evita que se aplaste */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.03);
+    border-radius: 10px;
+}
+
+.card-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Icono de respaldo si no hay imagen PNG */
+.fallback-icon {
+    font-size: 30px;
+    color: var(--card-color);
+    display: none; /* Por defecto oculto, el HTML lo muestra si falla la imagen */
+}
+
+/* Si la imagen falla (display:none), mostramos el icono material */
+.card-icon img[style*="display: none"] + .fallback-icon {
+    display: block;
+}
+
+.card-info h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+    line-height: 1.3;
+}
+
+.duracion {
+    font-size: 0.8rem;
+    color: #666;
+    background: #f0f0f0;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+/* --- ESTADO CERRADA --- */
+.card-carrera.cerrada {
+    filter: grayscale(100%); /* Blanco y negro */
+    opacity: 0.7;
+    cursor: not-allowed;
+    border-top-color: #666 !important;
+}
+
+.card-carrera.cerrada:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.badge-cerrada {
+    font-size: 0.7rem;
+    background: #d32f2f;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: bold;
+}

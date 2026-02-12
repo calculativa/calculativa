@@ -1051,6 +1051,20 @@ main.main {
   100% { transform: scale(1); }
 }
 
+/* Corrección de color para enlaces de instituciones */
+a.institucion,
+a.institucion:visited,
+a.institucion:hover,
+a.institucion:active {
+    color: var(--text-color); /* Usa tu variable de color (negro/blanco) */
+    text-decoration: none;    /* Quita el subrayado */
+}
+
+/* Asegura que el texto gris (la ubicación) siga siendo gris */
+a.institucion .institucion-content p {
+    color: #666; /* O la variable de texto secundario que uses */
+}
+
 /*RESPONSIVE para telefonos Super chicos (Caja instituciones miniaturas)*/
 
 @media (max-width: 360px) {

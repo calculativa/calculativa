@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleccionar Carrera - ISFD Bella Vista</title>
+    
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link rel="stylesheet" href="../../assets/css/menu-carreras.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet" />
+</head>
+<body>
+    
+    <aside class="sidebar">
+        <header class="sidebar-header">
+            <a href="../../index.html" class="header-logo">
+                <img src="../../assets/img/Logo-Circular.png" alt="Calculativa">
+            </a>
+            <button class="toggler sidebar-toggler">
+                <span class="material-symbols-rounded">chevron_left</span>
+            </button>
+            <button class="toggler menu-toggler">
+                <span class="material-symbols-rounded">menu</span>
+            </button>
+        </header>
+
+        <nav class="sidebar-nav">
+            <ul class="nav-list primary-nav">
+                <li class="nav-item">
+                    <a href="../isfd-bella-vista/index.html" class="nav-link">
+                        <span class="nav-icon material-symbols-outlined">arrow_back</span>
+                        <span class="nav-label">Volver al Menú</span>
+                        
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../../index.html" class="nav-link">
+                        <span class="nav-icon material-symbols-outlined">home</span>
+                        <span class="nav-label">Inicio</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <button id="dark-mode-toggle" class="nav-link dark-mode-toggle">
+                        <span id="dark-mode-icon" class="nav-icon material-symbols-rounded">computer</span>
+                        <span id="dark-mode-label" class="nav-label">Sistema</span>
+                        <span class="nav-tooltip">Cambiar tema</span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="main-content">
+        
+        <header class="page-header">
+            <div class="header-content">
+                <h1>Oferta Académica</h1>
+                <p>Selecciona tu carrera para acceder a la calculadora de correlativas</p>
+            </div>
+            <img src="../../assets/logos/isfd-bella-vista/logo-principal.png" alt="ISFD" class="header-institution-logo">
+        </header>
+
+        <section class="grupo-carreras">
+            <h2 class="grupo-titulo">Tecnicaturas Superiores</h2>
+            
+            <div class="carreras-grid">
+                
+                <a href="carreras/informatica.html" class="card-carrera" style="--card-color: #00bcd4;">
+                    <div class="card-icon">
+                        <img src="../../assets/logos/isfd-bella-vista/informatica.png" alt="Icono" onerror="this.style.display='none'">
+                        <span class="material-symbols-rounded fallback-icon">computer</span>
+                    </div>
+                    <div class="card-info">
+                        <h3>Infraestructura Informática</h3>
+                        <span class="duracion">3 Años</span>
+                    </div>
+                </a>
+
+                <a href="carreras/diseno-grafico.html" class="card-carrera" style="--card-color: #e91e63;">
+                    <div class="card-icon">
+                        <img src="../../assets/logos/isfd-bella-vista/diseno.png" alt="Icono" onerror="this.style.display='none'">
+                        <span class="material-symbols-rounded fallback-icon">palette</span>
+                    </div>
+                    <div class="card-info">
+                        <h3>Diseño Gráfico</h3>
+                        <span class="duracion">3 Años</span>
+                    </div>
+                </a>
+
+                <a href="carreras/higiene-seguridad.html" class="card-carrera" style="--card-color: #ff9800;">
+                    <div class="card-icon">
+                        <img src="../../assets/logos/isfd-bella-vista/higiene.png" alt="Icono" onerror="this.style.display='none'">
+                        <span class="material-symbols-rounded fallback-icon">safety_check</span>
+                    </div>
+                    <div class="card-info">
+                        <h3>Higiene y Seguridad</h3>
+                        <span class="duracion">3 Años</span>
+                    </div>
+                </a>
+
+                <a href="carreras/turismo.html" class="card-carrera" style="--card-color: #03a9f4;">
+                    <div class="card-icon">
+                        <img src="../../assets/logos/isfd-bella-vista/turismo.png" alt="Icono" onerror="this.style.display='none'">
+                        <span class="material-symbols-rounded fallback-icon">travel_explore</span>
+                    </div>
+                    <div class="card-info">
+                        <h3>Turismo</h3>
+                        <span class="duracion">3 Años</span>
+                    </div>
+                </a>
+
+                <a href="carreras/frutihorticola.html" class="card-carrera" style="--card-color: #4caf50;">
+                    <div class="card-icon">
+                        <img src="../../assets/logos/isfd-bella-vista/frutihorticola.png" alt="Icono" onerror="this.style.display='none'">
+                        <span class="material-symbols-rounded fallback-icon">potted_plant</span>
+                    </div>
+                    <div class="card-info">
+                        <h3>Producción Frutihortícola</h3>
+                        <span class="duracion">3 Años</span>
+                    </div>
+                </a>
+
+                <a href="#" class="card-carrera cerrada" style="--card-color: #f44336;">
+                    <div class="card-icon">
+                        <img src="../../assets/logos/isfd-bella-vista/alimentos.png" alt="Icono" onerror="this.style.display='none'">
+                        <span class="material-symbols-rounded fallback-icon">restaurant</span>
+                    </div>
+                    <div class="card-info">
+                        <h3>Tecnología en Alimentos</h3>
+                        <span class="badge-cerrada">CARRERA CERRADA</span>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <section class="grupo-carreras">
+            <h2 class="grupo-titulo">Profesorados</h2>
+            
+            <div class="carreras-grid">
+                
+                <a href="carreras/lengua.html" class="card-carrera" style="--card-color: #9c27b0;">
+                    <div class="card-icon">
+                        <img src="../../assets/logos/isfd-bella-vista/lengua.png" alt="Icono" onerror="this.style.display='none'">
+                        <span class="material-symbols-rounded fallback-icon">auto_stories</span>
+                    </div>
+                    <div class="card-info">
+                        <h3>Lengua y Literatura</h3>
+                        <span class="duracion">4 Años</span>
+                    </div>
+                </a>
+
+                <a href="carreras/ingles.html" class="card-carrera" style="--card-color: #3f51b5;">
+                    <div class="card-icon">
+                        <img src="../../assets/logos/isfd-bella-vista/ingles.png" alt="Icono" onerror="this.style.display='none'">
+                        <span class="material-symbols-rounded fallback-icon">language</span>
+                    </div>
+                    <div class="card-info">
+                        <h3>Inglés</h3>
+                        <span class="duracion">4 Años</span>
+                    </div>
+                </a>
+
+                <a href="carreras/historia.html" class="card-carrera" style="--card-color: #795548;">
+                    <div class="card-icon">
+                        <img src="../../assets/logos/isfd-bella-vista/historia.png" alt="Icono" onerror="this.style.display='none'">
+                        <span class="material-symbols-rounded fallback-icon">history_edu</span>
+                    </div>
+                    <div class="card-info">
+                        <h3>Historia</h3>
+                        <span class="duracion">4 Años</span>
+                    </div>
+                </a>
+
+                <a href="carreras/artes-visuales.html" class="card-carrera" style="--card-color: #009688;">
+                    <div class="card-icon">
+                        <img src="../../assets/logos/isfd-bella-vista/artes.png" alt="Icono" onerror="this.style.display='none'">
+                        <span class="material-symbols-rounded fallback-icon">brush</span>
+                    </div>
+                    <div class="card-info">
+                        <h3>Artes Visuales</h3>
+                        <span class="duracion">4 Años</span>
+                    </div>
+                </a>
+
+                 <a href="carreras/musica.html" class="card-carrera" style="--card-color: #ff5722;">
+                    <div class="card-icon">
+                        <img src="../../assets/logos/isfd-bella-vista/musica.png" alt="Icono" onerror="this.style.display='none'">
+                        <span class="material-symbols-rounded fallback-icon">music_note</span>
+                    </div>
+                    <div class="card-info">
+                        <h3>Música</h3>
+                        <span class="duracion">4 Años</span>
+                    </div>
+                </a>
+
+                <a href="carreras/educacion-fisica.html" class="card-carrera" style="--card-color: #607d8b;">
+                    <div class="card-icon">
+                        <img src="../../assets/logos/isfd-bella-vista/edfisica.png" alt="Icono" onerror="this.style.display='none'">
+                        <span class="material-symbols-rounded fallback-icon">sports_soccer</span>
+                    </div>
+                    <div class="card-info">
+                        <h3>Educación Física</h3>
+                        <span class="duracion">4 Años</span>
+                    </div>
+                </a>
+                
+                <a href="carreras/quimica.html" class="card-carrera" style="--card-color: #8bc34a;">
+                    <div class="card-icon">
+                        <img src="../../assets/logos/isfd-bella-vista/quimica.png" alt="Icono" onerror="this.style.display='none'">
+                        <span class="material-symbols-rounded fallback-icon">science</span>
+                    </div>
+                    <div class="card-info">
+                        <h3>Química</h3>
+                        <span class="duracion">4 Años</span>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+    </div>
+
+    <script src="../../assets/js/slidebar.js"></script>
+    <script src="../../assets/js/theme.js"></script>
+</body>
+</html>

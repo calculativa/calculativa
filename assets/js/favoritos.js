@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.institucion').forEach(card => {
         card.addEventListener('click', function(e) {
             if (e.target.closest('.star-icon')) return;
-            window.location.href = `/institucion/${this.dataset.id}`;
+            
         });
     });
 
