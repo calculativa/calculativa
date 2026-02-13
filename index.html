@@ -6,7 +6,7 @@
   <title>Calculativa</title>
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0">
-  <link rel="manifest" href="/2-Calculativa/manifest.json">
+  <link rel="manifest" href="./manifest.json">
 </head>
 <body>
 
@@ -273,7 +273,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/2-Calculativa/sw.js')
+        navigator.serviceWorker.register('calculativa/assets/sw.js')
           .then(reg => console.log('✅ Service Worker registrado:', reg.scope))
           .catch(err => console.error('❌ Error al registrar SW:', err));
       });
