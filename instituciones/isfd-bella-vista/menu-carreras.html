@@ -223,6 +223,16 @@
 
     </div>
 
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+            navigator.serviceWorker.register('../../sw.js') // Ajusta la ruta según la página
+                .then(reg => console.log('✅ SW registrado:', reg.scope))
+                .catch(err => console.error('❌ Error:', err));
+            });
+        }
+    </script>
+
     <script src="../../assets/js/slidebar.js"></script>
     <script src="../../assets/js/theme.js"></script>
 </body>
