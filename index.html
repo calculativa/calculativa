@@ -305,6 +305,25 @@
     }
   </script>
 
+  <!-- Actualizaciones -->
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').then(reg => {
+      reg.addEventListener('updatefound', () => {
+        const newSW = reg.installing;
+        newSW.addEventListener('statechange', () => {
+          if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+            // ¡Nueva versión lista!
+            if (confirm('Nueva versión disponible. ¿Actualizar ahora?')) {
+              window.location.reload();
+            }
+          }
+        });
+      });
+    });
+  }
+</script>
+
   <!-- Notificaciones -->
   <div id="notification-container" class="notification-container"></div>
   
