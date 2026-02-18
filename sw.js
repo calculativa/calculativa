@@ -54,7 +54,12 @@ const urlsToCache = [
   './instituciones/isfd-bella-vista/carreras/informatica/assetscarreras/logos/android-chrome-512x512.png',
   './instituciones/isfd-bella-vista/carreras/informatica/assetscarreras/logos/apple-touch-icon.png',
   './instituciones/isfd-bella-vista/carreras/informatica/assetscarreras/logos/favicon-16x16.png',
-  './instituciones/isfd-bella-vista/carreras/informatica/assetscarreras/logos/favicon-32x32.png'
+  './instituciones/isfd-bella-vista/carreras/informatica/assetscarreras/logos/favicon-32x32.png',
+  
+  // Recursos de Iconos de Google
+  './assets/css/material-icons.css',
+  './assets/fonts/material-symbols-rounded.woff2',
+  './assets/fonts/material-symbols-outlined.woff2'
 ];
 
 // Instalación
