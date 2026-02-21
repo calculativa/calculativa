@@ -361,6 +361,7 @@ body {
     width: calc(100% - 26px) !important;
     display: block; /* Importante: quitamos el flex column aquí para que funcione tu JS */
     overflow-y: hidden; /* Ocultamos el contenido extra */
+    padding-bottom: 40px;
     
     /* Mantenemos tus márgenes */
     margin: 13px;
