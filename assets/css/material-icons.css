@@ -1,24 +1,24 @@
-/* Material Symbols Rounded (variable) */
+/* --- Material Symbols Rounded (Local) --- */
 @font-face {
   font-family: 'Material Symbols Rounded';
   font-style: normal;
-  font-weight: 100 700;
-  font-display: swap;
+  font-weight: 400; /* CORREGIDO: Usamos un peso estándar (normal) */
+  font-display: block; /* CORREGIDO: 'block' evita que se vea el texto mientras carga */
   src: url('../fonts/material-symbols-rounded.woff2') format('woff2');
 }
 
-/* Material Symbols Outlined (variable) */
+/* --- Material Symbols Outlined (Local) --- */
 @font-face {
   font-family: 'Material Symbols Outlined';
   font-style: normal;
-  font-weight: 100 700;
-  font-display: swap;
+  font-weight: 400; /* CORREGIDO */
+  font-display: block;
   src: url('../fonts/material-symbols-outlined.woff2') format('woff2');
 }
 
-/* Clases de utilidad (opcional, pero ayuda a mantener consistencia) */
+/* --- Clases de utilidad --- */
 .material-symbols-rounded {
-  font-family: 'Material Symbols Rounded';
+  font-family: 'Material Symbols Rounded' !important; /* ¡CLAVE! Obliga a ignorar a Poppins */
   font-weight: normal;
   font-style: normal;
   font-size: 24px;
@@ -32,11 +32,11 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: 'liga';
+  vertical-align: middle;
 }
 
 .material-symbols-outlined {
-  font-family: 'Material Symbols Outlined';
-  /* mismas propiedades que arriba */
+  font-family: 'Material Symbols Outlined' !important; /* ¡CLAVE! */
   font-weight: normal;
   font-style: normal;
   font-size: 24px;
@@ -50,10 +50,5 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: 'liga';
-}
-
-/* Ajuste fino para que los iconos se alineen verticalmente */
-.material-symbols-rounded,
-.material-symbols-outlined {
   vertical-align: middle;
 }

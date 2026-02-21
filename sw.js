@@ -1,4 +1,4 @@
-const CACHE_NAME = 'calculativa-v1';
+const CACHE_NAME = 'calculativa-v2'; // Cambia de v1 a v2
 const urlsToCache = [
   // Raíz
   './',
