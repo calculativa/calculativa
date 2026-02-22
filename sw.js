@@ -1,111 +1,100 @@
-const CACHE_NAME = 'calculativa-v2'; // Cambia de v1 a v2
+const CACHE_NAME = 'calculativa-v6'; // Subimos a v6 para limpiar la caché anterior
+
+// 1. EL NÚCLEO (App Shell) - Solo lo esencial y que sabemos que existe
 const urlsToCache = [
-  // Raíz
+  // Raíz y Configuración
   './',
-  './index.html',
   './manifest.json',
   
-  // CSS global
+  // Páginas Base (Asegúrate de que estas rutas sean exactas)
+  './instituciones/isfd-bella-vista/index.html',
+  './instituciones/isfd-bella-vista/menu-carreras.html',
+  './instituciones/isfd-bella-vista/carreras/informatica.html',
+  
+  // CSS Globales
   './assets/css/styles.css',
   './assets/css/calculadora.css',
   './assets/css/hub.css',
   './assets/css/menu-carreras.css',
+  './assets/css/material-icons.css',
   
-  // JS global
+  // JS Globales (¡Aquí está el cerebro de la app!)
   './assets/js/theme.js',
   './assets/js/slidebar.js',
   './assets/js/favoritos.js',
   './assets/js/notification.js',
   './assets/js/search.js',
+  './assets/js/motor-correlativas.js',
   
-  // Imágenes globales
-  './assets/img/Logo-Circular.png',
-  './assets/img/ubicacion.png',
-  './assets/logos/logo-isfd-bv-100x100.png',
-  './assets/logos/logo-isfd-ituzaingo-100x100.png',
-  './assets/logos/logo-isfd-jme-100x100.png',
-  './assets/logos/logo-isfd-mburucuya-100x100.png',
-  './assets/logos/logo-isfd-mercedes-100x100.png',
-  './assets/logos/logo-isfd-sl-100x100.png',
-  './assets/logos/logo-isfd-goya-100x100.png',
-  
-  // PÁGINAS HTML
-  './instituciones/isfd-bella-vista/index.html',
-  './instituciones/isfd-bella-vista/menu-carreras.html',
-  './instituciones/isfd-bella-vista/carreras/informatica.html',
-  
-  // CSS específico de instituciones
-  './instituciones/isfd-bella-vista/assets-intituciones/css/styles.css',
-  
-  // JS específico de instituciones
-  './instituciones/isfd-bella-vista/assets-intituciones/js/favoritos.js',
-  './instituciones/isfd-bella-vista/assets-intituciones/js/notification.js',
-  './instituciones/isfd-bella-vista/assets-intituciones/js/search.js',
-  './instituciones/isfd-bella-vista/assets-intituciones/js/slidebar.js',
-  './instituciones/isfd-bella-vista/assets-intituciones/js/theme.js',
-  
-  // Logos específicos de instituciones
-  './instituciones/isfd-bella-vista/assets-intituciones/logos/logo-isfd-bv-100x100.png',
-  
-  // Recursos de la calculadora (carreras)
-  './instituciones/isfd-bella-vista/carreras/informatica/assetscarreras/js/theme.js',
-  './instituciones/isfd-bella-vista/carreras/informatica/assetscarreras/logos/favicon.ico',
-  './instituciones/isfd-bella-vista/carreras/informatica/assetscarreras/logos/android-chrome-192x192.png',
-  './instituciones/isfd-bella-vista/carreras/informatica/assetscarreras/logos/android-chrome-512x512.png',
-  './instituciones/isfd-bella-vista/carreras/informatica/assetscarreras/logos/apple-touch-icon.png',
-  './instituciones/isfd-bella-vista/carreras/informatica/assetscarreras/logos/favicon-16x16.png',
-  './instituciones/isfd-bella-vista/carreras/informatica/assetscarreras/logos/favicon-32x32.png',
-  
-  // Recursos de Iconos de Google
-  './assets/css/material-icons.css',
+  // Fuentes Locales (Para los íconos offline)
   './assets/fonts/material-symbols-rounded.woff2',
-  './assets/fonts/material-symbols-outlined.woff2'
+  './assets/fonts/material-symbols-outlined.woff2',
+  
+  // Imágenes Principales Críticas
+  './assets/img/Logo-Circular.png',
+  './assets/logos/isfd-bella-vista/logo-principal.png'
 ];
 
-// Instalación
+// 2. INSTALACIÓN (Descarga el Núcleo)
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('📦 Cacheando TODOS los recursos...');
+        console.log('📦 Instalando PWA y cacheando archivos base...');
         return cache.addAll(urlsToCache);
       })
+      .catch(err => {
+        console.error('❌ Falló la instalación del caché. Revisa si falta algún archivo de urlsToCache:', err);
+      })
   );
+  // Fuerza a que el nuevo Service Worker tome el control de inmediato
+  self.skipWaiting();
 });
 
-// Interceptar peticiones
+// 3. INTERCEPTOR (Magia del Caché Dinámico)
 self.addEventListener('fetch', event => {
+  // Ignoramos peticiones que no sean GET (como envíos de formularios) o que sean de extensiones de Chrome
+  if (event.request.method !== 'GET' || !event.request.url.startsWith('http')) return;
+
   event.respondWith(
     caches.match(event.request)
       .then(response => {
+        // A) Si el archivo ya está en el caché (¡Funciona offline!), lo devuelve inmediatamente
         if (response) {
-          return response; // Devuelve desde caché
+          return response; 
         }
+        
+        // B) Si NO está en el caché, lo busca en internet
         return fetch(event.request).then(networkResponse => {
-          // Opcional: guardar en caché lo nuevo
-          if (networkResponse && networkResponse.status === 200) {
+          // Si la respuesta de internet es válida, la clonamos y LA GUARDAMOS EN CACHÉ para la próxima vez
+          if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
             const responseToCache = networkResponse.clone();
             caches.open(CACHE_NAME)
               .then(cache => cache.put(event.request, responseToCache));
           }
           return networkResponse;
+        }).catch(() => {
+          // C) OPCIONAL: Aquí podrías devolver una página genérica de "Sin conexión" si quisieras en el futuro
+          console.log('Fallo de red al intentar obtener:', event.request.url);
         });
       })
   );
 });
 
-// Limpiar cachés viejos
+// 4. LIMPIEZA (Elimina versiones viejas cuando actualizas la app)
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keyList => {
       return Promise.all(
         keyList.map(key => {
           if (key !== CACHE_NAME) {
-            console.log('🧹 Eliminando caché viejo:', key);
+            console.log('🧹 Eliminando versión vieja del caché:', key);
             return caches.delete(key);
           }
         })
       );
     })
   );
+  // Reclama el control de las pestañas abiertas inmediatamente
+  event.waitUntil(self.clients.claim());
 });
