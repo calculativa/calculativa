@@ -22,7 +22,7 @@
     --text-color: #333333;
     --header-calc-color: #111111;
     --border-color: #DDDDDD;
-    --primary-color: #3f5adf;
+    --primary-color: var(--color-carrera, #3f5adf);
     --hover-color: #0300b3;
     --box-shadow: -5px -5px 18px -5px rgba(0,0,0,1);
     -webkit-box-shadow: -5px -5px 18px -5px rgba(0,0,0,1);
@@ -35,7 +35,7 @@
     --text-color: #E0E0E0;
     --header-calc-color: #FFFFFF;
     --border-color: #d6d6d6;
-    --primary-color: #3f5adf;
+    --primary-color: var(--color-carrera, #3f5adf);
     --hover-color: #3700B3;
     --bg-button-check: #6a6a6a;
 
@@ -50,7 +50,7 @@
     --text-color: #333333;
     --header-calc-color: #f5f5f5;
     --border-color: #DDDDDD;
-    --primary-color: #3f5adf;
+    --primary-color: var(--color-carrera, #3f5adf);
     --hover-color: #3700B3;
     --box-shadow: -8px -5px 19px 9px rgba(0,0,0,0.44);
     -webkit-box-shadow: -8px -5px 19px 9px rgba(0,0,0,0.44);
@@ -91,10 +91,6 @@ body {
     "footer-calc" 50px;
     
 }
-.header-calc {
-    grid-area: header-calc;
-    background-color: var(--primary-color);
-}
 
 .navbar {
     grid-area: navbar;
@@ -120,10 +116,43 @@ body {
 }
 
 /*-----header-calc-----*/
-
 .header-calc {
+    grid-area: header-calc;
+    background-color: var(--primary-color);
     text-transform: uppercase;
-    overflow:hidden;
+    
+    /* Nuevas reglas de centrado */
+    display: flex;
+    align-items: center;
+    position: relative; /* Permite que el título se centre respecto a esta barra */
+    padding: 0 10px;
+}
+
+.header-calc h1 {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); /* Centrado absoluto perfecto */
+    margin: 0;
+    width: max-content; /* Evita que el texto se aplaste si es largo */
+    z-index: 1;
+}
+
+/* 4. Estilo del Botón Hamburguesa */
+.btn-hamburguesa {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background 0.2s;
+    
+    /* Asegura que el botón se pueda hacer clic si el título es larguísimo */
+    position: relative; 
+    z-index: 10; 
 }
 
 /*-----Dar Estilo al boton Light y Dark mode-----*/

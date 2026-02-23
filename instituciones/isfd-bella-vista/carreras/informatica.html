@@ -12,15 +12,11 @@
     <link rel="stylesheet" href="../../../assets/css/calculadora.css">
     
     <style>
-        :root { --color-carrera: #00bcd4; }
+        :root { --color-carrera: #3f5adf; }
     </style>
 
     <link rel="icon" type="image/png" href="../../../assets/logos/isfd-bella-vista/infraestructura.png">
 </head>
-
-<style>
-    :root { --color-carrera: #3f5adf; }
-</style>
 
 <body class="calculadora-wrapper">
 
@@ -63,14 +59,10 @@
     </aside>
 
     <header class="header-calc">
-        <div style="display: flex; align-items: center; gap: 10px; padding-left: 10px;">
-            <button class="btn-hamburguesa" id="openSidebarBtn" aria-label="Abrir menú">
-                <span class="material-symbols-outlined">menu</span>
-            </button>
-            <h1>informática</h1>
-        </div>
-
-        
+        <button class="btn-hamburguesa" id="openSidebarBtn" aria-label="Abrir menú">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
+        <h1>informática</h1>
     </header>
 
     <article class="tablero-materias">
@@ -1098,13 +1090,21 @@
     </script>
     
     <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-            navigator.serviceWorker.register('../../../sw.js') // Ajusta la ruta según la página
-                .then(reg => console.log('✅ SW registrado:', reg.scope))
-                .catch(err => console.error('❌ Error:', err));
+      if ('serviceWorker' in navigator) {
+        // Nota que aquí usamos los ../../../ para informatica.html
+        navigator.serviceWorker.register('../../../sw.js').then(reg => {
+          reg.addEventListener('updatefound', () => {
+            const newSW = reg.installing;
+            newSW.addEventListener('statechange', () => {
+              if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+                if (confirm('Nueva versión disponible. ¿Actualizar ahora?')) {
+                  window.location.reload();
+                }
+              }
             });
-        }
+          });
+        });
+      }
     </script>
 
     <script src="../../../assets/js/theme.js"></script>

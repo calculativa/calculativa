@@ -58,7 +58,7 @@
                 <h1>Oferta Académica</h1>
                 <p>Selecciona tu carrera para acceder a la calculadora de correlativas</p>
             </div>
-            <img src="../../assets/logos/isfd-bella-vista/logo-principal.png" alt="ISFD" class="header-institution-logo">
+            <img src="../../assets/logos/logo-isfd-bv-100x100.png" alt="ISFD" class="header-institution-logo">
         </header>
 
         <section class="grupo-carreras">
@@ -223,13 +223,21 @@
     </div>
 
     <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-            navigator.serviceWorker.register('../../sw.js') // Ajusta la ruta según la página
-                .then(reg => console.log('✅ SW registrado:', reg.scope))
-                .catch(err => console.error('❌ Error:', err));
+      if ('serviceWorker' in navigator) {
+        // Nota que aquí usamos los ../../../ para informatica.html
+        navigator.serviceWorker.register('../../sw.js').then(reg => {
+          reg.addEventListener('updatefound', () => {
+            const newSW = reg.installing;
+            newSW.addEventListener('statechange', () => {
+              if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+                if (confirm('Nueva versión disponible. ¿Actualizar ahora?')) {
+                  window.location.reload();
+                }
+              }
             });
-        }
+          });
+        });
+      }
     </script>
 
     <script src="../../assets/js/slidebar.js"></script>
