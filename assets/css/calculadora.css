@@ -783,26 +783,6 @@ body {
     transform: translateX(0); /* Se desliza a la vista */
 }
 
-/* 3. Fondo Oscuro (Backdrop) para clickear y cerrar */
-.backdrop-menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5); /* Semi-transparente */
-    z-index: 9998; /* Debajo del sidebar, arriba del contenido */
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(2px);
-}
-
-.backdrop-menu.active {
-    opacity: 1;
-    visibility: visible;
-}
-
 /* 4. Estilo del Botón Hamburguesa en el Header Azul */
 .btn-hamburguesa {
     background: transparent;

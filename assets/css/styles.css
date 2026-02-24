@@ -65,7 +65,7 @@ body {
   background: var(--header-color);
   height: calc(100vh - 32px);
   transition: all 0.4s ease;
-  z-index: 1000;
+  z-index: 9000;
   display: flex;
   flex-direction: column; 
   overflow: hidden;
@@ -368,10 +368,10 @@ body {
   }
 
   .sidebar.menu-active {
-    height: calc(100vh - 26px); /* Altura completa */
-    display: flex; /* Activamos flex para organizar el contenido */
+    max-height: calc(100vh - 26px); /* Límite máximo, pero se adapta al contenido */
+    display: flex; 
     flex-direction: column;
-    overflow-y: auto; /* Permitimos scroll general */
+    overflow-y: auto; 
   }
 
   .sidebar .sidebar-header {
@@ -433,11 +433,6 @@ body {
     margin: 40px 0 30px;
   }
 
-  .sidebar.menu-active {
-    max-height: 80vh; /* Limita la altura máxima en móviles */
-    overflow-y: auto; /* Permite scroll general si el contenido es muy largo */
-  }
-  
   .sidebar.menu-active .primary-nav {
     overflow-y: visible; /* Desactiva scroll interno en móvil (opcional) */
   }
@@ -505,7 +500,7 @@ body {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  z-index: 1000;
+  z-index: 9999;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -1168,7 +1163,7 @@ a.institucion:active {
     width: calc(100% - 26px) !important; /* Ocupa todo el ancho menos el margen */
     margin: 13px; /* Mantenemos el margen */
     height: 56px;
-    z-index: 100;
+    z-index: 9999;
   }
   .main-content {
     width: 100%;
@@ -1289,4 +1284,26 @@ a.institucion:active {
 
 .btn-update-later:hover {
     background-color: var(--sidebar-hover-bg);
+}
+
+/* =========================================
+   FONDO DIFUMINADO GLOBAL (Backdrop)
+   ========================================= */
+.backdrop-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5); /* Semi-transparente */
+    z-index: 8000; /* Justo debajo del sidebar (9999) y debajo de notificaciones (10000) */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(2px);
+}
+
+.backdrop-menu.active {
+    opacity: 1;
+    visibility: visible;
 }

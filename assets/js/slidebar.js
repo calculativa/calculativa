@@ -1,7 +1,16 @@
-// slidebar.js - Versión Robusta, Delegada a CSS y Blindada
+// slidebar.js - Versión Definitiva con Backdrop Dinámico
 const sidebar = document.querySelector(".sidebar");
 const sidebarToggler = document.querySelector(".sidebar-toggler");
 const menuToggler = document.querySelector(".menu-toggler");
+
+// 1. CREAR EL FONDO DIFUMINADO AUTOMÁTICAMENTE SI NO EXISTE EN EL HTML
+let backdrop = document.getElementById('menuBackdrop');
+if (!backdrop) {
+    backdrop = document.createElement('div');
+    backdrop.id = 'menuBackdrop';
+    backdrop.className = 'backdrop-menu';
+    document.body.appendChild(backdrop);
+}
 
 // Función debounce para optimizar el evento resize
 function debounce(func, timeout = 100) {
@@ -17,9 +26,17 @@ const toggleMenu = (isActive) => {
   if (menuToggler) {
       menuToggler.querySelector("span").innerText = isActive ? "close" : "menu";
   }
-  // Solo bloqueamos el scroll si NO es el menú de la calculadora
   if (sidebar && !sidebar.classList.contains('sidebar-flotante')) {
+      // MAGIA: Calcula la altura exacta de los botones para no ocupar toda la pantalla
+      sidebar.style.height = isActive ? `${sidebar.scrollHeight}px` : "56px";
       document.body.style.overflow = isActive ? 'hidden' : ''; 
+      
+      // Mostrar/Ocultar el fondo difuminado
+      if (isActive) {
+          backdrop.classList.add('active');
+      } else {
+          backdrop.classList.remove('active');
+      }
   }
 };
 
@@ -31,7 +48,6 @@ if (sidebar && !sidebar.classList.contains('sidebar-flotante') && localStorage.g
 // Evento para colapsar/expandir sidebar (desktop)
 if (sidebarToggler) {
   sidebarToggler.addEventListener("click", () => {
-    // Ignorar si el clic viene del botón de cerrar de la calculadora
     if (sidebarToggler.id === 'closeSidebarBtn') return;
 
     if (sidebar && !sidebar.classList.contains('sidebar-flotante')) {
@@ -48,6 +64,15 @@ if (menuToggler) {
         toggleMenu(sidebar.classList.toggle("menu-active"));
     }
   });
+}
+
+// CERRAR EL MENÚ NORMAL AL TOCAR EL FONDO DIFUMINADO
+if (backdrop) {
+    backdrop.addEventListener("click", () => {
+        if (sidebar && sidebar.classList.contains("menu-active") && !sidebar.classList.contains('sidebar-flotante')) {
+            toggleMenu(sidebar.classList.toggle("menu-active"));
+        }
+    });
 }
 
 // Tooltips con event delegation
@@ -82,23 +107,24 @@ if (sidebarNav) {
 
 // Manejo del resize con debounce
 const handleResize = () => {
-  // Si no hay sidebar o ES la calculadora flotante, ignorar el resize automático
   if (!sidebar || sidebar.classList.contains('sidebar-flotante')) return;
-
-  sidebar.style.height = '';
 
   if (window.innerWidth >= 1024) {
     // Modo desktop
+    sidebar.style.height = ''; // Resetea la altura para que actúe el CSS de Desktop
     sidebar.classList.remove("menu-active");
     document.body.style.overflow = '';
     if (menuToggler) menuToggler.querySelector("span").innerText = "menu";
+    if (backdrop) backdrop.classList.remove('active'); // Ocultar fondo
   } else {
     // Modo móvil
     sidebar.classList.remove("collapsed");
+    if (!sidebar.classList.contains("menu-active")) {
+         sidebar.style.height = "56px";
+    }
   }
 };
 
-// Inicialización y eventos
 window.addEventListener("resize", debounce(handleResize));
 document.addEventListener("DOMContentLoaded", handleResize);
 
@@ -107,7 +133,6 @@ document.addEventListener("DOMContentLoaded", handleResize);
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
   const sidebarFlotante = document.getElementById('mainSidebar');
-  const backdrop = document.getElementById('menuBackdrop');
   const openBtn = document.getElementById('openSidebarBtn');
   const closeBtn = document.getElementById('closeSidebarBtn');
 
@@ -123,5 +148,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (openBtn) openBtn.addEventListener('click', toggleMenuFlotante);
   if (closeBtn) closeBtn.addEventListener('click', toggleMenuFlotante);
-  if (backdrop) backdrop.addEventListener('click', toggleMenuFlotante);
+  
+  // CERRAR EL MENÚ FLOTANTE AL TOCAR EL FONDO DIFUMINADO
+  if (backdrop) {
+      backdrop.addEventListener('click', () => {
+          if (sidebarFlotante && sidebarFlotante.classList.contains('active')) {
+              toggleMenuFlotante();
+          }
+      });
+  }
 });
