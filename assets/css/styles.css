@@ -1061,10 +1061,6 @@ a.institucion:active {
     text-decoration: none;    /* Quita el subrayado */
 }
 
-/* Asegura que el texto gris (la ubicación) siga siendo gris */
-a.institucion .institucion-content p {
-    color: #666; /* O la variable de texto secundario que uses */
-}
 
 /*RESPONSIVE para telefonos Super chicos (Caja instituciones miniaturas)*/
 
