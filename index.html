@@ -10,7 +10,6 @@
 </head>
 <body>
 
-  <button id="install-button" style="display: none;">📲 Instalar App</button>
   <!-- Barra Lateral -->
   <aside class="sidebar">
     <!-- Sidebar header -->
@@ -272,6 +271,22 @@
       <p>Calculativa 2026 - todos los derechos reservados</p>
     </footer>
   </div>
+
+<div id="install-container" class="install-container" style="display: none;">
+        <button id="install-button" class="btn-install">
+            <span class="material-symbols-rounded">app_shortcut</span>
+            Instalar Calculativa
+        </button>
+        <div class="install-info-wrapper">
+            <button id="install-info-btn" class="btn-info" aria-label="Información">
+                <span class="material-symbols-rounded">help</span>
+            </button>
+            <div id="install-tooltip" class="install-tooltip">
+                <strong>¿Por qué instalarla?</strong><br>
+                Tendrás acceso rápido desde tu pantalla y funcionará <strong>100% sin internet</strong>.
+            </div>
+        </div>
+    </div>
 
 <div id="update-toast" class="update-toast">
     <div class="update-toast-content">

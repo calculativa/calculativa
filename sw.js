@@ -1,4 +1,4 @@
-const CACHE_NAME = 'calculativa-0.2.9'; // Subimos a v6 para limpiar la caché anterior
+const CACHE_NAME = 'calculativa-0.2.10'; // Subimos a v6 para limpiar la caché anterior
 
 // 1. EL NÚCLEO (App Shell) - Solo lo esencial y que sabemos que existe
 const urlsToCache = [

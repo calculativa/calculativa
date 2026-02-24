@@ -1,7 +1,7 @@
 // assets/js/pwa-update.js
 
 // 1. DEFINE TU VERSIÓN AQUÍ
-const APP_VERSION = '0.2.9'; 
+const APP_VERSION = '0.2.10'; 
 
 document.addEventListener('DOMContentLoaded', () => {
     
@@ -11,23 +11,62 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 2. NOTIFICACIÓN DE ÉXITO POST-ACTUALIZACIÓN ---
     if (localStorage.getItem('appUpdated') === 'true') {
-        localStorage.removeItem('appUpdated'); 
+        localStorage.removeItem('appUpdated');
         setTimeout(() => {
             if (typeof mostrarNotificacion === 'function') {
                 mostrarNotificacion('¡App actualizada con éxito a la ' + APP_VERSION + '!', 'celebration', 4500);
             }
-        }, 800); 
+        }, 800);
     }
 
-    // --- 3. LÓGICA DEL BOTÓN "INSTALAR APP" ---
+    // --- 3. LÓGICA DEL BOTÓN "INSTALAR APP" Y TOOLTIP ---
     let deferredPrompt;
+    const installContainer = document.getElementById('install-container');
     const installButton = document.getElementById('install-button');
 
+    // Escucha si la app está lista para instalarse
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
-        if(installButton) installButton.style.display = 'block';
+        // En lugar de block, usamos flex para mantener el diseño CSS
+        if(installContainer) installContainer.style.display = 'flex'; 
     });
+
+    // Acción de instalar
+    if(installButton) {
+        installButton.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            deferredPrompt = null;
+            if(installContainer) installContainer.style.display = 'none';
+        });
+    }
+
+    // Oculta el botón si el usuario la instala por otros medios (ej. menú del navegador)
+    window.addEventListener('appinstalled', () => {
+        deferredPrompt = null;
+        if(installContainer) installContainer.style.display = 'none';
+    });
+
+    // --- Lógica del Botón de Ayuda (?) ---
+    const infoBtn = document.getElementById('install-info-btn');
+    const installTooltip = document.getElementById('install-tooltip');
+
+    if (infoBtn && installTooltip) {
+        // Mostrar/Ocultar al tocar el "?"
+        infoBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Evita que se cierre instantáneamente
+            installTooltip.classList.toggle('show');
+        });
+
+        // Cerrar el cartelito si tocas en cualquier otra parte de la pantalla
+        document.addEventListener('click', (e) => {
+            if (!infoBtn.contains(e.target) && !installTooltip.contains(e.target)) {
+                installTooltip.classList.remove('show');
+            }
+        });
+    }
 
     if(installButton) {
         installButton.addEventListener('click', async () => {
