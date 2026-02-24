@@ -825,6 +825,11 @@ body {
     font-size: 1.8rem;
 }
 
+/* Muestra el botón de cerrar en móvil SOLO en la calculadora */
+#closeSidebarBtn {
+    display: flex !important;
+}
+
 /* =========================================
    TAMAÑO NORMAL PARA ICONOS DE LA BARRA LATERAL
    ========================================= */
@@ -838,6 +843,7 @@ body {
 /* Ajuste fino para el botón de cerrar si es necesario */
 .sidebar.sidebar-flotante .sidebar-toggler .material-symbols-outlined {
     font-size: 1.8rem !important;
+    
 }
 
 /* Tamaño normal para iconos de la barra lateral */
