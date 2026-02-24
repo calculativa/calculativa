@@ -1,4 +1,4 @@
-const CACHE_NAME = 'calculativa-0.2.5'; // Subimos a v6 para limpiar la caché anterior
+const CACHE_NAME = 'calculativa-0.2.6'; // Subimos a v6 para limpiar la caché anterior
 
 // 1. EL NÚCLEO (App Shell) - Solo lo esencial y que sabemos que existe
 const urlsToCache = [
@@ -42,14 +42,17 @@ self.addEventListener('install', event => {
     caches.open(CACHE_NAME)
       .then(cache => {
         console.log('📦 Instalando PWA y cacheando archivos base...');
-        return cache.addAll(urlsToCache);
+        
+        // MAGIA ANTI-BUCLES: Convierte los enlaces en peticiones estrictas 
+        // que obligan al navegador a ignorar su memoria temporal (cache: 'reload')
+        const peticionesEstrictas = urlsToCache.map(url => new Request(url, { cache: 'reload' }));
+        
+        return cache.addAll(peticionesEstrictas);
       })
       .catch(err => {
-        console.error('❌ Falló la instalación del caché. Revisa si falta algún archivo de urlsToCache:', err);
+        console.error('❌ Falló la instalación del caché:', err);
       })
   );
-  // Fuerza a que el nuevo Service Worker tome el control de inmediato
-  //self.skipWaiting();
 });
 
 // 3. INTERCEPTOR (Magia del Caché Dinámico)
