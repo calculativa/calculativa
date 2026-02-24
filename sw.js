@@ -1,4 +1,4 @@
-const CACHE_NAME = 'calculativa-v8'; // Subimos a v6 para limpiar la caché anterior
+const CACHE_NAME = 'calculativa-0.2.2'; // Subimos a v6 para limpiar la caché anterior
 
 // 1. EL NÚCLEO (App Shell) - Solo lo esencial y que sabemos que existe
 const urlsToCache = [
@@ -25,6 +25,7 @@ const urlsToCache = [
   './assets/js/notification.js',
   './assets/js/search.js',
   './assets/js/motor-correlativas.js',
+  './assets/js/pwa-update.js',
   
   // Fuentes Locales (Para los íconos offline)
   './assets/fonts/material-symbols-rounded.woff2',

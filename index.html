@@ -65,11 +65,14 @@
           <span class="nav-tooltip">Analytics</span>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">
-            <span class="nav-icon material-symbols-rounded">star</span>
-            <span class="nav-label">Bookmarks</span>
-          </a>
-          <span class="nav-tooltip">Bookmarks</span>
+            <a href="#" id="btn-check-updates" class="nav-link">
+                <span class="nav-icon material-symbols-rounded">sync</span>
+                <span class="nav-label" style="display: flex; align-items: center; width: 100%;">
+                    Actualizar 
+                    <span id="app-version" style="font-size: 0.7rem; opacity: 0.5; margin-left: auto;">v6</span>
+                </span>
+                <span class="nav-tooltip">Buscar Updates</span>
+            </a>
         </li>
         <li class="nav-item">
           <a href="#" class="nav-link">
@@ -270,74 +273,6 @@
     </footer>
   </div>
 
-  <script>
-    let deferredPrompt;
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      document.getElementById('install-button').style.display = 'block';
-    });
-
-    document.getElementById('install-button').addEventListener('click', async () => {
-      if (!deferredPrompt) return;
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      console.log(`Usuario ${outcome === 'accepted' ? 'instaló' : 'canceló'}`);
-      deferredPrompt = null;
-      document.getElementById('install-button').style.display = 'none';
-    });
-
-    window.addEventListener('appinstalled', () => {
-      console.log('✅ PWA instalada');
-      deferredPrompt = null;
-      document.getElementById('install-button').style.display = 'none';
-    });
-  </script>
-
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-          .then(reg => console.log('✅ Service Worker registrado:', reg.scope))
-          .catch(err => console.error('❌ Error al registrar SW:', err));
-      });
-    }
-  </script>
-
-  <!-- Actualizaciones -->
-  <script>
-      if ('serviceWorker' in navigator) {
-        // RECUERDA: Ajustar los ../ según en qué archivo estés
-        navigator.serviceWorker.register('./sw.js').then(reg => {
-          reg.addEventListener('updatefound', () => {
-            const newSW = reg.installing;
-            newSW.addEventListener('statechange', () => {
-              if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
-                
-                // En lugar del feo confirm(), llamamos a nuestra hermosa tarjeta
-                const updateToast = document.getElementById('update-toast');
-                if (updateToast) {
-                    updateToast.classList.add('show'); // Hace que suba a la pantalla
-                    
-                    // Si toca "Actualizar", recarga la página
-                    document.getElementById('btn-update-now').addEventListener('click', () => {
-                        window.location.reload();
-                    });
-                    
-                    // Si toca "Más tarde", oculta la tarjeta
-                    document.getElementById('btn-update-later').addEventListener('click', () => {
-                        updateToast.classList.remove('show');
-                    });
-                }
-
-              }
-            });
-          });
-        });
-      }
-    </script>
-
 <div id="update-toast" class="update-toast">
     <div class="update-toast-content">
         <span class="material-symbols-rounded icon-update">system_update</span>
@@ -361,6 +296,8 @@
   <script src="assets/js/notification.js"></script>
   <script src="assets/js/favoritos.js"></script>
   <script src="assets/js/search.js"></script>
+  <script>const SW_PATH = './sw.js';</script>
+  <script src="./assets/js/pwa-update.js"></script>
 
 </body>
 </html>
