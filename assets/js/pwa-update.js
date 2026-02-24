@@ -1,7 +1,7 @@
 // assets/js/pwa-update.js
 
 // 1. DEFINE TU VERSIÓN AQUÍ
-const APP_VERSION = '0.2.7'; 
+const APP_VERSION = '0.2.8'; 
 
 document.addEventListener('DOMContentLoaded', () => {
     

@@ -1,4 +1,4 @@
-// slidebar.js - Versión Robusta y delegada a CSS
+// slidebar.js - Versión Robusta, Delegada a CSS y Blindada
 const sidebar = document.querySelector(".sidebar");
 const sidebarToggler = document.querySelector(".sidebar-toggler");
 const menuToggler = document.querySelector(".menu-toggler");
@@ -17,21 +17,24 @@ const toggleMenu = (isActive) => {
   if (menuToggler) {
       menuToggler.querySelector("span").innerText = isActive ? "close" : "menu";
   }
-  // Solo bloqueamos el scroll de la página si NO es el menú de la calculadora
+  // Solo bloqueamos el scroll si NO es el menú de la calculadora
   if (sidebar && !sidebar.classList.contains('sidebar-flotante')) {
       document.body.style.overflow = isActive ? 'hidden' : ''; 
   }
 };
 
-// Cargar estado inicial desde localStorage
-if (sidebar && localStorage.getItem('sidebarCollapsed') === 'true') {
+// Cargar estado inicial desde localStorage (SOLO PARA MENÚ NORMAL)
+if (sidebar && !sidebar.classList.contains('sidebar-flotante') && localStorage.getItem('sidebarCollapsed') === 'true') {
   sidebar.classList.add("collapsed");
 }
 
 // Evento para colapsar/expandir sidebar (desktop)
 if (sidebarToggler) {
   sidebarToggler.addEventListener("click", () => {
-    if (sidebar) {
+    // Ignorar si el clic viene del botón de cerrar de la calculadora
+    if (sidebarToggler.id === 'closeSidebarBtn') return;
+
+    if (sidebar && !sidebar.classList.contains('sidebar-flotante')) {
       sidebar.classList.toggle("collapsed");
       localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
     }
@@ -41,7 +44,9 @@ if (sidebarToggler) {
 // Evento para menú móvil
 if (menuToggler) {
   menuToggler.addEventListener("click", () => {
-    if (sidebar) toggleMenu(sidebar.classList.toggle("menu-active"));
+    if (sidebar && !sidebar.classList.contains('sidebar-flotante')) {
+        toggleMenu(sidebar.classList.toggle("menu-active"));
+    }
   });
 }
 
@@ -53,6 +58,10 @@ if (sidebarNav) {
     if (item && sidebar && sidebar.classList.contains('collapsed')) {
       const tooltip = item.querySelector('.nav-tooltip');
       if (tooltip) {
+        const rect = item.getBoundingClientRect();
+        tooltip.style.top = `${rect.top + (rect.height / 2)}px`;
+        tooltip.style.transform = 'translateY(-50%)'; 
+        tooltip.style.marginTop = '0'; 
         tooltip.style.opacity = '1';
         tooltip.style.pointerEvents = 'auto';
       }
@@ -73,9 +82,9 @@ if (sidebarNav) {
 
 // Manejo del resize con debounce
 const handleResize = () => {
-  if (!sidebar) return;
+  // Si no hay sidebar o ES la calculadora flotante, ignorar el resize automático
+  if (!sidebar || sidebar.classList.contains('sidebar-flotante')) return;
 
-  // IMPORTANTE: Limpiamos cualquier altura impuesta por JS para que mande el CSS
   sidebar.style.height = '';
 
   if (window.innerWidth >= 1024) {
@@ -107,7 +116,6 @@ document.addEventListener('DOMContentLoaded', () => {
           sidebarFlotante.classList.toggle('active');
           backdrop.classList.toggle('active');
           
-          // Previene que se haga scroll en la calculadora cuando el menú está abierto
           const isOpen = sidebarFlotante.classList.contains('active');
           document.body.style.overflow = isOpen ? 'hidden' : '';
       }

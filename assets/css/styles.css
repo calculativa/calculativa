@@ -245,7 +245,7 @@ body {
 .sidebar.collapsed .sidebar-nav .nav-item:hover .nav-tooltip {
   opacity: 1;
   pointer-events: auto;
-  transform: none; /* Evita que salte de posición al aparecer */
+  
 }
 
 .sidebar-nav .nav-link {
