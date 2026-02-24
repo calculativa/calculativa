@@ -1,4 +1,4 @@
-const CACHE_NAME = 'calculativa-0.2.4'; // Subimos a v6 para limpiar la caché anterior
+const CACHE_NAME = 'calculativa-0.2.5'; // Subimos a v6 para limpiar la caché anterior
 
 // 1. EL NÚCLEO (App Shell) - Solo lo esencial y que sabemos que existe
 const urlsToCache = [
@@ -49,7 +49,7 @@ self.addEventListener('install', event => {
       })
   );
   // Fuerza a que el nuevo Service Worker tome el control de inmediato
-  self.skipWaiting();
+  //self.skipWaiting();
 });
 
 // 3. INTERCEPTOR (Magia del Caché Dinámico)
@@ -98,4 +98,12 @@ self.addEventListener('activate', event => {
   );
   // Reclama el control de las pestañas abiertas inmediatamente
   event.waitUntil(self.clients.claim());
+});
+
+// 5. ESCUCHAR ÓRDENES DEL USUARIO
+// Esto permite que el botón "Actualizar" de la web despierte al SW que está esperando
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });

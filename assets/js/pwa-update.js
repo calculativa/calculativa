@@ -1,7 +1,7 @@
 // assets/js/pwa-update.js
 
 // 1. DEFINE TU VERSIÓN AQUÍ
-const APP_VERSION = '0.2.4'; 
+const APP_VERSION = '0.2.5'; 
 
 document.addEventListener('DOMContentLoaded', () => {
     
@@ -34,22 +34,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!deferredPrompt) return;
             deferredPrompt.prompt();
             const { outcome } = await deferredPrompt.userChoice;
-            console.log(`Usuario ${outcome === 'accepted' ? 'instaló' : 'canceló'}`);
             deferredPrompt = null;
             installButton.style.display = 'none';
         });
     }
 
-    window.addEventListener('appinstalled', () => {
-        console.log('✅ PWA instalada');
-        deferredPrompt = null;
-        if(installButton) installButton.style.display = 'none';
-    });
-
-
     // --- 4. REGISTRO DEL SERVICE WORKER Y ACTUALIZACIONES ---
     if ('serviceWorker' in navigator) {
-        // Lee la variable SW_PATH del HTML. Si no existe, usa './sw.js'
         const swUrl = typeof SW_PATH !== 'undefined' ? SW_PATH : './sw.js';
 
         navigator.serviceWorker.register(swUrl).then(reg => {
@@ -61,7 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     document.getElementById('btn-update-now').onclick = () => {
                         localStorage.setItem('appUpdated', 'true');
-                        window.location.reload();
+                        // MAGIA: Le enviamos un mensaje al SW para que despierte y aplique la actualización
+                        if (reg.waiting) {
+                            reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+                        }
                     };
                     
                     document.getElementById('btn-update-later').onclick = () => {
@@ -70,10 +64,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             };
 
-            // Escuchar actualizaciones automáticas
+            // Escuchar actualizaciones automáticas (Cuando descarga una nueva versión)
             reg.addEventListener('updatefound', () => {
                 const newSW = reg.installing;
                 newSW.addEventListener('statechange', () => {
+                    // Ahora sí se quedará en estado "installed" (waiting) esperando tu orden
                     if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
                         showUpdateToast();
                     }
@@ -91,6 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     reg.update().then(() => {
                         if (reg.waiting) {
+                            // Si ya había una esperando (le diste a "Más tarde"), la mostramos
                             setTimeout(showUpdateToast, 1000);
                         } else if (!reg.installing) {
                             setTimeout(() => {
@@ -105,6 +101,16 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     });
                 });
+            }
+        });
+
+        // 5. EL RECARGADOR AUTOMÁTICO
+        // Escucha cuando el nuevo Service Worker toma el control y recarga la página solo 1 vez
+        let refreshing = false;
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+            if (!refreshing) {
+                refreshing = true;
+                window.location.reload();
             }
         });
     }
