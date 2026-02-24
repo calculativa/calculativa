@@ -275,7 +275,7 @@ body {
 .sidebar.collapsed .sidebar-nav .nav-link .nav-label {
   opacity: 0;
   pointer-events: none;
-  display: none;
+  display: none !important;
 }
 
 .sidebar-nav .nav-link:hover {
