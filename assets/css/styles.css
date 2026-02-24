@@ -1199,3 +1199,98 @@ a.institucion .institucion-content p {
     left: -8% !important;
   }
 }
+
+/* --- TOAST DE ACTUALIZACIÓN DE VERSIÓN CON NUEVO DISEÑO --- */
+.update-toast {
+    position: fixed;
+    /* Centrado exacto en la pantalla */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8); /* Arranca un poco más chico para la animación */
+    
+    /* Oculto por defecto */
+    opacity: 0;
+    visibility: hidden;
+    
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 15px 50px rgba(0,0,0,0.6); /* Sombra más fuerte para que resalte en el centro */
+    border-radius: 16px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 99999; 
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Animación de "zoom" con rebote suave */
+    width: 90%;
+    max-width: 350px;
+}
+
+/* Clase que se agrega por JS para mostrarlo */
+.update-toast.show {
+    transform: translate(-50%, -50%) scale(1); /* Vuelve a su tamaño normal */
+    opacity: 1;
+    visibility: visible;
+}
+
+.update-toast-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.icon-update {
+    font-size: 35px;
+    color: var(--primary-color);
+}
+
+.update-text strong {
+    display: block;
+    font-size: 1.1rem;
+    color: var(--text-color);
+    margin-bottom: 4px;
+}
+
+.update-text p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    /* MAGIA DEL COLOR: Usa el color de texto del tema actual */
+    color: var(--text-color); 
+    opacity: 0.85; /* Lo hace apenitas más suave que el título, pero muy blanco en modo oscuro */
+}
+
+.update-toast-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 5px;
+}
+
+.btn-update-now {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: opacity 0.3s;
+}
+
+.btn-update-now:hover {
+    opacity: 0.8;
+}
+
+.btn-update-later {
+    background-color: transparent;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-update-later:hover {
+    background-color: var(--sidebar-hover-bg);
+}

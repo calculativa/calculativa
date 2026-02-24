@@ -1089,23 +1089,52 @@
         });
     </script>
     
-    <script>
+    <!-- Actualizaciones -->
+  <script>
       if ('serviceWorker' in navigator) {
-        // Nota que aquí usamos los ../../../ para informatica.html
+        // RECUERDA: Ajustar los ../ según en qué archivo estés
         navigator.serviceWorker.register('../../../sw.js').then(reg => {
           reg.addEventListener('updatefound', () => {
             const newSW = reg.installing;
             newSW.addEventListener('statechange', () => {
               if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
-                if (confirm('Nueva versión disponible. ¿Actualizar ahora?')) {
-                  window.location.reload();
+                
+                // En lugar del feo confirm(), llamamos a nuestra hermosa tarjeta
+                const updateToast = document.getElementById('update-toast');
+                if (updateToast) {
+                    updateToast.classList.add('show'); // Hace que suba a la pantalla
+                    
+                    // Si toca "Actualizar", recarga la página
+                    document.getElementById('btn-update-now').addEventListener('click', () => {
+                        window.location.reload();
+                    });
+                    
+                    // Si toca "Más tarde", oculta la tarjeta
+                    document.getElementById('btn-update-later').addEventListener('click', () => {
+                        updateToast.classList.remove('show');
+                    });
                 }
+
               }
             });
           });
         });
       }
     </script>
+
+    <div id="update-toast" class="update-toast">
+        <div class="update-toast-content">
+            <span class="material-symbols-rounded icon-update">system_update</span>
+            <div class="update-text">
+                <strong>¡Nueva versión!</strong>
+                <p>Calculativa se ha actualizado con mejoras y nuevas funciones.</p>
+            </div>
+        </div>
+        <div class="update-toast-actions">
+            <button id="btn-update-later" class="btn-update-later">Más tarde</button>
+            <button id="btn-update-now" class="btn-update-now">Actualizar</button>
+        </div>
+    </div>
 
     <script src="../../../assets/js/theme.js"></script>
     <script src="../../../assets/js/motor-correlativas.js"></script>
