@@ -1,7 +1,7 @@
 // assets/js/pwa-update.js
 
 // 1. DEFINE TU VERSIÓN AQUÍ
-const APP_VERSION = '0.2.10'; 
+const APP_VERSION = '0.2.11'; 
 
 document.addEventListener('DOMContentLoaded', () => {
     
@@ -38,8 +38,18 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!deferredPrompt) return;
             deferredPrompt.prompt();
             const { outcome } = await deferredPrompt.userChoice;
+            
+            // El navegador destruye el pase después de preguntar, sea cual sea la respuesta
             deferredPrompt = null;
-            if(installContainer) installContainer.style.display = 'none';
+            
+            // MAGIA: Ocultamos TODO el contenedor (incluyendo el "?") con un desvanecimiento
+            if(installContainer) {
+                installContainer.style.transition = 'opacity 0.3s ease';
+                installContainer.style.opacity = '0';
+                setTimeout(() => {
+                    installContainer.style.display = 'none';
+                }, 300);
+            }
         });
     }
 

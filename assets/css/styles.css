@@ -1313,30 +1313,32 @@ a.institucion:active {
    ========================================= */
 .install-container {
     position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
+    /* --- Posición en PC: Arriba a la derecha --- */
+    top: 20px;
+    right: 20px;
+    
     background: var(--header-color);
     padding: 8px 12px;
     border-radius: 50px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-    /* Usaremos flex desde JS para mostrarlo */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     align-items: center;
-    gap: 15px;
-    z-index: 99990; /* Arriba de todo */
+    gap: 12px;
+    z-index: 99990; 
     border: 1px solid rgba(255,255,255,0.1);
-    animation: slideUpInstall 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    
+    /* Animación desde la derecha */
+    animation: slideInRight 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-@keyframes slideUpInstall {
-    from { bottom: -50px; opacity: 0; }
-    to { bottom: 30px; opacity: 1; }
+@keyframes slideInRight {
+    from { right: -100px; opacity: 0; }
+    to { right: 20px; opacity: 1; }
 }
 
 .btn-install {
     background: transparent;
     border: none;
-    color: #ffffff; /* Blanco para contrastar con el fondo */
+    color: #ffffff; 
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
     font-size: 0.95rem;
@@ -1344,7 +1346,7 @@ a.institucion:active {
     align-items: center;
     gap: 8px;
     cursor: pointer;
-    padding: 5px 10px;
+    padding: 2px 5px;
     transition: opacity 0.3s;
 }
 
@@ -1363,8 +1365,8 @@ a.institucion:active {
     background: rgba(255,255,255,0.2);
     border: none;
     color: #ffffff;
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -1378,11 +1380,11 @@ a.institucion:active {
     transform: scale(1.1);
 }
 
+/* Como ahora está arriba, el cartelito debe abrirse hacia ABAJO */
 .install-tooltip {
     position: absolute;
-    bottom: calc(100% + 15px);
-    left: 50%;
-    transform: translateX(-50%) translateY(10px);
+    top: calc(100% + 15px); /* Aparece debajo del botón */
+    right: 0; /* Alineado al borde derecho */
     background: var(--bg-color);
     color: var(--text-color);
     padding: 12px 15px;
@@ -1394,25 +1396,62 @@ a.institucion:active {
     border: 1px solid var(--border-color);
     opacity: 0;
     visibility: hidden;
+    transform: translateY(-10px);
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     pointer-events: none;
 }
 
-/* Triangulito del cartel (la flechita que apunta abajo) */
+/* Triangulito apuntando hacia arriba */
 .install-tooltip::after {
     content: '';
     position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
+    bottom: 100%;
+    right: 8px; /* Lo alinea con el botón de ayuda */
     border-width: 8px;
     border-style: solid;
-    border-color: var(--bg-color) transparent transparent transparent;
+    border-color: transparent transparent var(--bg-color) transparent;
 }
 
-/* Clase JS para mostrar el mensaje */
 .install-tooltip.show {
     opacity: 1;
     visibility: visible;
-    transform: translateX(-50%) translateY(0);
+    transform: translateY(0);
+}
+
+/* =========================================
+   ADAPTACIÓN PERFECTA PARA CELULAR
+   ========================================= */
+@media (max-width: 1024px) {
+    .install-container {
+        /* Lo bajamos un poquito para centrarlo en tu barra lateral (que mide 56px) */
+        top: 22px; 
+        /* Lo empujamos a la izquierda para que no tape al botón hamburguesa */
+        right: 65px; 
+        padding: 4px 10px;
+        gap: 8px;
+        /* Le damos un fondo translúcido para que se fusione con la barra azul */
+        background: rgba(255, 255, 255, 0.15); 
+        box-shadow: none;
+        border: none;
+    }
+
+    .btn-install {
+        font-size: 0.8rem;
+        gap: 4px;
+    }
+
+    .btn-install .material-symbols-rounded {
+        font-size: 1.1rem;
+    }
+
+    .btn-info {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .install-tooltip {
+        /* Achicamos el cartelito un poco en móvil para que no se salga de la pantalla */
+        width: 200px; 
+        right: -10px;
+    }
 }
