@@ -259,29 +259,58 @@ body {
     align-items: center; /* Alinea verticalmente el botón y los checkboxes */
 }
 
+/* =========================================
+   BOTONES DE MATERIAS (TAMAÑO COMPACTO Y UNIFORME)
+   ========================================= */
 .materia-boton {
     display: flex;
     margin-left: 5px;
     align-items: center;
-    width: 80%; /* Limita el ancho del contenedor del botón */
-    height: 100%;
-    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
-    overflow: hidden; /* Oculta el texto que se desborda */
-    text-overflow: ellipsis; /* Añade puntos suspensivos al texto truncado */
+    width: 75%; /* Fijamos el ancho estrictamente */
+    height: auto; 
+    padding: 2px; /* Reducimos drásticamente este relleno para evitar el scroll vertical */
+    
+    /* MAGIA: Esto obliga al contenedor a no estirarse, forzando a que el botón interior corte el texto */
+    min-width: 0; 
 }
 
 .materia-btn {
-    padding: .3em; /*Tamaño de los botones*/
-    display: inline-block; /* Cambia a inline-block para que funcione text-overflow */
-    width: 100%; /* Ocupa todo el ancho disponible del contenedor */
-    text-align: left; /* Alinea el texto a la izquierda */
-    border: 0.2rem solid var(--color-apagado);
-    font-size: .6em;
-    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
-    overflow: hidden; /* Oculta el texto que se desborda */
-    text-overflow: ellipsis; /* Añade puntos suspensivos al texto truncado */
-    background-color: var(--bg-button-check);
+    /* Achicamos el botón para que entren más materias sin hacer scroll */
+    padding: 6px 10px; 
+    width: 100%; 
+    text-align: left; 
+    
+    border: 2.5px solid var(--color-apagado); 
+    border-radius: 8px; /* Un poco menos curvo para que quede bien en tamaño pequeño */
+    background-color: var(--bg-color); 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Sombra más sutil */
+    
+    font-size: 0.7rem; /* Apenas un poquito más chico */
+    font-weight: 500;
     color: var(--text-color);
+    
+    /* Garantiza que TODOS midan lo mismo y los textos largos se corten con "..." */
+    display: block; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.4s ease;
+}
+
+/* Efecto al pasar el mouse (Te avisa que es clickeable para ver info) */
+.materia-btn:hover {
+    transform: translateY(-2px); /* Levita un poquito menos para no chocar arriba */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    filter: brightness(1.05); 
+}
+
+/* Efecto al hacer clic (Sensación física) */
+.materia-btn:active {
+    transform: translateY(1px); /* Se hunde */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    background-color: var(--sidebar-hover-bg); 
 }
 
 .materia-none1 {
@@ -1011,4 +1040,3 @@ body {
     font-size: 1.8rem !important;
     color: currentColor;
 }
-
