@@ -87,9 +87,8 @@ body {
     grid-template:
     "header-calc" 50px
     "tablero-materias" auto
-    "info-lateral" 65px
+    "info-lateral" 90px /* <--- AUMENTAMOS DE 65px a 90px para que entre el requisito para rendir*/
     "footer-calc" 50px;
-    
 }
 
 .navbar {
@@ -455,8 +454,6 @@ body {
     position: absolute;
     top: 140%; 
     left: 50%;
-    
-    /* MAGIA 1: Lo encogemos a tamaño 0 cuando está oculto para que no ocupe espacio físico */
     transform: translateX(-50%) translateY(-10px) scale(0);
     transform-origin: top center;
     
@@ -469,10 +466,14 @@ body {
     text-align: center;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     border: 1px solid var(--border-color);
+    
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    z-index: 9999; /* Tu idea del z-index la aplicamos por las dudas */
+    
+    /* MAGIA AL OCULTARSE: El tamaño se encoge en 0.3s, pero la transparencia espera a que termine para desaparecer */
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0s linear 0.3s, visibility 0s linear 0.3s;
+    
+    z-index: 9999; 
     pointer-events: none;
 }
 
@@ -494,6 +495,9 @@ body {
     opacity: 1;
     visibility: visible;
     transform: translateX(-50%) translateY(0) scale(1);
+    
+    /* MAGIA AL APARECER: La opacidad y visibilidad son instantáneas (0s), pero el tamaño crece suavemente (0.3s) */
+    /*transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0s, visibility 0s;*/
 }
 
 /* =========================================
@@ -583,17 +587,87 @@ body {
     display: flex;
     flex-direction: column;
     align-items: baseline;
-    justify-content: space-around;
+    
+    /* MAGIA: En celular apilamos todo arriba para que no se desborde */
+    justify-content: flex-start; 
+    padding: 5px 8px; /* Un respirito interno para que no toque los bordes de la caja */
+    
     text-align: justify;
+    overflow-y: auto; 
+    scrollbar-width: none; 
+}
+
+.info-lateral::-webkit-scrollbar {
+    display: none;
 }
 
 #materia-nombre {
     font-weight: bold;
-    font-size: .6em;
+    font-size: 0.9em; 
+    margin-bottom: 0; /* Pegado a la primera condición en celulares */
+    color: var(--text-color);
 }
 
 .condiciones {
-    font-size: .6em;
+    font-size: 0.65em; 
+}
+
+.condiciones p {
+    margin: 1px 0; /* Súper juntitos en el celular */
+    line-height: 1.2; 
+}
+
+/* Línea separadora de Rendir (Celular) */
+#condicion-3 {
+    margin-top: 3px; 
+    padding-top: 3px; 
+    border-top: 1px solid var(--border-color); 
+}
+
+#condicion-3:empty {
+    display: none;
+}
+
+/* MAGIA: Clases automáticas para resaltar palabras */
+.texto-regular {
+    color: var(--color-check-anaranjado);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.texto-aprobado {
+    color: var(--color-check-verde);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* =========================================
+   ESPACIOS MÁS AMPLIOS PARA TABLET Y PC
+   ========================================= */
+@media (min-width: 768px) {
+    .info-lateral {
+        justify-content: center; /* En PC centramos todo el bloque */
+        gap: 5px; /* Le damos respiración extra entre título y condiciones */
+        padding: 10px 15px;
+    }
+    
+    #materia-nombre {
+        font-size: 1.1em; /* Título un poco más grande en PC */
+        margin-bottom: 5px; 
+    }
+    
+    .condiciones {
+        font-size: 0.7em; /* Textos un poco más legibles en PC */
+    }
+    
+    .condiciones p {
+        margin: 5px 0; /* Más aire entre cada condición */
+    }
+    
+    #condicion-3 {
+        margin-top: 8px; 
+        padding-top: 8px; 
+    }
 }
 
 /*-----footer-calc-----*/

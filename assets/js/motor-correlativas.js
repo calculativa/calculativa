@@ -15,10 +15,26 @@ if (rightBtn && leftBtn && content) {
         content.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
     });
 
-    // Actualizar el estado de los botones
+    // Actualizar el estado visual y funcional de los botones
     function updateButtons() {
-        leftBtn.disabled = content.scrollLeft === 0;
-        rightBtn.disabled = content.scrollLeft + content.clientWidth >= content.scrollWidth;
+        // ¿Estamos al principio de todo? (Izquierda)
+        if (content.scrollLeft <= 1) { // Usamos 1 en vez de 0 por redondeos de pantalla
+            leftBtn.style.opacity = "0.3";          // Lo hace semi-transparente
+            leftBtn.style.pointerEvents = "none";   // Bloquea los clics
+        } else {
+            leftBtn.style.opacity = "1";            // Color normal
+            leftBtn.style.pointerEvents = "auto";   // Permite clics
+        }
+
+        // ¿Llegamos al final del carrusel? (Derecha)
+        const maxScroll = content.scrollWidth - content.clientWidth;
+        if (content.scrollLeft >= maxScroll - 1) {
+            rightBtn.style.opacity = "0.3";
+            rightBtn.style.pointerEvents = "none";
+        } else {
+            rightBtn.style.opacity = "1";
+            rightBtn.style.pointerEvents = "auto";
+        }
     }
 
     // Actualizar botones al cargar la página y al desplazarse
@@ -70,4 +86,67 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     });
+});
+
+// ==========================================
+// 3. LÓGICA DEL PANEL LATERAL DE INFORMACIÓN
+// ==========================================
+document.addEventListener("DOMContentLoaded", function () {
+    const botonesMaterias = document.querySelectorAll('.materia-btn');
+    const panelTitulo = document.getElementById('materia-nombre');
+    const panelCondicion1 = document.getElementById('condicion-1');
+    const panelCondicion2 = document.getElementById('condicion-2');
+    const panelCondicion3 = document.getElementById('condicion-3');
+    
+    let botonActivo = null;
+
+    // Función que busca palabras clave y las pinta
+    function resaltarPalabras(texto) {
+        if (!texto) return "";
+        return texto
+            // Busca "Regular" o "Regulares" y lo pinta naranja
+            .replace(/Regular/gi, '<span class="texto-regular">REGULAR</span>')
+            .replace(/Regulares/gi, '<span class="texto-regular">REGULARES</span>')
+            // Busca "Aprobada" o "Aprobadas" y lo pinta verde
+            .replace(/Aprobada/gi, '<span class="texto-aprobado">APROBADA</span>')
+            .replace(/Aprobadas/gi, '<span class="texto-aprobado">APROBADAS</span>');
+    }
+
+    if (botonesMaterias.length > 0 && panelTitulo) {
+        botonesMaterias.forEach(boton => {
+            boton.addEventListener('click', () => {
+                
+                // CASO A: Apagar el botón
+                if (botonActivo === boton) {
+                    panelTitulo.textContent = "Selecciona una materia";
+                    // Usamos innerHTML para que reconozca los colores
+                    panelCondicion1.innerHTML = "Aquí verás los requisitos para poder cursarla o rendirla.";
+                    panelCondicion2.innerHTML = "";
+                    if(panelCondicion3) panelCondicion3.innerHTML = ""; 
+                    
+                    boton.style.color = "var(--text-color)";
+                    botonActivo = null;
+                } 
+                // CASO B: Encender un botón
+                else {
+                    botonesMaterias.forEach(b => b.style.color = "var(--text-color)");
+                    
+                    const nombre = boton.getAttribute('data-nombre');
+                    const reqCursarReg = boton.getAttribute('data-cursar-reg');
+                    const reqCursarAprob = boton.getAttribute('data-cursar-aprob');
+                    const reqRendir = boton.getAttribute('data-rendir');
+
+                    panelTitulo.textContent = nombre || boton.textContent;
+                    
+                    // Usamos innerHTML y pasamos el texto por nuestro "pintor de palabras"
+                    panelCondicion1.innerHTML = resaltarPalabras(reqCursarReg) || "";
+                    panelCondicion2.innerHTML = resaltarPalabras(reqCursarAprob) || "";
+                    if(panelCondicion3) panelCondicion3.innerHTML = resaltarPalabras(reqRendir) || "";
+                    
+                    boton.style.color = "var(--primary-color)";
+                    botonActivo = boton;
+                }
+            });
+        });
+    }
 });

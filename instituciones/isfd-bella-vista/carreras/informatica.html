@@ -113,8 +113,14 @@
                 <div class="materia-linea">
                     <div class="materia-contenedor">
                         <div class="materia-boton">
-                            <!-- Materia 2 -->
-                            <button class="materia-btn">1-Relación Estado-Sociedad</button>
+                            <!-- Materia 1 -->
+                            <button class="materia-btn" 
+                                    data-nombre="Relación Estado-Sociedad" 
+                                    data-cursar-reg="Para cursar: Ninguna materia Regular previa." 
+                                    data-cursar-aprob="Para cursar: Ninguna materia Aprobada previa."
+                                    data-rendir="Para Rendir: Ninguna materia Aprobada previa.">
+                                1-Relación Estado-Sociedad
+                            </button>
                         </div>
                         <div class="materia-checkboxes">
                             <label class="custom-checkbox">
@@ -1178,9 +1184,11 @@
 
     <aside class="info-lateral">
         <h3 id="materia-nombre">Selecciona una materia</h3>
+        
         <div class="condiciones">
-            <p id="condicion-1">*Condicion1*</p>
-            <p id="condicion-2">*Condicion2*</p>
+            <p id="condicion-1">Aquí verás los requisitos para poder cursarla o rendirla.</p>
+            <p id="condicion-2"></p>
+            <p id="condicion-3"></p>
         </div>
     </aside>
 
