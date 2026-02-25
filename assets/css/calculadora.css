@@ -111,7 +111,6 @@ body {
 .footer-calc {
     grid-area: footer-calc;
     background-color: var(--primary-color);
-    
 }
 
 /*-----header-calc-----*/
@@ -125,6 +124,7 @@ body {
     align-items: center;
     position: relative; /* Permite que el título se centre respecto a esta barra */
     padding: 0 10px;
+    overflow-y: hidden;
 }
 
 .header-calc h1 {
@@ -274,21 +274,21 @@ body {
 }
 
 .materia-btn {
-    /* Achicamos el botón para que entren más materias sin hacer scroll */
-    padding: 6px 10px; 
+    /* ACHICAMOS EL BOTÓN: De 6px 10px bajamos a 4px 6px */
+    padding: 4px 6px; 
     width: 100%; 
     text-align: left; 
     
     border: 2.5px solid var(--color-apagado); 
-    border-radius: 8px; /* Un poco menos curvo para que quede bien en tamaño pequeño */
+    border-radius: 8px; 
     background-color: var(--bg-color); 
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Sombra más sutil */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); 
     
-    font-size: 0.7rem; /* Apenas un poquito más chico */
+    /* LETRA MÁS COMPACTA: De 0.7rem bajamos a 0.65rem */
+    font-size: 0.65rem; 
     font-weight: 500;
     color: var(--text-color);
     
-    /* Garantiza que TODOS midan lo mismo y los textos largos se corten con "..." */
     display: block; 
     white-space: nowrap; 
     overflow: hidden; 
@@ -335,20 +335,23 @@ body {
     display: none;
 }
 
-/* Estilos base para los checkboxes redondos (estilo App) */
+/* Estilos base para los checkboxes redondos */
 .custom-checkbox .checkmark {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 22px; /* Reducido de 26px a 22px para que sea más sutil */
-    height: 22px;
+    
+    /* ACHICAMOS LOS CÍRCULOS: De 22px bajamos a 20px */
+    width: 20px; 
+    height: 20px;
+    
     background-color: transparent;
-    border: 2px solid var(--border-color); 
+    border: 2px solid #9f9f9f; /*Color de los bordes del checkbox*/
     border-radius: 50%; 
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
     position: relative;
-    margin: 2px; /* Le damos un margen invisible para que al crecer no choque con la caja */
+    margin: 2px; 
 }
 
 /* Efecto al pasar el mouse por encima (Solo PC) */
@@ -384,8 +387,9 @@ body {
 .custom-checkbox .checkmark::after {
     content: "";
     position: absolute;
-    width: 4px; /* Reducido para encajar en el nuevo círculo */
-    height: 9px; 
+    /* ACHICAMOS EL TICK: Para que entre en el nuevo círculo de 20px */
+    width: 3px; 
+    height: 8px; 
     border: solid white;
     border-width: 0 2px 2px 0; 
     transform: rotate(45deg) scale(0); 
@@ -762,7 +766,7 @@ body {
 
 @media (min-width: 400px) and (max-width: 767px) {
     h1{
-        font-size: 1.9rem;
+        font-size: 1.8rem;
     }
     h2 {
         font-size: 1.2rem;
@@ -786,8 +790,8 @@ body {
 
     /*header-calc responsive tablet*/
 
-    h1{
-        font-size: 1.5rem;
+    .header-calc {
+        overflow-y: hidden;
     }
     h2 {
         font-size: 1.2rem;
@@ -1164,6 +1168,10 @@ body {
         width: 35px;
         height: 35px;
     }
+    .btn-hamburguesa {
+        right: auto; /* Soltamos el ancla derecha */
+        left: 15px;  /* Lo anclamos a la izquierda */
+    }
 }
 
 /* =========================================
@@ -1256,4 +1264,34 @@ body {
     font-size: 0.95rem;
     line-height: 1.5;
     white-space: pre-wrap; /* Respeta los saltos de línea &#10; del HTML */
+}
+
+/* =========================================
+   BLOQUE ENGLOBADOR DE MATERIAS ANUALES (AJUSTADO AL RAS)
+   ========================================= */
+.bloque-anual {
+    background-color: rgba(63, 90, 223, 0.15); 
+    background-color: color-mix(in srgb, var(--primary-color), transparent);
+    border-radius: 10px;
+    
+    /* MAGIA: Metemos la caja hacia adentro por los costados (6px) para que abrace al botón y los checks */
+    margin: 2px 6px; 
+    padding: 2px 0; 
+    
+    display: flex;
+    flex-direction: column;
+    gap: 0px; 
+    border: 1px solid color-mix(in srgb, var(--primary-color) 40%, transparent);
+}
+
+/* Al achicar la caja madre, los botones se empujarían más al centro. 
+   Con esto le quitamos su margen individual para que mantengan 
+   la misma línea vertical que las materias normales de arriba y abajo. */
+.bloque-anual .materia-boton {
+    margin-left: 0px; 
+}
+
+/* Un ajuste fino milimétrico para que los checkboxes respiren bien del lado derecho */
+.bloque-anual .materia-checkboxes {
+    width: 62%; 
 }

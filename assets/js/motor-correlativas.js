@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         
                         // Configurar el click del botón flotante para que abra ESTE texto
                         btnMasInfo.onclick = () => {
-                            modalTitulo.textContent = "Detalles: " + (nombre || boton.textContent);
+                            modalTitulo.textContent = (nombre || boton.textContent);
                             modalTexto.innerHTML = resaltarPalabras(detallesExtensos); // También pintamos palabras aquí
                             modalOverlay.classList.remove('modal-oculto');
                         };
