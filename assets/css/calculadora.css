@@ -1114,3 +1114,146 @@ body {
     font-size: 1.8rem !important;
     color: currentColor;
 }
+
+/* =========================================
+   BOTÓN DE "MÁS INFO" EN PANEL LATERAL
+   ========================================= */
+.info-lateral {
+    position: relative; /* Clave para anclar el botón adentro */
+}
+
+.btn-mas-info {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: var(--primary-color);
+    color: #ffffff;
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px; /* Cuadradito redondeado elegante */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s;
+    z-index: 10;
+}
+
+.btn-mas-info .material-symbols-rounded {
+    font-size: 1.2rem;
+}
+
+.btn-mas-info.oculto {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0); /* Se encoge hasta desaparecer */
+}
+
+.btn-mas-info:active {
+    transform: scale(0.9); /* Efecto al tocar */
+}
+
+/* En PC lo bajamos a la esquina inferior derecha */
+@media (min-width: 768px) {
+    .btn-mas-info {
+        top: auto;
+        bottom: 10px;
+        right: 15px;
+        width: 35px;
+        height: 35px;
+    }
+}
+
+/* =========================================
+   VENTANA EMERGENTE (MODAL) - BLINDADA
+   ========================================= */
+.modal-overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(0, 0, 0, 0.5) !important;
+    backdrop-filter: blur(3px); /* Fondo difuminado estilo Apple */
+    z-index: 100000 !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    
+    /* BLINDAJE CONTRA LA REGLA DE CALCULADORA-WRAPPER */
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    border: none !important;
+    margin: 0 !important;
+}
+
+.modal-oculto {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+.modal-contenido {
+    background: var(--bg-color);
+    color: var(--text-color);
+    width: 90%;
+    max-width: 400px;
+    
+    /* Le devolvemos su estilo propio */
+    border-radius: 16px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+    padding: 20px !important;
+    border: 1px solid var(--border-color);
+    
+    /* Animación de entrada desde abajo */
+    transform: translateY(20px) scale(0.95);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Cuando se muestra, sube a su posición natural */
+.modal-overlay:not(.modal-oculto) .modal-contenido {
+    transform: translateY(0) scale(1);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+}
+
+#modal-cerrar {
+    background: var(--sidebar-hover-bg);
+    border: none;
+    border-radius: 50%;
+    color: var(--text-color);
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+
+#modal-cerrar:active {
+    transform: scale(0.8);
+}
+
+.modal-body p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    white-space: pre-wrap; /* Respeta los saltos de línea &#10; del HTML */
+}

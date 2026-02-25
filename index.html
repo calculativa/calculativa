@@ -9,7 +9,18 @@
   <link rel="manifest" href="./manifest.json">
 </head>
 <body>
-
+  <!-- Detectar si esta en modo claro u oscuro -->
+  <script>
+        (function() {
+            try {
+                var mode = localStorage.getItem('darkMode') || 'system';
+                if (mode === 'dark' || (mode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.body.classList.add('dark-mode');
+                }
+            } catch (e) {}
+        })();
+    </script>
+    
   <!-- Barra Lateral -->
   <aside class="sidebar">
     <!-- Sidebar header -->

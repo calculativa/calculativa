@@ -11,7 +11,17 @@
     <link rel="stylesheet" href="../../assets/css/material-icons.css">
 </head>
 <body>
-
+    <!-- Detectar si esta en modo claro u oscuro -->
+    <script>
+        (function() {
+            try {
+                var mode = localStorage.getItem('darkMode') || 'system';
+                if (mode === 'dark' || (mode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.body.classList.add('dark-mode');
+                }
+            } catch (e) {}
+        })();
+    </script>
     <aside class="sidebar">
         <header class="sidebar-header">
             <a href="../../index.html" class="header-logo"> <img src="../../assets/img/Logo-Circular.png" alt="Calculativa">

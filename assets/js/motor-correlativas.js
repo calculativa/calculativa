@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // ==========================================
-// 3. LÓGICA DEL PANEL LATERAL DE INFORMACIÓN
+// 3. LÓGICA DEL PANEL LATERAL Y MODAL DE INFO
 // ==========================================
 document.addEventListener("DOMContentLoaded", function () {
     const botonesMaterias = document.querySelectorAll('.materia-btn');
@@ -98,16 +98,33 @@ document.addEventListener("DOMContentLoaded", function () {
     const panelCondicion2 = document.getElementById('condicion-2');
     const panelCondicion3 = document.getElementById('condicion-3');
     
+    // Elementos del Modal y Botón Flotante
+    const btnMasInfo = document.getElementById('btn-mas-info');
+    const modalOverlay = document.getElementById('modal-info');
+    const modalTitulo = document.getElementById('modal-titulo');
+    const modalTexto = document.getElementById('modal-texto');
+    const btnCerrarModal = document.getElementById('modal-cerrar');
+
     let botonActivo = null;
 
-    // Función que busca palabras clave y las pinta
+    // Aseguramos que el modal inicie oculto
+    if(modalOverlay) modalOverlay.classList.add('modal-oculto');
+    if(btnMasInfo) btnMasInfo.classList.add('oculto');
+
+    // Lógica para cerrar el Modal
+    if (btnCerrarModal && modalOverlay) {
+        btnCerrarModal.addEventListener('click', () => modalOverlay.classList.add('modal-oculto'));
+        // Cerrar si tocan afuera de la caja blanca
+        modalOverlay.addEventListener('click', (e) => {
+            if(e.target === modalOverlay) modalOverlay.classList.add('modal-oculto');
+        });
+    }
+
     function resaltarPalabras(texto) {
         if (!texto) return "";
         return texto
-            // Busca "Regular" o "Regulares" y lo pinta naranja
             .replace(/Regular/gi, '<span class="texto-regular">REGULAR</span>')
             .replace(/Regulares/gi, '<span class="texto-regular">REGULARES</span>')
-            // Busca "Aprobada" o "Aprobadas" y lo pinta verde
             .replace(/Aprobada/gi, '<span class="texto-aprobado">APROBADA</span>')
             .replace(/Aprobadas/gi, '<span class="texto-aprobado">APROBADAS</span>');
     }
@@ -119,10 +136,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 // CASO A: Apagar el botón
                 if (botonActivo === boton) {
                     panelTitulo.textContent = "Selecciona una materia";
-                    // Usamos innerHTML para que reconozca los colores
                     panelCondicion1.innerHTML = "Aquí verás los requisitos para poder cursarla o rendirla.";
                     panelCondicion2.innerHTML = "";
                     if(panelCondicion3) panelCondicion3.innerHTML = ""; 
+                    
+                    if(btnMasInfo) btnMasInfo.classList.add('oculto'); // Ocultar botón flotante
                     
                     boton.style.color = "var(--text-color)";
                     botonActivo = null;
@@ -135,16 +153,29 @@ document.addEventListener("DOMContentLoaded", function () {
                     const reqCursarReg = boton.getAttribute('data-cursar-reg');
                     const reqCursarAprob = boton.getAttribute('data-cursar-aprob');
                     const reqRendir = boton.getAttribute('data-rendir');
+                    const detallesExtensos = boton.getAttribute('data-detalles'); // Capturamos la info larga
 
                     panelTitulo.textContent = nombre || boton.textContent;
-                    
-                    // Usamos innerHTML y pasamos el texto por nuestro "pintor de palabras"
                     panelCondicion1.innerHTML = resaltarPalabras(reqCursarReg) || "";
                     panelCondicion2.innerHTML = resaltarPalabras(reqCursarAprob) || "";
                     if(panelCondicion3) panelCondicion3.innerHTML = resaltarPalabras(reqRendir) || "";
                     
                     boton.style.color = "var(--primary-color)";
                     botonActivo = boton;
+
+                    // Mostrar el botón flotante SOLO si la materia tiene detalles extra
+                    if(btnMasInfo && detallesExtensos) {
+                        btnMasInfo.classList.remove('oculto');
+                        
+                        // Configurar el click del botón flotante para que abra ESTE texto
+                        btnMasInfo.onclick = () => {
+                            modalTitulo.textContent = "Detalles: " + (nombre || boton.textContent);
+                            modalTexto.innerHTML = resaltarPalabras(detallesExtensos); // También pintamos palabras aquí
+                            modalOverlay.classList.remove('modal-oculto');
+                        };
+                    } else if (btnMasInfo) {
+                        btnMasInfo.classList.add('oculto');
+                    }
                 }
             });
         });

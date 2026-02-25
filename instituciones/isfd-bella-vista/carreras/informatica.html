@@ -19,6 +19,22 @@
 </head>
 
 <body class="calculadora-wrapper">
+    
+    <script>
+        (function() {
+            try {
+                // Leemos exactamente tu llave 'darkMode'
+                var mode = localStorage.getItem('darkMode') || 'system';
+                
+                // Si el usuario eligió oscuro, o si eligió sistema y su celular está en oscuro
+                if (mode === 'dark' || (mode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.body.classList.add('dark-mode');
+                }
+            } catch (e) {}
+        })();
+    </script>
+
+    <div class="backdrop-menu" id="menuBackdrop"></div>
 
     <div class="backdrop-menu" id="menuBackdrop"></div>
 
@@ -118,7 +134,8 @@
                                     data-nombre="Relación Estado-Sociedad" 
                                     data-cursar-reg="Para cursar: Ninguna materia Regular previa." 
                                     data-cursar-aprob="Para cursar: Ninguna materia Aprobada previa."
-                                    data-rendir="Para Rendir: Ninguna materia Aprobada previa.">
+                                    data-rendir="Para Rendir: Ninguna materia Aprobada previa."
+                                    data-detalles="Esta materia no tiene correlativas.&#10;Puedes cursarla y rendirla libremente en tu primer año.">
                                 1-Relación Estado-Sociedad
                             </button>
                         </div>
@@ -1182,8 +1199,13 @@
         </div>
     </article>
 
+    <!-- Texto en el menu de información -->
     <aside class="info-lateral">
         <h3 id="materia-nombre">Selecciona una materia</h3>
+        
+        <button id="btn-mas-info" class="btn-mas-info oculto" title="Ver detalles extra">
+            <span class="material-symbols-rounded">open_in_new</span>
+        </button>
         
         <div class="condiciones">
             <p id="condicion-1">Aquí verás los requisitos para poder cursarla o rendirla.</p>
@@ -1192,8 +1214,8 @@
         </div>
     </aside>
 
+    <!-- Footer -->
     <footer class="footer-calc">
-        
         <div class="scrolling-buttons-container">
             <span id="scrolling-button-left" class="material-symbols-outlined">arrow_left</span>
             <button class="btn-calcular">Cursar</button>
@@ -1203,6 +1225,7 @@
         </div>
     </footer>
 
+    <!-- Cartel de nueva actualicación -->
     <div id="update-toast" class="update-toast">
         <div class="update-toast-content">
             <span class="material-symbols-rounded icon-update">system_update</span>
@@ -1214,6 +1237,19 @@
         <div class="update-toast-actions">
             <button id="btn-update-later" class="btn-update-later">Más tarde</button>
             <button id="btn-update-now" class="btn-update-now">Actualizar</button>
+        </div>
+    </div>
+
+    <!-- Boton "Mas info"-->
+    <div id="modal-info" class="modal-overlay modal-oculto">
+        <div class="modal-contenido">
+            <div class="modal-header">
+                <h3 id="modal-titulo">Detalles</h3>
+                <button id="modal-cerrar"><span class="material-symbols-rounded">close</span></button>
+            </div>
+            <div class="modal-body">
+                <p id="modal-texto"></p>
+            </div>
         </div>
     </div>
 
