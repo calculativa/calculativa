@@ -189,6 +189,7 @@ body {
     width: 100%;
     height: max-content;
     flex: 1;
+    overflow-x: hidden !important;
 }
 
 .caja-materias:first-child {
@@ -289,67 +290,242 @@ body {
 
 /*Personalizacion de Check-boxs*/
 
+/* =========================================
+   DISEÑO PREMIUM DE CHECKBOXES
+   ========================================= */
 .materia-checkboxes {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    width: 60%; /* Limita el ancho del contenedor de checkboxes */
+    width: 60%; 
     height: 100%;
-    gap: 5px; /* Espaciado entre checkboxes */
-    
+    gap: 8px; /* Un poco más de aire entre ellos */
 }
 
 /* Oculta el checkbox nativo */
 .custom-checkbox input[type="checkbox"] {
     display: none;
-    opacity: 1; /* Oculta el checkbox */
-    position: relative; /* Lo saca del flujo normal */
 }
 
-/* Estilos base para los checkboxes */
+/* Estilos base para los checkboxes redondos (estilo App) */
 .custom-checkbox .checkmark {
     display: flex;
-    width: 20px;
-    height: 20px;
-    background-color: var(--bg-button-check);
-    border: 2px solid #ccc;
-    border-radius: 4px;
+    align-items: center;
+    justify-content: center;
+    width: 22px; /* Reducido de 26px a 22px para que sea más sutil */
+    height: 22px;
+    background-color: transparent;
+    border: 2px solid var(--border-color); 
+    border-radius: 50%; 
     cursor: pointer;
-    transition: background-color 0.3s, border-color 0.3s;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    position: relative;
+    margin: 2px; /* Le damos un margen invisible para que al crecer no choque con la caja */
 }
 
-/* Cambiar el color de fondo cuando el checkbox está seleccionado */
-.custom-checkbox input[type="checkbox"][data-checkbox="1"]:checked + .checkmark {
-    background-color: var(--color-check-rojo); /* Primer checkbox: rojo */
-    border-color: var(--color-check-rojo);
-}
-
-.custom-checkbox input[type="checkbox"][data-checkbox="2"]:checked + .checkmark {
-    background-color: var(--color-check-anaranjado); /* Segundo checkbox: naranja */
-    border-color: var(--color-check-anaranjado);
-}
-
-.custom-checkbox input[type="checkbox"][data-checkbox="3"]:checked + .checkmark {
-    background-color: var(--color-check-verde); /* Tercer checkbox: verde */
-    border-color: var(--color-check-verde);
-}
-
-/* Añadir un "tick" (marca de verificación) cuando el checkbox está seleccionado */
-.custom-checkbox input[type="checkbox"]:checked + .checkmark::after {
-    content: "";
-    display: block;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    transform: rotate(45deg);
-    margin-left: 6px;
-    margin-top: 2px;
-}
-
-/* Cambiar el estilo del checkbox al pasar el mouse */
+/* Efecto al pasar el mouse por encima (Solo PC) */
 .custom-checkbox:hover .checkmark {
-    border-color: var(--primary-color);
+    transform: scale(1.05); /* Reducido de 1.1 a 1.05 para evitar la barra de scroll */
+    border-color: #888;
+}
+
+/* --- Colores, Bordes y Resplandores al marcar --- */
+
+/* 1. Rojo */
+.custom-checkbox input[type="checkbox"][data-checkbox="1"]:checked + .checkmark {
+    background-color: var(--color-check-rojo);
+    border-color: var(--color-check-rojo);
+    box-shadow: 0 4px 10px rgba(217, 62, 62, 0.4); /* Resplandor rojo debajo */
+}
+
+/* 2. Naranja */
+.custom-checkbox input[type="checkbox"][data-checkbox="2"]:checked + .checkmark {
+    background-color: var(--color-check-anaranjado);
+    border-color: var(--color-check-anaranjado);
+    box-shadow: 0 4px 10px rgba(216, 131, 34, 0.4);
+}
+
+/* 3. Verde */
+.custom-checkbox input[type="checkbox"][data-checkbox="3"]:checked + .checkmark {
+    background-color: var(--color-check-verde);
+    border-color: var(--color-check-verde);
+    box-shadow: 0 4px 10px rgba(102, 204, 103, 0.4);
+}
+
+/* --- La Palomita (Tick) Animada --- */
+.custom-checkbox .checkmark::after {
+    content: "";
+    position: absolute;
+    width: 4px; /* Reducido para encajar en el nuevo círculo */
+    height: 9px; 
+    border: solid white;
+    border-width: 0 2px 2px 0; 
+    transform: rotate(45deg) scale(0); 
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    margin-bottom: 2px;
+}
+
+/* Mostrar la palomita con rebote al marcar */
+.custom-checkbox input[type="checkbox"]:checked + .checkmark::after {
+    /* MAGIA: Aparece rebotando hasta su tamaño normal (scale 1) */
+    transform: rotate(45deg) scale(1);
+}
+
+/* =========================================
+   ALINEACIÓN DEL TÍTULO DE AÑO (CABECERA)
+   ========================================= */
+.titulo-anio {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Asegura que el texto vaya a la izquierda */
+    padding-left: 5px; /* Lo alinea con el borde de los botones de materias */
+}
+
+.titulo-anio h2 {
+    margin: 0;
+    font-size: 1.1rem; /* Un pelín más chico para que sea más fino */
+    color: var(--text-color);
+    padding: 2px 0; /* ¡Redujimos el espacio de 10px a solo 2px! */
+}
+
+/* =========================================
+   TOOLTIPS DE LOS CHECKBOXES (CABECERA)
+   ========================================= */
+/* Centramos verticalmente toda la cabecera y reducimos su altura */
+.header-checks {
+    align-items: center; 
+    margin-bottom: 4px; /* Menos separación con la materia */
+    border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+    padding-bottom: 3px; /* Menos aire abajo */
+}
+
+.info-check {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px; /* Mismo ancho que los checkboxes redondos para que queden centrados */
+    cursor: pointer;
+    color: var(--text-color);
+    opacity: 0.5;
+    transition: opacity 0.3s;
+    outline: none; /* Quita el borde azul molesto al tocar en celular */
+}
+
+.info-check:hover,
+.info-check:focus {
+    opacity: 1;
+}
+
+.info-check .material-symbols-rounded {
+    font-size: 1.1rem; /* Un poco más pequeño que el botón normal */
+}
+
+/* --- El Cartelito flotante (BLINDADO CONTRA BARRAS DE SCROLL) --- */
+.check-tooltip {
+    position: absolute;
+    top: 140%; 
+    left: 50%;
+    
+    /* MAGIA 1: Lo encogemos a tamaño 0 cuando está oculto para que no ocupe espacio físico */
+    transform: translateX(-50%) translateY(-10px) scale(0);
+    transform-origin: top center;
+    
+    background: var(--bg-color);
+    color: var(--text-color);
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 0.7rem;
+    width: max-content;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border: 1px solid var(--border-color);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 9999; /* Tu idea del z-index la aplicamos por las dudas */
+    pointer-events: none;
+}
+
+/* Triangulito apuntando hacia arriba */
+.check-tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent var(--bg-color) transparent;
+}
+
+/* Mostrar al pasar el mouse (Se agranda a tamaño real) */
+.info-check:hover .check-tooltip,
+.info-check:focus .check-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0) scale(1);
+}
+
+/* =========================================
+   MAGIA 2: EVITAR CHOQUE CON LA PARED DERECHA
+   ========================================= */
+
+/* El último tooltip (Verde) lo abrimos hacia adentro (Izquierda) */
+.info-check:last-child .check-tooltip {
+    left: auto;
+    right: -10px;
+    transform: translateY(-10px) scale(0);
+    transform-origin: top right; /* Que crezca desde la esquina superior derecha */
+}
+
+.info-check:last-child:hover .check-tooltip,
+.info-check:last-child:focus .check-tooltip {
+    transform: translateY(0) scale(1);
+}
+
+/* Acomodamos su triangulito para que siga apuntando al '?' verde */
+.info-check:last-child .check-tooltip::after {
+    left: auto;
+    right: 15px; 
+    transform: none;
+}
+
+/* Colores de las líneas superiores */
+.tooltip-rojo { border-top: 3px solid var(--color-check-rojo); }
+.tooltip-naranja { border-top: 3px solid var(--color-check-anaranjado); }
+.tooltip-verde { border-top: 3px solid var(--color-check-verde); }
+
+/* 1. El primer tooltip (Rojo) se abre hacia ADENTRO (Derecha) */
+.info-check:first-child .check-tooltip {
+    left: 0;
+    transform: translateY(-10px) scale(0);
+    transform-origin: top left; /* Crece desde la esquina superior izquierda */
+}
+.info-check:first-child:hover .check-tooltip,
+.info-check:first-child:focus .check-tooltip {
+    transform: translateY(0) scale(1);
+}
+.info-check:first-child .check-tooltip::after {
+    left: 10px; /* Acomoda el triangulito */
+    transform: none;
+}
+
+/* 2. El último tooltip (Verde) se abre hacia ADENTRO (Izquierda) */
+.info-check:last-child .check-tooltip {
+    left: auto;
+    right: 0;
+    transform: translateY(-10px) scale(0);
+    transform-origin: top right; /* Crece desde la esquina superior derecha */
+}
+.info-check:last-child:hover .check-tooltip,
+.info-check:last-child:focus .check-tooltip {
+    transform: translateY(0) scale(1);
+}
+.info-check:last-child .check-tooltip::after {
+    left: auto;
+    right: 10px; /* Acomoda el triangulito */
+    transform: none;
 }
 
 /*-----Cajas cambiadores-----*/
@@ -835,3 +1011,4 @@ body {
     font-size: 1.8rem !important;
     color: currentColor;
 }
+
