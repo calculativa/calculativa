@@ -218,3 +218,77 @@ document.addEventListener("DOMContentLoaded", function () {
     // ...y también cada vez que el usuario agrande o achique la ventana
     window.addEventListener('resize', ajustarRenglones);
 });
+
+// ==========================================
+// 6. MEMORIA PERMANENTE (LOCALSTORAGE)
+// ==========================================
+document.addEventListener("DOMContentLoaded", function () {
+    
+    // 1. Seleccionamos todos los checkboxes que tengan el atributo data-materia
+    const checkboxesMaterias = document.querySelectorAll('input[data-materia]');
+    const btnRefresh = document.getElementById('refresh-button');
+    
+    // MAGIA DE ESCALABILIDAD: Leemos en qué carrera estamos desde el HTML
+    const nombreCarrera = document.body.getAttribute('data-carrera') || 'general';
+    
+    // Nombre del "archivo" único para esta carrera
+    const NOMBRE_MEMORIA = 'calculativa_progreso_' + nombreCarrera;
+
+    // 2. FUNCIÓN PARA CARGAR: Lee la memoria al abrir la página
+    function cargarProgreso() {
+        // Buscamos si hay datos guardados. Si no hay, creamos un objeto vacío {}
+        const memoria = JSON.parse(localStorage.getItem(NOMBRE_MEMORIA)) || {};
+        
+        checkboxesMaterias.forEach(chk => {
+            const nombreMateria = chk.getAttribute('data-materia');
+            const tipoCheck = chk.getAttribute('data-checkbox');
+            
+            // Creamos un código único para este checkbox (Ej: "Relación Estado-Sociedad-3")
+            const claveUnica = nombreMateria + "-" + tipoCheck;
+            
+            // Si en la memoria dice que este checkbox estaba tildado, lo tildamos
+            if (memoria[claveUnica] === true) {
+                chk.checked = true;
+            }
+        });
+    }
+
+    // 3. FUNCIÓN PARA GUARDAR: Toma una foto del estado actual y lo guarda
+    function guardarProgreso() {
+        const memoria = {}; 
+        
+        checkboxesMaterias.forEach(chk => {
+            const nombreMateria = chk.getAttribute('data-materia');
+            const tipoCheck = chk.getAttribute('data-checkbox');
+            const claveUnica = nombreMateria + "-" + tipoCheck;
+            
+            // Solo guardamos los que están marcados para ahorrar espacio
+            if (chk.checked) {
+                memoria[claveUnica] = true;
+            }
+        });
+        
+        // Convertimos el objeto a texto y lo guardamos bajo llave en el navegador
+        localStorage.setItem(NOMBRE_MEMORIA, JSON.stringify(memoria));
+    }
+
+    // 4. CONECTAMOS LOS CABLES
+    // A. Apenas entra el usuario, cargamos sus datos guardados
+    cargarProgreso();
+    
+    // B. Cada vez que el usuario tilda o destilda algo, guardamos automáticamente
+    checkboxesMaterias.forEach(chk => {
+        chk.addEventListener('change', guardarProgreso);
+    });
+
+    // 5. ACTUALIZAR EL BOTÓN REFRESH (La Goma de Borrar)
+    if(btnRefresh) {
+        btnRefresh.addEventListener('click', () => {
+            // Borramos el archivo de la memoria del navegador
+            localStorage.removeItem(NOMBRE_MEMORIA);
+            
+            // (Opcional visual) Si ya tenías un código que destildaba visualmente los checks
+            // en la parte de "Evaluar Correlativas", esto lo complementa borrando la raíz.
+        });
+    }
+});
