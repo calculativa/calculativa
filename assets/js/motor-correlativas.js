@@ -181,3 +181,40 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+// ==========================================
+// 5. EXPANSIÓN INTELIGENTE DE BOTONES (ANTI-SCROLL)
+// ==========================================
+document.addEventListener("DOMContentLoaded", function () {
+    
+    function ajustarRenglones() {
+        // Buscamos todas las columnas de materias (1° Año, 2° Año, etc.)
+        const listasMaterias = document.querySelectorAll('.botones-materias');
+        
+        listasMaterias.forEach(lista => {
+            // Obtenemos el alto real disponible en la caja
+            const altoDisponible = lista.clientHeight;
+            
+            // Contamos cuántos botones reales hay adentro de ese año
+            const cantidadBotones = lista.querySelectorAll('.materia-btn').length;
+            if (cantidadBotones === 0) return;
+            
+            // Calculamos cuántos píxeles le tocaría a cada botón
+            const espacioPorBoton = altoDisponible / cantidadBotones;
+            
+            // Si cada botón tiene más de 45 píxeles de espacio libre, 
+            // le damos permiso de usar 2 renglones. Si no, lo limitamos a 1.
+            if (espacioPorBoton > 45) {
+                lista.classList.add('espacio-sobrado');
+            } else {
+                lista.classList.remove('espacio-sobrado');
+            }
+        });
+    }
+
+    // Ejecutamos la medición al cargar la página...
+    ajustarRenglones();
+    
+    // ...y también cada vez que el usuario agrande o achique la ventana
+    window.addEventListener('resize', ajustarRenglones);
+});
