@@ -181,23 +181,34 @@ body {
     height: 100%;
 }
 
-.caja-materias{
-    border: .1rem solid var(--primary-color);
-    border-left: 0;
-    background-color: var(--bg-color);
-    width: 100%;
-    height: max-content;
-    flex: 1;
-    overflow-x: hidden !important;
+/* =========================================
+   CAJA PRINCIPAL DE CADA AÑO
+   ========================================= */
+.caja-materias {
+    display: flex;
+    flex: 0 0 auto;
+    width: 50%;
+    text-align: left !important;
+    flex-direction: column; 
+    justify-content: space-between; 
+    
+    /* 1. BLINDAJE: Quitamos el scroll a la caja madre */
+    overflow: hidden; 
+    
+    /* 2. RECUPERAMOS LAS LÍNEAS DIVISORAS AZULES */
+    border-right: .1rem solid var(--primary-color); 
 }
 
+/* El primer año tiene borde izquierdo */
 .caja-materias:first-child {
     border-left: .1rem solid var(--primary-color);
     border-radius: 8px 0 0 8px;
 }
 
+/* El último año no necesita línea separadora a la derecha */
 .caja-materias:last-child {
-    border-radius: 0 8px 8px 0 ;
+    border-right: none; 
+    border-radius: 0 8px 8px 0;
 }
 
 /*-----Hacer que el tablero-materias tenga desplazamiento Horizontal-----*/
@@ -210,17 +221,6 @@ body {
     overflow-wrap: break-word;
     scrollbar-color: var(--primary-color) var(--bg-color);
     scrollbar-width: thin;
-    overflow-y: auto;
-}
-
-.caja-materias {
-    display: flex;
-    flex: 0 0 auto;
-    width: 50%;
-    
-    text-align: center;
-    flex-direction: column; /* Organiza el contenido en columna */
-    justify-content: space-between; /* Empuja .caja-cambiador hacia abajo */
     overflow-y: auto;
 }
 
@@ -246,8 +246,17 @@ body {
 .botones-materias {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    height: 100%;
+    justify-content: flex-start; 
+    gap: 3px; 
+    padding: 4px 0; 
+    
+    flex-grow: 1; 
+    
+    /* MAGIA DEL SCROLL */
+    overflow-y: auto; /* Permite el scroll Vertical */
+    overflow-x: hidden; /* MATA el scroll Horizontal intruso */
+    
+    height: auto; 
     width: 100%;
 }
 
@@ -255,7 +264,8 @@ body {
     display: flex;
     width: 100%;
     height: 100%;
-    align-items: center; /* Alinea verticalmente el botón y los checkboxes */
+    align-items: center;
+    justify-content: space-between; /* Manda los checks a la derecha */
 }
 
 /* =========================================
@@ -263,13 +273,13 @@ body {
    ========================================= */
 .materia-boton {
     display: flex;
-    margin-left: 5px;
     align-items: center;
-    width: 75%; /* Fijamos el ancho estrictamente */
+    flex-grow: 1; /* MAGIA: Ocupa todo el espacio libre restante */
+    margin-left: 5px;
+    margin-right: 5px; /* Un respirito antes de los checks */
+    width: auto; /* Anulamos el 75% problemático */
     height: auto; 
-    padding: 2px; /* Reducimos drásticamente este relleno para evitar el scroll vertical */
-    
-    /* MAGIA: Esto obliga al contenedor a no estirarse, forzando a que el botón interior corte el texto */
+    padding: 2px;
     min-width: 0; 
 }
 
@@ -325,9 +335,11 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    width: 60%; 
+    
+    /* MAGIA: Ancho INQUEBRANTABLE. Jamás se encogerá ni estirará */
+    flex: 0 0 100px; 
+    width: 100px; 
     height: 100%;
-    gap: 8px; /* Un poco más de aire entre ellos */
 }
 
 /* Oculta el checkbox nativo */
@@ -406,29 +418,58 @@ body {
 /* =========================================
    ALINEACIÓN DEL TÍTULO DE AÑO (CABECERA)
    ========================================= */
+
 .titulo-anio {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start; /* Asegura que el texto vaya a la izquierda */
-    padding-left: 5px; /* Lo alinea con el borde de los botones de materias */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    flex-grow: 1 !important; /* Ocupa el espacio izquierdo */
+    padding-left: 8px !important;
+    width: auto !important;
+}
+.titulo-anio h2 {
+    text-align: left !important;
+    margin: 0 !important;
+    width: 100% !important;
 }
 
-.titulo-anio h2 {
-    margin: 0;
-    font-size: 1.1rem; /* Un pelín más chico para que sea más fino */
-    color: var(--text-color);
-    padding: 2px 0; /* ¡Redujimos el espacio de 10px a solo 2px! */
+/* 3. CABECERA COMPLETA (HEADER CHECKS): Fila entera restaurada */
+.header-checks {
+    display: flex !important;
+    width: 100% !important; /* Le devolvemos el ancho total a la fila */
+    justify-content: space-between !important;
+    align-items: center !important;
+    
+    /* Le devolvemos su línea separadora inferior */
+    margin-bottom: 4px !important;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.2) !important;
+    padding-bottom: 3px !important;
+    
+    /* MATAMOS LAS REGLAS DESTRUCTIVAS ANTERIORES */
+    flex: none !important;
+    min-width: 100% !important;
+    margin-left: 0 !important; 
+    margin-right: 0 !important; 
 }
 
 /* =========================================
    TOOLTIPS DE LOS CHECKBOXES (CABECERA)
    ========================================= */
-/* Centramos verticalmente toda la cabecera y reducimos su altura */
 .header-checks {
+    display: flex;
+    justify-content: space-evenly; 
     align-items: center; 
-    margin-bottom: 4px; /* Menos separación con la materia */
+    
+    /* MISMO ANCHO EXACTO QUE LOS CHECKS DE ABAJO */
+    flex: 0 0 100px; 
+    width: 100px; 
+    
+    margin-left: auto; /* Lo empuja a la derecha */
+    margin-right: 6px; /* Compensación milimétrica para que la barra de scroll no los desvíe */
+    
+    margin-bottom: 4px; 
     border-bottom: 1px solid rgba(128, 128, 128, 0.2);
-    padding-bottom: 3px; /* Menos aire abajo */
+    padding-bottom: 3px; 
 }
 
 .info-check {
@@ -568,11 +609,16 @@ body {
 /*-----Cajas cambiadores-----*/
 /*-----CajasCambiadores es la caja abajo y contiene el cambio total de selectores por año-----*/
 
-.caja-cambiador{
+.caja-cambiador {
     border-top: .1rem solid var(--primary-color);
     width: 100%;
-    height: 10%; /* Altura de la caja cambiador */
-    margin-top: auto; /* Asegura que esté al final */
+    
+    /* En vez de un % que colapsa, le damos una altura automática con un mínimo seguro */
+    height: auto; 
+    min-height: 35px; 
+    flex-shrink: 0; /* Prohibido aplastarse */
+    
+    margin-top: 0; 
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1058,11 +1104,34 @@ body {
     width: 270px !important;
     margin: 0 !important; 
     border-radius: 0 16px 16px 0; 
+
+    font-size: 1rem !important;
 }
 
 /* 2. Estado ACTIVO (Cuando se abre) */
 .sidebar.sidebar-flotante.active {
     transform: translateX(0); /* Se desliza a la vista */
+    
+}
+/* 2. Achicamos la letra de los textos para que entren los largos */
+.sidebar.sidebar-flotante .nav-label,
+.sidebar.sidebar-flotante .text {
+    font-size: 0.9rem !important; 
+    white-space: nowrap; /* Prohíbe terminantemente que el texto caiga a un segundo renglón */
+    overflow: hidden;    
+    text-overflow: ellipsis; /* Si sobra, pone "..." en vez de romper el diseño */
+}
+
+/* 3. Achicamos los íconos (Bajamos de 1.8rem a 1.5rem) */
+.sidebar.sidebar-flotante .material-symbols-outlined,
+.sidebar.sidebar-flotante .material-symbols-rounded {
+    font-size: 1.5rem !important;  
+    color: currentColor;           
+}
+
+/* 4. Aseguramos que el ícono de ayuda "?" mantenga su tamaño chiquito */
+.sidebar.sidebar-flotante .nav-label .material-symbols-rounded {
+    font-size: 1.1rem !important;
 }
 
 /* 4. Estilo del Botón Hamburguesa en el Header Azul */
@@ -1267,31 +1336,47 @@ body {
 }
 
 /* =========================================
-   BLOQUE ENGLOBADOR DE MATERIAS ANUALES (AJUSTADO AL RAS)
+   BLOQUE ENGLOBADOR DE MATERIAS ANUALES (ALINEACIÓN PERFECTA)
    ========================================= */
 .bloque-anual {
     background-color: rgba(63, 90, 223, 0.15); 
-    background-color: color-mix(in srgb, var(--primary-color), transparent);
+    background-color: color-mix(in srgb, var(--primary-color) 15%, transparent);
     border-radius: 10px;
     
-    /* MAGIA: Metemos la caja hacia adentro por los costados (6px) para que abrace al botón y los checks */
-    margin: 2px 6px; 
+    /* DIETA PARA CELULAR: Ajustamos los márgenes negativos al nuevo tamaño */
+    margin: -2px 0 -2px 5px; 
     padding: 2px 0; 
     
     display: flex;
     flex-direction: column;
-    gap: 0px; 
+    gap: 3px; /* Igual a los 3px de afuera */
     border: 1px solid color-mix(in srgb, var(--primary-color) 40%, transparent);
 }
 
-/* Al achicar la caja madre, los botones se empujarían más al centro. 
-   Con esto le quitamos su margen individual para que mantengan 
-   la misma línea vertical que las materias normales de arriba y abajo. */
+/* Compensación del botón interno */
 .bloque-anual .materia-boton {
     margin-left: 0px; 
+    width: auto;
 }
 
-/* Un ajuste fino milimétrico para que los checkboxes respiren bien del lado derecho */
+/* Restauramos los checks internos a su tamaño natural */
 .bloque-anual .materia-checkboxes {
-    width: 62%; 
+    flex: 0 0 100px; 
+    width: auto;
+}
+
+/* =========================================
+   RECUPERAR EL ESPACIADO AMPLIO EN PC Y TABLET
+   ========================================= */
+@media (min-width: 768px) {
+    .botones-materias {
+        gap: 8px;
+        padding: 10px 0;
+    }
+    
+    .bloque-anual {
+        gap: 8px;
+        margin: -4px 0 -4px 5px;
+        padding: 4px 0;
+    }
 }

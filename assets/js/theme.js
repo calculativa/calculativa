@@ -60,3 +60,43 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+// ==========================================
+// CONTROL DE PANTALLA COMPLETA (FULLSCREEN)
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    const btnFullscreen = document.getElementById('btn-fullscreen');
+    const iconoFullscreen = document.getElementById('icono-fullscreen');
+    const textoFullscreen = document.getElementById('texto-fullscreen');
+
+    if (btnFullscreen) {
+        btnFullscreen.addEventListener('click', (e) => {
+            e.preventDefault(); // Evita que el enlace "#" te suba al inicio de la página
+
+            if (!document.fullscreenElement) {
+                // Si NO estamos en pantalla completa, entramos
+                document.documentElement.requestFullscreen().catch((err) => {
+                    console.log(`Error al intentar iniciar pantalla completa: ${err.message}`);
+                });
+            } else {
+                // Si YA estamos en pantalla completa, salimos
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        });
+
+        // Escuchamos si la pantalla cambia (incluso si el usuario sale apretando la tecla ESC en PC)
+        document.addEventListener('fullscreenchange', () => {
+            if (document.fullscreenElement) {
+                // Estamos en pantalla completa
+                iconoFullscreen.textContent = 'fullscreen_exit';
+                textoFullscreen.textContent = 'Minimizar Pantalla';
+            } else {
+                // Volvimos a la normalidad
+                iconoFullscreen.textContent = 'fullscreen';
+                textoFullscreen.textContent = 'Pantalla Completa';
+            }
+        });
+    }
+});
