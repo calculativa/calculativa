@@ -92,8 +92,8 @@ body {
 }
 
 .sidebar-header .toggler {
-  height: 35px;
-  width: 35px;
+  height: 38px; /* ANTES: 35px */
+  width: 38px;  /* ANTES: 35px */
   color: var(--text-color);
   border: none;
   cursor: pointer;
@@ -139,7 +139,7 @@ body {
 }
 
 .sidebar-header .toggler span {
-  font-size: 1.75rem;
+  font-size: 1.8rem;
   transition: 0.4s ease;
 }
 
@@ -359,19 +359,23 @@ body {
   .sidebar {
     height: 56px; 
     width: calc(100% - 26px) !important;
-    display: block; /* Importante: quitamos el flex column aquí para que funcione tu JS */
-    overflow-y: hidden; /* Ocultamos el contenido extra */
+    display: block; 
+    overflow-y: hidden; 
     padding-bottom: 40px;
-    
-    /* Mantenemos tus márgenes */
     margin: 13px;
+    
+    /* MAGIA AL CERRAR: El scroll desaparece instantáneamente (0s) mientras la caja se encoge en 0.4s */
+    transition: all 0.4s ease, overflow-y 0s 0s !important;
   }
 
   .sidebar.menu-active {
-    max-height: calc(100vh - 26px); /* Límite máximo, pero se adapta al contenido */
+    max-height: calc(100vh - 26px); 
     display: flex; 
     flex-direction: column;
     overflow-y: auto; 
+    
+    /* MAGIA AL ABRIR: Espera exactamente 0.4s (lo que dura la animación) para habilitar la barra de scroll */
+    transition: all 0.4s ease, overflow-y 0s 0.4s !important;
   }
 
   .sidebar .sidebar-header {
@@ -395,12 +399,12 @@ body {
 
   .sidebar-header .menu-toggler {
     display: flex;
-    height: 30px;
-    width: 30px;
+    height: 38px;
+    width: 38px;
   }
 
   .sidebar-header .menu-toggler span {
-    font-size: 1.3rem;
+    font-size: 1.8rem;
   }
 
   .sidebar .sidebar-nav .nav-list {
@@ -1453,5 +1457,96 @@ a.institucion:active {
         /* Achicamos el cartelito un poco en móvil para que no se salga de la pantalla */
         width: 200px; 
         right: -10px;
+    }
+}
+
+/* =========================================
+   NUEVO BOTÓN VOLVER (Para Menú Carreras)
+   ========================================= */
+.btn-volver {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 12px;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-volver:hover {
+    background: var(--sidebar-hover-bg);
+}
+
+.btn-volver:active {
+    transform: scale(0.9);
+}
+
+.btn-volver .material-symbols-rounded {
+    font-size: 1.8rem;
+}
+
+@media (max-width: 1024px) {
+    .btn-volver {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* =========================================
+   BOTÓN VOLVER (Menú Carreras e Institución)
+   ========================================= */
+
+/* 1. Diseño idéntico al botón menú y oculto por defecto en PC */
+.sidebar-header .btn-volver {
+    display: none; 
+    align-items: center;
+    justify-content: center;
+    
+    /* MAGIA: Actualizado a 38px para igualar al de Informática */
+    width: 38px;
+    height: 38px;
+    color: var(--text-color);
+    background: var(--bg-boton); 
+    border-radius: 8px; 
+    
+    text-decoration: none;
+    transition: 0.4s ease;
+}
+
+.sidebar-header .btn-volver:hover {
+    background: var(--sidebar-hover-bg);
+}
+
+.sidebar-header .btn-volver:active {
+    transform: scale(0.9);
+}
+
+.sidebar-header .btn-volver .material-symbols-rounded {
+  font-size: 1.8rem; 
+}
+
+/* 2. Comportamiento en Celular / Tablet */
+@media (max-width: 1024px) {
+    
+    /* MAGIA: Ocultamos el logo SOLO si la cabecera tiene un botón "Volver" (como en menu-carreras) */
+    .sidebar-header:has(.btn-volver) .header-logo {
+        display: none !important; 
+    }
+    
+    /* Mostramos la flecha con su fondo blanco/oscuro */
+    .sidebar-header .btn-volver {
+        display: flex !important; 
+    }
+
+    /* Si el menú se abre, ocultamos la flecha */
+    .sidebar.menu-active .sidebar-header .btn-volver {
+        display: none !important;
+    }
+    
+    /* Si el menú de Informática se abre, ocultamos la flecha */
+    .sidebar.active .header-calc .btn-volver {
+        display: none !important;
     }
 }

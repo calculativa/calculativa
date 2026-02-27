@@ -931,6 +931,12 @@ body {
         width: 80%;
     }
 
+    /* El MENÚ HAMBURGUESA se suelta de la derecha y se pone al lado del Volver */
+    .btn-hamburguesa {
+        right: auto !important; 
+        left: 60px !important; /* Lo ubicamos pegadito a la flecha (15px + tamaño del botón) */
+    }
+
 }
 
 /*-----Hacer Responsive cuando los telefonos esten verticalmente-----*/
@@ -1195,54 +1201,130 @@ body {
    BOTÓN DE "MÁS INFO" EN PANEL LATERAL
    ========================================= */
 .info-lateral {
-    position: relative; /* Clave para anclar el botón adentro */
+    position: relative; 
+    /* MAGIA ANTI-SCROLL: Matamos cualquier barra vertical fantasma en celular */
+    overflow: hidden !important; 
 }
 
 .btn-mas-info {
     position: absolute;
-    top: 5px;
+    top: 5px; /* MAGIA: Vuelve a la esquina superior derecha en celular */
     right: 5px;
     background: var(--primary-color);
     color: #ffffff;
     border: none;
-    width: 28px;
-    height: 28px;
-    border-radius: 8px; /* Cuadradito redondeado elegante */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    
+    height: 28px; 
+    width: auto !important; /* Ancho elástico para que entre el texto */
+    padding: 0 10px; 
+    
+    border-radius: 8px; 
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 5px; 
+    
     cursor: pointer;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 10;
 }
 
+/* Achicamos apenitas el icono para que haga buen balance con el texto */
 .btn-mas-info .material-symbols-rounded {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+}
+
+/* ESTILOS PARA EL TEXTO NUEVO */
+.texto-info {
+    font-size: 0.75rem; 
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .btn-mas-info.oculto {
     opacity: 0;
     pointer-events: none;
-    transform: scale(0); /* Se encoge hasta desaparecer */
+    transform: scale(0); 
 }
 
 .btn-mas-info:active {
-    transform: scale(0.9); /* Efecto al tocar */
+    transform: scale(0.9); 
 }
 
-/* En PC lo bajamos a la esquina inferior derecha */
+/* =========================================
+   BOTÓN VOLVER (Para la Calculadora)
+   ========================================= */
+.btn-volver {
+    position: absolute;
+    left: 15px; 
+    
+    /* Clonamos el color y fondo exacto del menú hamburguesa */
+    color: white; 
+    background: transparent;
+    border: none;
+    
+    /* Clonamos las proporciones */
+    width: 38px;  
+    height: 38px;
+    padding: 5px;
+    border-radius: 5px; 
+    
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, transform 0.2s;
+    z-index: 10;
+}
+
+.btn-volver:hover {
+    background-color: rgba(255, 255, 255, 0.2); 
+}
+
+.btn-volver:active {
+    transform: scale(0.9);
+}
+
+.btn-volver .material-symbols-rounded {
+    font-size: 1.8rem; 
+}
+
+/* =========================================
+   BOTÓN + INFO EN TABLET Y PC (INCLUYE COLAPSO)
+   ========================================= */
 @media (min-width: 768px) {
+    .info-lateral {
+        /* En PC sí necesitamos que scrollee si el texto de la materia es muy largo */
+        overflow-y: auto !important; 
+    }
+
+    /* Botón estirado y cómodo por defecto */
     .btn-mas-info {
         top: auto;
         bottom: 10px;
         right: 15px;
-        width: 35px;
+        width: auto !important; /* Se estira para mostrar el texto + INFO */
         height: 35px;
+        padding: 0 12px;
     }
-    .btn-hamburguesa {
-        right: auto; /* Soltamos el ancla derecha */
-        left: 15px;  /* Lo anclamos a la izquierda */
+    
+    /* 1. La flecha VOLVER toma el control de la esquina izquierda */
+    .btn-volver {
+        left: 15px !important; 
+    }
+
+    /* MAGIA COLAPSABLE: Cuando el panel se achica, el botón se vuelve un icono cuadrado */
+    .panel-colapsado .btn-mas-info {
+        width: 35px !important; /* Vuelve a ser un cuadradito perfecto */
+        padding: 0 !important;
+        right: 12.5px !important; /* Lo centramos matemáticamente en la columna de 60px */
+        bottom: 15px;
+    }
+
+    .panel-colapsado .texto-info {
+        display: none !important; /* Escondemos la palabra "+ INFO" */
     }
 }
 
@@ -1454,4 +1536,87 @@ body {
     
     font-size: 0.73rem !important; 
     line-height: 1.25 !important; 
+}
+
+/* =========================================
+   CABECERA DEL PANEL DE INFORMACIÓN
+   ========================================= */
+.cabecera-info {
+    display: none; /* MAGIA: Toda la cabecera (texto, botón y línea) desaparece en celular */
+    
+    /* Mantenemos la estructura guardada para cuando despierte en PC */
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.titulo-panel {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    white-space: nowrap; 
+}
+
+.btn-toggle {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    border-radius: 6px;
+    transition: background-color 0.2s, transform 0.3s ease;
+}
+
+.btn-toggle:hover {
+    background-color: var(--color-apagado); 
+}
+
+/* =========================================
+   ESTADO COLAPSADO (Solo para Tablet y PC)
+   ========================================= */
+.calculadora-wrapper {
+    transition: grid-template-columns 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.contenido-info {
+    transition: opacity 0.2s ease, transform 0.3s ease;
+}
+
+@media (min-width: 768px) {
+    /* MAGIA: Hacemos reaparecer toda la cabecera con su título, línea y botón */
+    .cabecera-info {
+        display: flex; 
+    }
+
+    /* Cuando se activa la clase colapsada, el panel se reduce a 60px */
+    .calculadora-wrapper.panel-colapsado {
+        grid-template-columns: 60px auto !important; 
+    }
+
+    /* Ocultamos el contenido y el título al colapsar */
+    .panel-colapsado .contenido-info,
+    .panel-colapsado .titulo-panel {
+        opacity: 0;
+        pointer-events: none;
+        display: none; 
+    }
+
+    /* Centramos el botón y quitamos la línea de abajo al colapsar */
+    .panel-colapsado .cabecera-info {
+        justify-content: center;
+        border-bottom: none;
+    }
+
+    /* Giramos la flechita para que apunte a la derecha */
+    .panel-colapsado .btn-toggle .material-symbols-rounded {
+        transform: rotate(180deg);
+        color: var(--primary-color);
+    }
 }

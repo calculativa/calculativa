@@ -36,15 +36,14 @@
 
     <div class="backdrop-menu" id="menuBackdrop"></div>
 
-    <div class="backdrop-menu" id="menuBackdrop"></div>
-
     <aside class="sidebar sidebar-flotante" id="mainSidebar">
         <header class="sidebar-header">
             <a href="../../../index.html" class="header-logo">
                 <img src="../../../assets/img/Logo-Circular.png" alt="Calculativa">
             </a>
-            <button class="toggler sidebar-toggler" id="closeSidebarBtn">
-                <span class="material-symbols-outlined">chevron_left</span>
+            
+            <button class="toggler sidebar-toggler" id="closeSidebarBtn" aria-label="Cerrar menú">
+                <span class="material-symbols-rounded">close</span>
             </button>
         </header>
 
@@ -53,8 +52,7 @@
                 <li class="nav-item">
                     <a href="../menu-carreras.html" class="nav-link">
                         <span class="nav-icon material-symbols-outlined">arrow_back</span>
-                        <span class="nav-label">Volver al Menú</span>
-                        
+                        <span class="nav-label">Volver a Carreras</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -102,6 +100,10 @@
     </aside>
 
     <header class="header-calc">
+        <a href="../menu-carreras.html" class="btn-volver" title="Volver al Menú de Carreras">
+            <span class="material-symbols-rounded">arrow_back</span>
+        </a>
+
         <button class="btn-hamburguesa" id="openSidebarBtn" aria-label="Abrir menú">
             <span class="material-symbols-outlined">menu</span>
         </button>
@@ -1248,17 +1250,28 @@
     </article>
 
     <!-- Texto en el menu de información -->
-    <aside class="info-lateral">
-        <h3 id="materia-nombre">Selecciona una materia</h3>
+    <aside class="info-lateral" id="panel-lateral-info">
         
-        <button id="btn-mas-info" class="btn-mas-info oculto" title="Ver detalles extra">
-            <span class="material-symbols-rounded">open_in_new</span>
-        </button>
-        
-        <div class="condiciones">
-            <p id="condicion-1">Aquí verás los requisitos para poder cursarla o rendirla.</p>
-            <p id="condicion-2"></p>
-            <p id="condicion-3"></p>
+        <div class="cabecera-info">
+            <span class="titulo-panel">Info de Materia</span>
+            <button id="btn-toggle-info" class="btn-toggle" title="Ocultar/Mostrar panel">
+                <span class="material-symbols-rounded">keyboard_double_arrow_left</span>
+            </button>
+        </div>
+
+        <div class="contenido-info">
+            <h3 id="materia-nombre">Selecciona una materia</h3>
+            
+            <button id="btn-mas-info" class="btn-mas-info oculto" title="Ver detalles extra">
+                <span class="material-symbols-rounded">open_in_new</span>
+                <span class="texto-info">+ Info</span> 
+            </button>
+            
+            <div class="condiciones">
+                <p id="condicion-1">Aquí verás los requisitos para poder cursarla o rendirla.</p>
+                <p id="condicion-2"></p>
+                <p id="condicion-3"></p>
+            </div>
         </div>
     </aside>
 

@@ -292,3 +292,15 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+// ==========================================
+    // SISTEMA DE PANEL LATERAL COLAPSABLE
+    // ==========================================
+    const btnToggleInfo = document.getElementById("btn-toggle-info");
+    const wrapper = document.querySelector(".calculadora-wrapper");
+
+    if (btnToggleInfo && wrapper) {
+        btnToggleInfo.addEventListener("click", () => {
+            wrapper.classList.toggle("panel-colapsado");
+        });
+    }
