@@ -638,18 +638,10 @@ body {
 
 /*-----info-lateral-----*/
 
+/*-----info-lateral (MÓVIL BLINDADO) -----*/
 .info-lateral {
-    display: flex;
-    flex-direction: column;
-    align-items: baseline;
-    
-    /* MAGIA: En celular apilamos todo arriba para que no se desborde */
-    justify-content: flex-start; 
-    padding: 5px 8px; /* Un respirito interno para que no toque los bordes de la caja */
-    
-    text-align: justify;
-    overflow-y: auto; 
-    scrollbar-width: none; 
+    padding: 3px 8px !important; /* Reducimos 1px más de padding superior para ganar espacio */
+    text-align: left !important; 
 }
 
 .info-lateral::-webkit-scrollbar {
@@ -658,26 +650,53 @@ body {
 
 #materia-nombre {
     font-weight: bold;
-    font-size: 0.9em; 
-    margin-bottom: 0; /* Pegado a la primera condición en celulares */
+    font-size: 0.8em !important; /* Achicamos un pelín el título */
+    margin-bottom: 1px !important; /* Lo pegamos al máximo a las condiciones */
+    padding-bottom: 0;
+    border-bottom: none !important; 
     color: var(--text-color);
+    
+    /* MAGIA MÓVIL: 1 renglón estricto y escudo derecho */
+    text-align: left !important;
+    display: block;
+    white-space: nowrap !important; 
+    overflow: hidden !important;
+    text-overflow: ellipsis !important; 
+    padding-right: 90px !important; 
+    width: 100%;
 }
 
 .condiciones {
-    font-size: 0.65em; 
+    font-size: 0.68em !important; /* Letra un poco más chica para que entre todo */
+    width: 100%;
+    text-align: left !important; 
 }
-
+    
 .condiciones p {
-    margin: 1px 0; /* Súper juntitos en el celular */
-    line-height: 1.2; 
+    margin: 0 !important; /* Eliminamos el margen entre renglones por completo */
+    line-height: 1.15 !important; 
+}
+    
+#condicion-3 {
+    margin-top: 2px !important; 
+    padding-top: 2px !important; 
+    /* ¡VUELVE LA LÍNEA SEPARADORA! */
+    border-top: 1px dashed rgba(128, 128, 128, 0.4) !important; 
 }
 
-/* Línea separadora de Rendir (Celular) */
-#condicion-3 {
-    margin-top: 3px; 
-    padding-top: 3px; 
-    border-top: 1px solid var(--border-color); 
+#condicion-3:empty {
+    display: none;
 }
+
+/* MAGIA: Clases automáticas para resaltar palabras */
+.texto-regular { color: var(--color-check-anaranjado); font-weight: bold; text-transform: uppercase;}
+.texto-aprobado { color: var(--color-check-verde); font-weight: bold; text-transform: uppercase;}
+
+/* =========================================
+   INTERRUPTOR BASE: DOBLE VERSIÓN DE TEXTO
+   ========================================= */
+.texto-pc { display: none; }
+.texto-movil { display: inline; }
 
 #condicion-3:empty {
     display: none;
@@ -700,28 +719,60 @@ body {
    ESPACIOS MÁS AMPLIOS PARA TABLET Y PC
    ========================================= */
 @media (min-width: 768px) {
+    /*info-lateral responsive tablet y PC*/
     .info-lateral {
-        justify-content: center; /* En PC centramos todo el bloque */
-        gap: 5px; /* Le damos respiración extra entre título y condiciones */
-        padding: 10px 15px;
+        align-items: baseline;
+        justify-content: flex-start;
+        padding: 25px 20px; /* Un poco más de aire a los costados generales del panel */
     }
     
     #materia-nombre {
-        font-size: 1.1em; /* Título un poco más grande en PC */
-        margin-bottom: 5px; 
+        font-size: 1.15em; 
+        margin-bottom: 15px; /* Separamos más el título de los requisitos */
+        padding-bottom: 15px;
+        border-bottom: 1px dashed var(--border-color) !important; 
+        width: 100%;
+        
+        padding-right: 0 !important; 
+        white-space: normal !important; 
+        overflow: visible !important; 
     }
     
     .condiciones {
-        font-size: 0.7em; /* Textos un poco más legibles en PC */
+        font-size: 0.85em; 
+        width: 100%;
     }
     
     .condiciones p {
-        margin: 5px 0; /* Más aire entre cada condición */
+        margin: 12px; /* MAGIA PC: Muchísima más separación entre cada párrafo */
+        line-height: 1.8; /* MAGIA PC: Mucho más aire entre los renglones del mismo texto */
     }
     
     #condicion-3 {
-        margin-top: 8px; 
-        padding-top: 8px; 
+        margin-top: 25px; /* Empujamos la condición de Rendir bien abajo para que se note la división */
+        padding-top: 15px; 
+        border-top: 1px dashed var(--border-color) !important; 
+    }
+
+    .texto-pc {
+        margin-bottom: 10px;
+    }
+    
+
+    /* INTERRUPTOR PC: Encendemos el texto estructurado y apagamos el del celular */
+    .texto-pc { display: block; }
+    .texto-movil { display: none; }
+
+    /* MAGIA PC: Control total de márgenes para los títulos de cursar/rendir */
+    .titulo-requisito {
+        display: block; /* Esto hace que el texto que le sigue baje de renglón automáticamente */
+        font-weight: 700; /* Bien negrita */
+        
+        /* AQUÍ TIENES TUS MÁRGENES PARA JUGAR */
+        margin-top: 5px;
+        margin-bottom: 12px;
+        
+        color: var(--text-color); /* Opcional: Le da el color de la carrera para que resalte más */
     }
 }
 
@@ -1007,6 +1058,8 @@ body {
     #refresh-button { /*Boton de reiniciar*/
         font-size: 1.8rem;
     }
+
+    
 }
 
 /*agrega una barra de desplazamiento cuando esta de manera horizontal*/
@@ -1620,6 +1673,7 @@ body {
 
 .contenido-info {
     transition: opacity 0.2s ease, transform 0.3s ease;
+    width: 100%;
 }
 
 @media (min-width: 768px) {

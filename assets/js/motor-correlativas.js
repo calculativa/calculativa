@@ -231,10 +231,23 @@ document.addEventListener("DOMContentLoaded", function () {
                         return req; // Si son números normales, los devuelve tal cual
                     }
 
-                    // 1. Panel Lateral (Solo numérico y directo)
-                    const textoCursarReg = reqReg ? `Para cursar: tener Regularizadas ${traducirMagia(reqReg)}.` : `Para cursar: Ninguna materia Regular previa.`;
-                    const textoCursarAprob = reqAprob ? `Para cursar: tener Aprobadas ${traducirMagia(reqAprob)}.` : `Para cursar: Ninguna materia Aprobada previa.`;
-                    const textoRendir = reqRend ? `Para Rendir: tener Aprobadas ${traducirMagia(reqRend)}.` : `Para Rendir: Ninguna materia Aprobada previa.`;
+                    // 1. Panel Lateral (Doble versión: Móvil intacto y PC detallado)
+                    const regStr = reqReg ? traducirMagia(reqReg) : "Ninguna";
+                    const aprobStr = reqAprob ? traducirMagia(reqAprob) : "Ninguna";
+                    const rendStr = reqRend ? traducirMagia(reqRend) : "Ninguna";
+
+                    const textoCursarReg = `
+                        <span class="texto-movil">${reqReg ? `Para cursar: tener Regularizadas ${regStr}.` : `Para cursar: Ninguna materia Regular previa.`}</span>
+                        <span class="texto-pc"><span class="titulo-requisito">📌 PARA CURSAR:</span>• Regulares: ${regStr}</span>
+                    `;
+                    const textoCursarAprob = `
+                        <span class="texto-movil">${reqAprob ? `Para cursar: tener Aprobadas ${aprobStr}.` : `Para cursar: Ninguna materia Aprobada previa.`}</span>
+                        <span class="texto-pc">• Aprobadas: ${aprobStr}</span>
+                    `;
+                    const textoRendir = `
+                        <span class="texto-movil">${reqRend ? `Para Rendir: tener Aprobadas ${rendStr}.` : `Para Rendir: Ninguna materia Aprobada previa.`}</span>
+                        <span class="texto-pc"><span class="titulo-requisito">🎓 PARA RENDIR:</span>• Aprobadas: ${rendStr}</span>
+                    `;
 
                     panelTitulo.textContent = nombre || boton.textContent;
                     panelCondicion1.innerHTML = resaltarPalabras(textoCursarReg);
