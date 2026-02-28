@@ -1,3 +1,7 @@
+// ==========================================
+// 1. INICIO
+// ==========================================
+
 // Función que agrupa los números y crea el HTML con la "llave"
 function armarListaAgrupada(reqs) {
     if (!reqs) return `   ✅ Ninguna materia previa.\n`;
@@ -252,17 +256,17 @@ document.addEventListener("DOMContentLoaded", function () {
                             let baseDetalles = resaltarPalabras(detallesExtensos || "");
 
                             // --- DIAPOSITIVA 1: Cursar (Regulares) ---
-                            let htmlReg = `<span class="titulo-lista">📌 Para CURSAR necesitas tener <span class="texto-regular">REGULARIZADAS</span>:</span>\n\n`;
-                            htmlReg += armarListaAgrupada(reqReg); 
+                            let htmlReg = `<span class="titulo-lista">📌 Para CURSAR necesitas tener <span class="texto-regular">REGULARIZADAS</span>:</span>`;
+                            htmlReg += armarListaAgrupada(reqReg);
                             paginasModal.push(baseDetalles + htmlReg);
                             
                             // --- DIAPOSITIVA 2: Cursar (Aprobadas) ---
-                            let htmlAprob = `<span class="titulo-lista">📌 Para CURSAR necesitas tener <span class="texto-aprobado">APROBADAS</span>:</span>\n\n`;
+                            let htmlAprob = `<span class="titulo-lista">📌 Para CURSAR necesitas tener <span class="texto-aprobado">APROBADAS</span>:</span>`;
                             htmlAprob += armarListaAgrupada(reqAprob);
                             paginasModal.push(baseDetalles + htmlAprob);
                             
                             // --- DIAPOSITIVA 3: Rendir (Aprobadas) ---
-                            let htmlRend = `<span class="titulo-lista">🎓 Para RENDIR necesitas tener <span class="texto-aprobado">APROBADAS</span>:</span>\n\n`;
+                            let htmlRend = `<span class="titulo-lista">🎓 Para RENDIR necesitas tener <span class="texto-aprobado">APROBADAS</span>:</span>`;
                             htmlRend += armarListaAgrupada(reqRend);
                             paginasModal.push(baseDetalles + htmlRend);
 
@@ -400,8 +404,41 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // ==========================================
-// 7. MOTOR MATEMÁTICO (EVALUACIÓN DE CORRELATIVAS)
-// ==========================================
+    // 7. LÓGICA DE LAS CAJAS CAMBIADOR (SELECCIÓN RÁPIDA POR AÑO)
+    // ==========================================
+document.addEventListener("DOMContentLoaded", function () {
+    // Buscamos todas las cajas cambiador del documento
+    const cajasCambiador = document.querySelectorAll('.caja-cambiador');
+
+    cajasCambiador.forEach(caja => {
+        const checksCambiador = caja.querySelectorAll('.checkbox-materia');
+        
+        checksCambiador.forEach(chkCambiador => {
+            chkCambiador.addEventListener('change', function () {
+                const tipoSeleccionado = this.getAttribute('data-checkbox'); // 1 (Rojo), 2 (Naranja) o 3 (Verde)
+                
+                // Buscamos la columna entera (el año) al que pertenece este cambiador
+                const cajaAnio = this.closest('.caja-materias'); 
+                
+                // Buscamos las materias reales de ese año (ignorando los huecos "materia-none")
+                const checksMaterias = cajaAnio.querySelectorAll(`.botones-materias .materia-linea .checkbox-materia[data-checkbox="${tipoSeleccionado}"]`);
+                
+                checksMaterias.forEach(checkMateria => {
+                    // Si el cambiador se encendió, encendemos la materia. Si se apagó, la apagamos.
+                    checkMateria.checked = this.checked;
+                    
+                    // MAGIA PURA: Simulamos que el usuario hizo click manualmente
+                    // Esto dispara el autoguardado en LocalStorage y apaga los otros colores
+                    checkMateria.dispatchEvent(new Event('change'));
+                });
+            });
+        });
+    });
+});
+
+    // ==========================================
+    // 8. MOTOR MATEMÁTICO (EVALUACIÓN DE CORRELATIVAS)
+    // ==========================================
 document.addEventListener("DOMContentLoaded", function () {
     const btnCursar = document.getElementById('btn-evaluar-cursar');
     const btnRendir = document.getElementById('btn-evaluar-rendir');
@@ -455,23 +492,61 @@ document.addEventListener("DOMContentLoaded", function () {
             botonesMaterias.forEach(boton => {
                 boton.className = 'materia-btn'; // Reset clases
                 let id = boton.getAttribute('data-id');
+                if (!id) return; // Ignora los huecos vacíos
+                
                 let reqRend = boton.getAttribute('data-req-rendir');
+                
+                // 1. Calculamos PRIMERO si tiene las materias previas en regla
+                let cumpleRendir = cumpleRequisitos(reqRend, estado.aprobadas);
 
+                // 2. Evaluamos en cascada estricta
                 if (estado.aprobadas.has(id)) {
-                    boton.classList.add('borde-verde'); // YA APROBADA
-                } else if (cumpleRequisitos(reqRend, estado.aprobadas)) {
-                    boton.classList.add('borde-azul'); // LISTA PARA RENDIR
+                    // El alumno tildó la materia. ¿Pero es legal?
+                    if (cumpleRendir) {
+                        boton.classList.add('borde-verde'); // ✅ Aprobado Legal
+                    } else {
+                        boton.classList.add('borde-rojo'); // ❌ ILEGAL: Marcó el check pero le faltan previas
+                    }
+                } else if (cumpleRendir) {
+                    boton.classList.add('borde-azul'); // 🟦 Lista para ir a rendir
                 } else {
-                    boton.classList.add('borde-rojo'); // BLOQUEADA
+                    boton.classList.add('borde-rojo'); // ❌ Bloqueada
                 }
             });
         });
     }
 
+    // --- LÓGICA BOTÓN REFRESH (RESET INSTANTÁNEO) ---
     if (btnRefresh) {
         btnRefresh.addEventListener('click', () => {
-            botonesMaterias.forEach(b => b.className = 'materia-btn');
-            setTimeout(() => window.location.reload(), 200);
+            // 1. Borramos la memoria (LocalStorage)
+            const nombreCarrera = document.body.getAttribute('data-carrera') || 'general';
+            localStorage.removeItem('calculativa_progreso_' + nombreCarrera);
+
+            // 2. Destildamos todos los checkboxes visualmente
+            document.querySelectorAll('.checkbox-materia').forEach(chk => {
+                chk.checked = false;
+            });
+
+            // 3. Quitamos los colores matemáticos de los botones (bordes)
+            botonesMaterias.forEach(boton => {
+                boton.classList.remove('borde-verde', 'borde-rojo', 'borde-azul');
+                boton.style.color = "var(--text-color)"; // Devuelve el texto a color normal
+            });
+
+            // 4. Restauramos el panel lateral de información a su estado por defecto
+            const panelTitulo = document.getElementById('materia-nombre');
+            const panelCondicion1 = document.getElementById('condicion-1');
+            const panelCondicion2 = document.getElementById('condicion-2');
+            const panelCondicion3 = document.getElementById('condicion-3');
+            const btnMasInfo = document.getElementById('btn-mas-info');
+
+            if(panelTitulo) panelTitulo.textContent = "Selecciona una materia";
+            if(panelCondicion1) panelCondicion1.innerHTML = "Aquí verás los requisitos para poder cursarla o rendirla.";
+            if(panelCondicion2) panelCondicion2.innerHTML = "";
+            if(panelCondicion3) panelCondicion3.innerHTML = "";
+            if(btnMasInfo) btnMasInfo.classList.add('oculto');
         });
     }
 });
+

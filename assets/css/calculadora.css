@@ -27,6 +27,8 @@
     --box-shadow: -5px -5px 18px -5px rgba(0,0,0,1);
     -webkit-box-shadow: -5px -5px 18px -5px rgba(0,0,0,1);
     -moz-box-shadow: -5px -5px 18px -5px rgba(0,0,0,1);
+
+    --grosor-borde: 1.5px;
 }
 
 /* Modo Dark */
@@ -286,7 +288,7 @@ body {
 
 .materia-btn {
     /* 1. DISEÑO ORIGINAL RECUPERADO (Bordes, color, sombras) */
-    border: 0.2rem solid var(--color-apagado) !important; 
+    border: var(--grosor-borde) solid var(--color-apagado) !important; 
     border-radius: 8px !important; 
     background-color: var(--bg-color) !important; 
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05) !important; 
@@ -423,7 +425,7 @@ body {
    ========================================= */
 .titulo-anio {
     text-align: center;
-    padding: 6px 0; /* Mantenemos la reducción de tamaño que solucionó el scroll */
+    padding: 3px 0; /* Mantenemos la reducción de tamaño que solucionó el scroll */
     border-bottom: .1rem solid var(--primary-color);
     background-color: transparent; /* MAGIA: Le devolvemos la transparencia original */
     color: var(--text-color);
@@ -1424,15 +1426,17 @@ body {
 }
 
 /* =========================================
-   TÍTULOS DE LISTAS (En un solo renglón)
+   TÍTULOS DE LISTAS (Adaptable a múltiples renglones)
    ========================================= */
 .titulo-lista {
-    white-space: nowrap !important; /* Prohíbe terminantemente bajar de renglón */
+    display: block; /* Lo convertimos en un bloque para que empuje bien la lista hacia abajo */
+    white-space: normal !important; /* MAGIA: Le damos permiso para bajar de renglón si no entra */
     
-    /* MAGIA: En PC se ve a 0.95rem, pero en celulares chicos se achica fluidamente hasta 0.65rem para entrar perfecto */
-    font-size: clamp(0.65rem, 3.8vw, 0.95rem); 
+    font-size: 0.9rem !important; /* Le devolvemos un tamaño súper legible para celulares */
+    line-height: 1.4; /* Espaciado cómodo entre la primera y la segunda línea */
+    letter-spacing: 0; /* Ya no hace falta apretar las letras */
     
-    letter-spacing: -0.3px; /* Junta apenitas las letras para ahorrar valioso espacio horizontal */
+    margin-bottom: 8px; /* Un poco de aire antes de que empiece la lista de materias */
 }
 
 /* =========================================
@@ -1499,11 +1503,12 @@ body {
 
 /* 1. Las cajas individuales absorben el espacio sobrante equitativamente */
 .botones-materias > .materia-linea,
-.botones-materias > .materia-none {
+.botones-materias > .materia-none,
+.bloque-anual > .materia-linea {      /* <--- MAGIA: Ahora las materias de adentro también se estiran igual */
     flex-grow: 1 !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: center !important; /* Centra el botón en su nuevo espacio */
+    justify-content: center !important; 
 }
 
 /* 2. BLINDAJE: La cabecera (Título y "?") tiene prohibido absorber espacio, se ancla arriba */
@@ -1512,13 +1517,27 @@ body {
     justify-content: flex-start !important;
 }
 
-/* 3. La caja azul absorbe el TRIPLE de espacio para que sus materias internas respiren igual que las de afuera */
+/* =========================================
+   DISTRIBUCIÓN DINÁMICA DEL ESPACIO (ANTI-HUECOS)
+   ========================================= */
+
+/* 3. La caja azul absorbe el espacio base de 1 materia por defecto */
 .bloque-anual {
-    flex-grow: 3 !important; 
+    flex-grow: 1 !important; 
     display: flex !important;
     flex-direction: column !important;
-    justify-content: space-evenly !important; /* Reparte el espacio internamente */
+    justify-content: space-evenly !important; 
 }
+
+/* MAGIA ANTI-DESALINEACIÓN: Modificadores de tamaño (Del 2 al 9) */
+.bloque-anual-2 { flex-grow: 2 !important; }
+.bloque-anual-3 { flex-grow: 3 !important; }
+.bloque-anual-4 { flex-grow: 4 !important; }
+.bloque-anual-5 { flex-grow: 5 !important; }
+.bloque-anual-6 { flex-grow: 6 !important; }
+.bloque-anual-7 { flex-grow: 7 !important; }
+.bloque-anual-8 { flex-grow: 8 !important; }
+.bloque-anual-9 { flex-grow: 9 !important; }
 
 /* 4. BLINDAJE DE TÍTULOS: Si en el futuro pones un texto largo, se cortará con "..." en vez de romper la caja */
 .titulo-anio h2 {
