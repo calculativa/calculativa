@@ -286,7 +286,7 @@ body {
 
 .materia-btn {
     /* 1. DISEÑO ORIGINAL RECUPERADO (Bordes, color, sombras) */
-    border: 2.5px solid var(--color-apagado) !important; 
+    border: 0.2rem solid var(--color-apagado) !important; 
     border-radius: 8px !important; 
     background-color: var(--bg-color) !important; 
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05) !important; 
@@ -1731,19 +1731,19 @@ body {
    ========================================= */
 
 .borde-verde {
-    border: 2px solid var(--color-check-verde) !important;
+    border: 0.2rem solid var(--color-check-verde) !important;
     box-shadow: 0 0 8px rgba(102, 204, 103, 0.4);
     transition: all 0.3s ease;
 }
 
 .borde-rojo {
-    border: 2px solid var(--color-check-rojo) !important;
+    border: 0.2rem solid var(--color-check-rojo) !important;
     opacity: 0.7; /* Sutil transparencia para dar sensación de bloqueo */
     transition: all 0.3s ease;
 }
 
 .borde-azul {
-    border: 2px solid #3498db !important; /* Azul para "Listo para rendir" */
+    border: 0.2rem solid #3498db !important; /* Azul para "Listo para rendir" */
     box-shadow: 0 0 8px rgba(52, 152, 219, 0.4);
     transition: all 0.3s ease;
 }
