@@ -66,8 +66,7 @@ body {
     padding: 10px 5px;
     background-color: var(--bg-color);
     color: var(--text-color);
-    transition: background-color 0.5s ease, color 0.5s ease;
-    
+    transition: background-color 0.3s ease, color 0.3s ease; /* Ajustado a 0.3s */
 }
 
 .calculadora-wrapper>* {
@@ -85,7 +84,7 @@ body {
 .calculadora-wrapper {
     display: grid;
     gap: 5px;
-    transition: background-color 0.5s ease, color 0.5s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
     grid-template:
     "header-calc" 50px
     "tablero-materias" auto
@@ -1160,7 +1159,7 @@ body {
     
     /* Estado inicial: Oculto a la izquierda */
     transform: translateX(-110%); 
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
     
     box-shadow: 5px 0 15px rgba(0,0,0,0.5);
     
@@ -1661,7 +1660,11 @@ body {
 }
 
 .btn-toggle:hover {
-    background-color: var(--color-apagado); 
+    /* MAGIA: Usa un 15% del color principal de la carrera (azul en este caso) y el resto transparente */
+    background-color: color-mix(in srgb, var(--primary-color) 15%, transparent); 
+    
+    /* Si la flecha no resalta lo suficiente al pasar el mouse, también podemos colorearla: */
+    color: var(--primary-color);
 }
 
 /* =========================================
