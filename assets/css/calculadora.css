@@ -1419,6 +1419,20 @@ body {
     font-size: 0.95rem;
     line-height: 1.5;
     white-space: pre-wrap; /* Respeta los saltos de línea &#10; del HTML */
+    text-align: left; /* MAGIA: Alinea la lista a la izquierda */
+    margin-top: 0;
+}
+
+/* =========================================
+   TÍTULOS DE LISTAS (En un solo renglón)
+   ========================================= */
+.titulo-lista {
+    white-space: nowrap !important; /* Prohíbe terminantemente bajar de renglón */
+    
+    /* MAGIA: En PC se ve a 0.95rem, pero en celulares chicos se achica fluidamente hasta 0.65rem para entrar perfecto */
+    font-size: clamp(0.65rem, 3.8vw, 0.95rem); 
+    
+    letter-spacing: -0.3px; /* Junta apenitas las letras para ahorrar valioso espacio horizontal */
 }
 
 /* =========================================
@@ -1619,4 +1633,117 @@ body {
         transform: rotate(180deg);
         color: var(--primary-color);
     }
+}
+
+/* =========================================
+   CONTROLES DEL CARRUSEL EN EL MODAL
+   ========================================= */
+.modal-controles {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+    margin-top: 10px;
+}
+
+.modal-controles.oculto {
+    display: none !important;
+}
+
+.btn-flecha {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.btn-flecha:active {
+    transform: scale(0.9);
+}
+
+/* Cuando no hay más páginas para avanzar/retroceder, se vuelve semitransparente */
+.btn-flecha:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#modal-indicador {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--text-color);
+}
+
+/* =========================================
+   LLAVES DE AÑOS EN EL MODAL (+ INFO)
+   ========================================= */
+.llave-anio {
+    position: relative;
+    margin-left: 5px;
+    margin-bottom: 0px; /* MAGIA: 0 espacio extra debajo de la llave */
+    margin-top: 8px;    /* Reducimos la distancia con lo de arriba */
+    padding-left: 12px;
+    
+    /* MAGIA: Apretamos la llave contra el texto interno */
+    padding-top: 10px; 
+    padding-bottom: 0;
+    border-left: 2px solid var(--primary-color);
+}
+
+/* Las patitas superior e inferior de la llave '[' */
+.llave-anio::before, 
+.llave-anio::after {
+    content: '';
+    position: absolute;
+    left: -2px; 
+    width: 6px;
+    height: 2px;
+    background-color: var(--primary-color);
+}
+.llave-anio::before { top: 0; }
+.llave-anio::after { bottom: 0; }
+
+/* El textito "1° AÑO" flotando arriba de la llave */
+.etiqueta-anio {
+    position: absolute; /* MAGIA: Esto lo saca del renglón y lo hace flotar */
+    top: -8px; /* Ajustado para que encaje con el nuevo padding-top */
+    left: 2px; 
+    
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    background-color: var(--bg-color); 
+    padding: 0 6px;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+/* =========================================
+   ESTADOS DEL MOTOR MATEMÁTICO (BORDES)
+   ========================================= */
+
+.borde-verde {
+    border: 2px solid var(--color-check-verde) !important;
+    box-shadow: 0 0 8px rgba(102, 204, 103, 0.4);
+    transition: all 0.3s ease;
+}
+
+.borde-rojo {
+    border: 2px solid var(--color-check-rojo) !important;
+    opacity: 0.7; /* Sutil transparencia para dar sensación de bloqueo */
+    transition: all 0.3s ease;
+}
+
+.borde-azul {
+    border: 2px solid #3498db !important; /* Azul para "Listo para rendir" */
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.4);
+    transition: all 0.3s ease;
 }

@@ -401,6 +401,7 @@ body {
     display: flex;
     height: 38px;
     width: 38px;
+    margin-left: auto; /* MAGIA: Esto lo ancla a la derecha aunque la flecha "volver" desaparezca */
   }
 
   .sidebar-header .menu-toggler span {
@@ -1426,17 +1427,48 @@ a.institucion:active {
    ADAPTACIÓN PERFECTA PARA CELULAR
    ========================================= */
 @media (max-width: 1024px) {
+    .sidebar {
+      height: 56px; 
+      width: calc(100% - 26px) !important;
+      display: block; 
+      
+      /* Oculto por defecto. Cuando el menú se cierra, el scroll desaparece instantáneamente */
+      overflow-y: hidden; 
+      
+      padding-bottom: 40px;
+      margin: 13px;
+      transition: all 0.4s ease !important;
+    }
+
+    @keyframes delayScrollbar {
+      0%   { overflow-y: hidden; }
+      99%  { overflow-y: hidden; }
+      100% { overflow-y: auto; }
+    }
+
+    .sidebar.menu-active {
+      max-height: calc(100vh - 26px); 
+      display: flex; 
+      flex-direction: column;
+      animation: delayScrollbar 0.4s forwards;
+      transition: all 0.4s ease !important;
+    }
+
+    /* MAGIA: Movemos el botón de instalar a la izquierda en celulares */
     .install-container {
-        /* Lo bajamos un poquito para centrarlo en tu barra lateral (que mide 56px) */
-        top: 22px; 
-        /* Lo empujamos a la izquierda para que no tape al botón hamburguesa */
-        right: 65px; 
-        padding: 4px 10px;
-        gap: 8px;
-        /* Le damos un fondo translúcido para que se fusione con la barra azul */
-        background: rgba(255, 255, 255, 0.15); 
-        box-shadow: none;
-        border: none;
+        right: 75px !important;
+        top: 20px !important;
+        animation: slideInRightMobile 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    }
+
+    @keyframes slideInRightMobile {
+        from { right: -100px; opacity: 0; }
+        to { right: 75px; opacity: 1; }
+    }
+
+    .btn-install {
+        font-size: 0.8rem;
+        gap: 4px;
     }
 
     .btn-install {

@@ -1,3 +1,39 @@
+// Función que agrupa los números y crea el HTML con la "llave"
+function armarListaAgrupada(reqs) {
+    if (!reqs) return `   ✅ Ninguna materia previa.\n`;
+    
+    // -- PALABRAS MÁGICAS RESERVADAS --
+    if (reqs === "TODAS") return `   🌟 TODAS las demás materias de la carrera.\n`;
+    if (reqs === "TODAS1") return `   🌟 TODAS las materias de 1° Año.\n`;
+    if (reqs === "TODAS2") return `   🌟 TODAS las materias de 2° Año.\n`;
+    if (reqs === "TODAS3") return `   🌟 TODAS las materias de 3° Año.\n`;
+    
+    // 1. Agrupamos los IDs en cajas por año
+    let grupos = {};
+    reqs.split(',').forEach(id => {
+        let idLimpio = id.trim();
+        let anio = obtenerAnio(idLimpio);
+        if (!grupos[anio]) grupos[anio] = [];
+        grupos[anio].push(idLimpio);
+    });
+
+    // 2. Armamos el HTML dibujando la llave sin saltos de línea basura
+    let html = "";
+    Object.keys(grupos).sort().forEach(anio => {
+        html += `<div class="llave-anio">`; 
+        html += `<span class="etiqueta-anio">${anio}</span>`; 
+        
+        let items = [];
+        grupos[anio].forEach(id => {
+            items.push(`   • ${id} - ${dbMaterias[id]}`);
+        });
+        html += items.join('\n'); 
+        
+        html += `</div>`;
+    });
+    return html;
+}
+
 const rightBtn = document.querySelector("#scrolling-button-right");
 const leftBtn = document.querySelector("#scrolling-button-left");
 const content = document.querySelector(".caja-cursado");
@@ -89,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // ==========================================
-// 3. LÓGICA DEL PANEL LATERAL Y MODAL DE INFO
+// 2. LÓGICA DEL PANEL LATERAL Y MODAL DE INFO
 // ==========================================
 document.addEventListener("DOMContentLoaded", function () {
     const botonesMaterias = document.querySelectorAll('.materia-btn');
@@ -98,83 +134,141 @@ document.addEventListener("DOMContentLoaded", function () {
     const panelCondicion2 = document.getElementById('condicion-2');
     const panelCondicion3 = document.getElementById('condicion-3');
     
-    // Elementos del Modal y Botón Flotante
+    // Elementos del Modal
     const btnMasInfo = document.getElementById('btn-mas-info');
     const modalOverlay = document.getElementById('modal-info');
     const modalTitulo = document.getElementById('modal-titulo');
     const modalTexto = document.getElementById('modal-texto');
     const btnCerrarModal = document.getElementById('modal-cerrar');
 
-    let botonActivo = null;
+    // Elementos del Carrusel
+    const modalControles = document.getElementById('modal-controles');
+    const btnIzq = document.getElementById('modal-btn-izq');
+    const btnDer = document.getElementById('modal-btn-der');
+    const indicador = document.getElementById('modal-indicador');
 
-    // Aseguramos que el modal inicie oculto
+    let botonActivo = null;
+    let paginasModal = []; // Aquí guardaremos las diapositivas
+    let paginaActual = 0;
+
+    // Iniciar ocultos
     if(modalOverlay) modalOverlay.classList.add('modal-oculto');
     if(btnMasInfo) btnMasInfo.classList.add('oculto');
 
-    // Lógica para cerrar el Modal
+    // Función que lee la base de datos de palabras
+    function resaltarPalabras(texto) {
+        if (!texto) return "";
+        return texto
+            .replace(/\b(Aprobada|Aprobadas|Aprobado|Aprobados)\b/gi, match => `<span class="texto-aprobado">${match.toUpperCase()}</span>`)
+            .replace(/\b(Regular|Regulares|Regularizada|Regularizadas)\b/gi, match => `<span class="texto-regular">${match.toUpperCase()}</span>`);
+    }
+
+    // Cerrar Modal
     if (btnCerrarModal && modalOverlay) {
         btnCerrarModal.addEventListener('click', () => modalOverlay.classList.add('modal-oculto'));
-        // Cerrar si tocan afuera de la caja blanca
         modalOverlay.addEventListener('click', (e) => {
             if(e.target === modalOverlay) modalOverlay.classList.add('modal-oculto');
         });
     }
 
-    function resaltarPalabras(texto) {
-        if (!texto) return "";
-        return texto
-            .replace(/Regular/gi, '<span class="texto-regular">REGULAR</span>')
-            .replace(/Regulares/gi, '<span class="texto-regular">REGULARES</span>')
-            .replace(/Aprobada/gi, '<span class="texto-aprobado">APROBADA</span>')
-            .replace(/Aprobadas/gi, '<span class="texto-aprobado">APROBADAS</span>');
+    // MAGIA: Navegación del Carrusel
+    function actualizarCarrusel() {
+        modalTexto.innerHTML = paginasModal[paginaActual];
+        
+        if (paginasModal.length > 1) {
+            modalControles.classList.remove('oculto');
+            indicador.textContent = `${paginaActual + 1} / ${paginasModal.length}`;
+            btnIzq.disabled = (paginaActual === 0);
+            btnDer.disabled = (paginaActual === paginasModal.length - 1);
+        } else {
+            modalControles.classList.add('oculto');
+        }
     }
+
+    if (btnIzq) btnIzq.addEventListener('click', () => { if(paginaActual > 0) { paginaActual--; actualizarCarrusel(); } });
+    if (btnDer) btnDer.addEventListener('click', () => { if(paginaActual < paginasModal.length - 1) { paginaActual++; actualizarCarrusel(); } });
+
+    // ==========================================
+    // 3. Click en los botones de las Materias
+    // ==========================================
 
     if (botonesMaterias.length > 0 && panelTitulo) {
         botonesMaterias.forEach(boton => {
             boton.addEventListener('click', () => {
                 
-                // CASO A: Apagar el botón
+                // CASO A: Apagar botón
                 if (botonActivo === boton) {
                     panelTitulo.textContent = "Selecciona una materia";
                     panelCondicion1.innerHTML = "Aquí verás los requisitos para poder cursarla o rendirla.";
                     panelCondicion2.innerHTML = "";
                     if(panelCondicion3) panelCondicion3.innerHTML = ""; 
-                    
-                    if(btnMasInfo) btnMasInfo.classList.add('oculto'); // Ocultar botón flotante
-                    
+                    if(btnMasInfo) btnMasInfo.classList.add('oculto');
                     boton.style.color = "var(--text-color)";
                     botonActivo = null;
                 } 
-                // CASO B: Encender un botón
+                // CASO B: Encender botón
                 else {
                     botonesMaterias.forEach(b => b.style.color = "var(--text-color)");
                     
-                    const nombre = boton.getAttribute('data-nombre');
-                    const reqCursarReg = boton.getAttribute('data-cursar-reg');
-                    const reqCursarAprob = boton.getAttribute('data-cursar-aprob');
-                    const reqRendir = boton.getAttribute('data-rendir');
-                    const detallesExtensos = boton.getAttribute('data-detalles'); // Capturamos la info larga
+                    const idMateria = boton.getAttribute('data-id');
+                    const nombre = dbMaterias[idMateria];
+                    
+                    const reqReg = boton.getAttribute('data-req-cursar-reg'); 
+                    const reqAprob = boton.getAttribute('data-req-cursar-aprob');
+                    const reqRend = boton.getAttribute('data-req-rendir');
+                    const detallesExtensos = boton.getAttribute('data-detalles'); 
+
+                    // --- MINI TRADUCTOR DE PALABRAS MÁGICAS ---
+                    function traducirMagia(req) {
+                        if (req === "TODAS") return "TODAS las materias";
+                        if (req === "TODAS1") return "TODAS las de 1° Año";
+                        if (req === "TODAS2") return "TODAS las de 2° Año";
+                        if (req === "TODAS3") return "TODAS las de 3° Año";
+                        return req; // Si son números normales, los devuelve tal cual
+                    }
+
+                    // 1. Panel Lateral (Solo numérico y directo)
+                    const textoCursarReg = reqReg ? `Para cursar: tener Regularizadas ${traducirMagia(reqReg)}.` : `Para cursar: Ninguna materia Regular previa.`;
+                    const textoCursarAprob = reqAprob ? `Para cursar: tener Aprobadas ${traducirMagia(reqAprob)}.` : `Para cursar: Ninguna materia Aprobada previa.`;
+                    const textoRendir = reqRend ? `Para Rendir: tener Aprobadas ${traducirMagia(reqRend)}.` : `Para Rendir: Ninguna materia Aprobada previa.`;
 
                     panelTitulo.textContent = nombre || boton.textContent;
-                    panelCondicion1.innerHTML = resaltarPalabras(reqCursarReg) || "";
-                    panelCondicion2.innerHTML = resaltarPalabras(reqCursarAprob) || "";
-                    if(panelCondicion3) panelCondicion3.innerHTML = resaltarPalabras(reqRendir) || "";
+                    panelCondicion1.innerHTML = resaltarPalabras(textoCursarReg);
+                    panelCondicion2.innerHTML = resaltarPalabras(textoCursarAprob);
+                    if(panelCondicion3) panelCondicion3.innerHTML = resaltarPalabras(textoRendir);
                     
                     boton.style.color = "var(--primary-color)";
                     botonActivo = boton;
 
-                    // Mostrar el botón flotante SOLO si la materia tiene detalles extra
-                    if(btnMasInfo && detallesExtensos) {
-                        btnMasInfo.classList.remove('oculto');
+                    // 2. Preparar el Carrusel del Modal
+                    if(btnMasInfo) {
+                        btnMasInfo.classList.remove('oculto'); 
                         
-                        // Configurar el click del botón flotante para que abra ESTE texto
                         btnMasInfo.onclick = () => {
-                            modalTitulo.textContent = (nombre || boton.textContent);
-                            modalTexto.innerHTML = resaltarPalabras(detallesExtensos); // También pintamos palabras aquí
+                            modalTitulo.textContent = nombre || boton.textContent;
+                            paginasModal = [];
+                            paginaActual = 0;
+                            
+                            let baseDetalles = resaltarPalabras(detallesExtensos || "");
+
+                            // --- DIAPOSITIVA 1: Cursar (Regulares) ---
+                            let htmlReg = `<span class="titulo-lista">📌 Para CURSAR necesitas tener <span class="texto-regular">REGULARIZADAS</span>:</span>\n\n`;
+                            htmlReg += armarListaAgrupada(reqReg); 
+                            paginasModal.push(baseDetalles + htmlReg);
+                            
+                            // --- DIAPOSITIVA 2: Cursar (Aprobadas) ---
+                            let htmlAprob = `<span class="titulo-lista">📌 Para CURSAR necesitas tener <span class="texto-aprobado">APROBADAS</span>:</span>\n\n`;
+                            htmlAprob += armarListaAgrupada(reqAprob);
+                            paginasModal.push(baseDetalles + htmlAprob);
+                            
+                            // --- DIAPOSITIVA 3: Rendir (Aprobadas) ---
+                            let htmlRend = `<span class="titulo-lista">🎓 Para RENDIR necesitas tener <span class="texto-aprobado">APROBADAS</span>:</span>\n\n`;
+                            htmlRend += armarListaAgrupada(reqRend);
+                            paginasModal.push(baseDetalles + htmlRend);
+
+                            actualizarCarrusel();
                             modalOverlay.classList.remove('modal-oculto');
                         };
-                    } else if (btnMasInfo) {
-                        btnMasInfo.classList.add('oculto');
                     }
                 }
             });
@@ -183,7 +277,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ==========================================
-// 5. EXPANSIÓN INTELIGENTE DE BOTONES (ANTI-SCROLL)
+// 4. EXPANSIÓN INTELIGENTE DE BOTONES (ANTI-SCROLL)
 // ==========================================
 document.addEventListener("DOMContentLoaded", function () {
     
@@ -220,7 +314,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ==========================================
-// 6. MEMORIA PERMANENTE (LOCALSTORAGE)
+// 5. MEMORIA PERMANENTE (LOCALSTORAGE)
 // ==========================================
 document.addEventListener("DOMContentLoaded", function () {
     
@@ -293,8 +387,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-// ==========================================
-    // SISTEMA DE PANEL LATERAL COLAPSABLE
+    // ==========================================
+    // 6. SISTEMA DE PANEL LATERAL COLAPSABLE
     // ==========================================
     const btnToggleInfo = document.getElementById("btn-toggle-info");
     const wrapper = document.querySelector(".calculadora-wrapper");
@@ -304,3 +398,80 @@ document.addEventListener("DOMContentLoaded", function () {
             wrapper.classList.toggle("panel-colapsado");
         });
     }
+
+    // ==========================================
+// 7. MOTOR MATEMÁTICO (EVALUACIÓN DE CORRELATIVAS)
+// ==========================================
+document.addEventListener("DOMContentLoaded", function () {
+    const btnCursar = document.getElementById('btn-evaluar-cursar');
+    const btnRendir = document.getElementById('btn-evaluar-rendir');
+    const botonesMaterias = document.querySelectorAll('.materia-btn');
+    const btnRefresh = document.getElementById('refresh-button');
+
+    function obtenerEstadoAlumno() {
+        let regulares = new Set();
+        let aprobadas = new Set();
+        document.querySelectorAll('.checkbox-materia:checked').forEach(chk => {
+            let id = chk.getAttribute('data-materia').replace('Materia ', '');
+            let tipo = chk.getAttribute('data-checkbox');
+            if (tipo === "2") regulares.add(id);
+            if (tipo === "3") { aprobadas.add(id); regulares.add(id); }
+        });
+        return { regulares, aprobadas };
+    }
+
+    function cumpleRequisitos(requisitosStr, setAlumno) {
+        if (!requisitosStr) return true;
+        if (requisitosStr === "TODAS") return setAlumno.size >= Object.keys(dbMaterias).length - 1;
+        let reqsArray = requisitosStr.split(',').map(id => id.trim());
+        return reqsArray.every(reqId => setAlumno.has(reqId));
+    }
+
+    // --- LÓGICA CURSAR ---
+    if (btnCursar) {
+        btnCursar.addEventListener('click', () => {
+            let estado = obtenerEstadoAlumno();
+            botonesMaterias.forEach(boton => {
+                boton.className = 'materia-btn'; // Reset clases
+                let id = boton.getAttribute('data-id');
+                let reqReg = boton.getAttribute('data-req-cursar-reg');
+                let reqAprob = boton.getAttribute('data-req-cursar-aprob');
+
+                let puedeCursar = cumpleRequisitos(reqReg, estado.regulares) && cumpleRequisitos(reqAprob, estado.aprobadas);
+                
+                if (puedeCursar) {
+                    boton.classList.add('borde-verde'); // Habilitada
+                } else {
+                    boton.classList.add('borde-rojo'); // Bloqueada
+                }
+            });
+        });
+    }
+
+    // --- LÓGICA RENDIR ---
+    if (btnRendir) {
+        btnRendir.addEventListener('click', () => {
+            let estado = obtenerEstadoAlumno();
+            botonesMaterias.forEach(boton => {
+                boton.className = 'materia-btn'; // Reset clases
+                let id = boton.getAttribute('data-id');
+                let reqRend = boton.getAttribute('data-req-rendir');
+
+                if (estado.aprobadas.has(id)) {
+                    boton.classList.add('borde-verde'); // YA APROBADA
+                } else if (cumpleRequisitos(reqRend, estado.aprobadas)) {
+                    boton.classList.add('borde-azul'); // LISTA PARA RENDIR
+                } else {
+                    boton.classList.add('borde-rojo'); // BLOQUEADA
+                }
+            });
+        });
+    }
+
+    if (btnRefresh) {
+        btnRefresh.addEventListener('click', () => {
+            botonesMaterias.forEach(b => b.className = 'materia-btn');
+            setTimeout(() => window.location.reload(), 200);
+        });
+    }
+});
