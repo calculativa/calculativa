@@ -1,5 +1,23 @@
 // ==========================================
-// 1. INICIO
+// 1. AUTO-COMPLETAR NOMBRES DE MATERIAS
+// ==========================================
+document.addEventListener("DOMContentLoaded", function () {
+    // Buscamos todos los botones de materias en la pantalla
+    const botones = document.querySelectorAll('.materia-btn');
+    
+    botones.forEach(boton => {
+        const id = boton.getAttribute('data-id');
+        
+        // Si el botón tiene un ID y ese ID existe en nuestro "cartucho" (dbMaterias)
+        if (id && dbMaterias[id]) {
+            // Le inyectamos el texto combinando el ID y el Nombre
+            boton.textContent = `${id}-${dbMaterias[id]}`;
+        }
+    });
+});
+
+// ==========================================
+// 2. INICIO
 // ==========================================
 
 // Función que agrupa los números y crea el HTML con la "llave"
@@ -129,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // ==========================================
-// 2. LÓGICA DEL PANEL LATERAL Y MODAL DE INFO
+// 3. LÓGICA DEL PANEL LATERAL Y MODAL DE INFO
 // ==========================================
 document.addEventListener("DOMContentLoaded", function () {
     const botonesMaterias = document.querySelectorAll('.materia-btn');
@@ -193,7 +211,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (btnDer) btnDer.addEventListener('click', () => { if(paginaActual < paginasModal.length - 1) { paginaActual++; actualizarCarrusel(); } });
 
     // ==========================================
-    // 3. Click en los botones de las Materias
+    // 4. Click en los botones de las Materias
     // ==========================================
 
     if (botonesMaterias.length > 0 && panelTitulo) {
@@ -294,7 +312,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ==========================================
-// 4. EXPANSIÓN INTELIGENTE DE BOTONES (ANTI-SCROLL)
+// 5. EXPANSIÓN INTELIGENTE DE BOTONES (ANTI-SCROLL)
 // ==========================================
 document.addEventListener("DOMContentLoaded", function () {
     
@@ -331,7 +349,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ==========================================
-// 5. MEMORIA PERMANENTE (LOCALSTORAGE)
+// 6. MEMORIA PERMANENTE (LOCALSTORAGE)
 // ==========================================
 document.addEventListener("DOMContentLoaded", function () {
     
@@ -405,7 +423,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
     // ==========================================
-    // 6. SISTEMA DE PANEL LATERAL COLAPSABLE
+    // 7. SISTEMA DE PANEL LATERAL COLAPSABLE
     // ==========================================
     const btnToggleInfo = document.getElementById("btn-toggle-info");
     const wrapper = document.querySelector(".calculadora-wrapper");
@@ -417,7 +435,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // ==========================================
-    // 7. LÓGICA DE LAS CAJAS CAMBIADOR (SELECCIÓN RÁPIDA POR AÑO)
+    // 8. LÓGICA DE LAS CAJAS CAMBIADOR (SELECCIÓN RÁPIDA POR AÑO)
     // ==========================================
 document.addEventListener("DOMContentLoaded", function () {
     // Buscamos todas las cajas cambiador del documento
@@ -450,7 +468,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
     // ==========================================
-    // 8. MOTOR MATEMÁTICO (EVALUACIÓN DE CORRELATIVAS)
+    // 9. MOTOR MATEMÁTICO (EVALUACIÓN DE CORRELATIVAS)
     // ==========================================
 document.addEventListener("DOMContentLoaded", function () {
     const btnCursar = document.getElementById('btn-evaluar-cursar');
