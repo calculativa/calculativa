@@ -17,6 +17,118 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ==========================================
+// 1.5. INYECCIÓN DEL MODO SELECT (LISTA DESPLEGABLE)
+// ==========================================
+document.addEventListener("DOMContentLoaded", function () {
+    const contenedores = document.querySelectorAll('.materia-contenedor, .caja-cambiador');
+    
+    // A. CONSTRUIR LOS SELECTS AUTOMÁTICAMENTE
+    contenedores.forEach(contenedor => {
+        const cajaCheckboxes = contenedor.querySelector('.materia-checkboxes');
+        if (!cajaCheckboxes) return;
+
+        const primerCheck = cajaCheckboxes.querySelector('.checkbox-materia');
+        if (!primerCheck) return;
+        const nombreMateria = primerCheck.getAttribute('data-materia');
+
+        // Creamos el elemento <select>
+        const select = document.createElement('select');
+        select.className = 'materia-select';
+        select.setAttribute('data-materia', nombreMateria);
+        select.setAttribute('data-estado', '0');
+        
+        select.innerHTML = `
+            <option value="0">---</option>
+            <option value="1">Libre</option>
+            <option value="2">Regular</option>
+            <option value="3">Aprobado</option>
+        `;
+
+        // Lo insertamos en el HTML justo al lado de los checkboxes
+        cajaCheckboxes.parentNode.insertBefore(select, cajaCheckboxes.nextSibling);
+
+        // Ajustar visualmente por si ya había datos cargados del LocalStorage
+        const checks = contenedor.querySelectorAll(`.checkbox-materia[data-materia="${nombreMateria}"]`);
+        checks.forEach(chk => {
+            if (chk.checked) {
+                const val = chk.getAttribute('data-checkbox');
+                select.value = val;
+                select.setAttribute('data-estado', val);
+            }
+        });
+
+        // SINCRONIZACIÓN 1: Cuando el usuario usa la Lista Desplegable -> Tilda el Checkbox Oculto
+        select.addEventListener('change', function() {
+            const valor = this.value;
+            this.setAttribute('data-estado', valor);
+
+            checks.forEach(chk => {
+                const tipo = chk.getAttribute('data-checkbox');
+                chk.checked = (tipo === valor);
+                // Disparamos el evento para que el LocalStorage y el Motor evalúen el cambio
+                chk.dispatchEvent(new Event('change')); 
+            });
+        });
+    });
+
+    // B. SINCRONIZACIÓN 2: Cuando el sistema tilda un Checkbox -> Actualiza la Lista
+    // (Útil para los botones de "Marcar todo 1° Año")
+    document.querySelectorAll('.checkbox-materia').forEach(chk => {
+        chk.addEventListener('change', function() {
+            const nombreMateria = this.getAttribute('data-materia');
+            const select = document.querySelector(`.materia-select[data-materia="${nombreMateria}"]`);
+            if (!select) return;
+
+            if (this.checked) {
+                const valor = this.getAttribute('data-checkbox');
+                if (select.value !== valor) {
+                    select.value = valor;
+                    select.setAttribute('data-estado', valor);
+                }
+            } else {
+                // Si se desmarcó, verificamos si todos quedaron vacíos
+                const grupoChecks = document.querySelectorAll(`.checkbox-materia[data-materia="${nombreMateria}"]`);
+                const algunoMarcado = Array.from(grupoChecks).some(c => c.checked);
+                if (!algunoMarcado) {
+                    select.value = "0";
+                    select.setAttribute('data-estado', "0");
+                }
+            }
+        });
+    });
+
+    // C. LÓGICA DEL BOTÓN DEL MENÚ (Guardado de preferencias)
+    const btnToggleModo = document.getElementById('btn-toggle-input');
+    const iconModo = document.getElementById('input-mode-icon');
+    const labelModo = document.getElementById('input-mode-label');
+
+    let modoActual = localStorage.getItem('calculativa_modo_input') || 'checkbox';
+    
+    function aplicarModo(modo) {
+        if (modo === 'lista') {
+            document.body.classList.add('modo-lista');
+            if (labelModo) labelModo.textContent = "Modo: Lista";
+            if (iconModo) iconModo.textContent = "fact_check"; 
+        } else {
+            document.body.classList.remove('modo-lista');
+            if (labelModo) labelModo.textContent = "Modo: Checkbox";
+            if (iconModo) iconModo.textContent = "check_box"; 
+        }
+    }
+
+    aplicarModo(modoActual); // Aplicamos al abrir la app
+
+    if (btnToggleModo) {
+        btnToggleModo.addEventListener('click', (e) => {
+            e.preventDefault();
+            modoActual = modoActual === 'checkbox' ? 'lista' : 'checkbox';
+            localStorage.setItem('calculativa_modo_input', modoActual);
+            aplicarModo(modoActual);
+        });
+    }
+});
+
+// ==========================================
 // 2. INICIO
 // ==========================================
 
@@ -557,6 +669,12 @@ document.addEventListener("DOMContentLoaded", function () {
             // 2. Destildamos todos los checkboxes visualmente
             document.querySelectorAll('.checkbox-materia').forEach(chk => {
                 chk.checked = false;
+            });
+
+            // MAGIA: Resetea también todas las listas desplegables
+            document.querySelectorAll('.materia-select').forEach(sel => {
+                sel.value = "0";
+                sel.setAttribute('data-estado', "0");
             });
 
             // 3. Quitamos los colores matemáticos de los botones (bordes)

@@ -1823,3 +1823,45 @@ body {
     box-shadow: 0 0 8px rgba(52, 152, 219, 0.4);
     transition: all 0.3s ease;
 }
+
+/* =========================================
+   SISTEMA DE ENTRADA DOBLE (CHECKBOX VS SELECT)
+   ========================================= */
+.materia-select {
+    display: none; /* Oculto por defecto */
+    flex: 0 0 100px; /* Exactamente el mismo ancho inquebrantable que los checkboxes */
+    width: 100px; 
+    height: 30px;
+    padding: 0 5px;
+    border-radius: 6px;
+    background-color: transparent;
+    color: var(--text-color);
+    border: 2px solid var(--border-color);
+    font-family: inherit;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.materia-select:hover {
+    border-color: var(--color-apagado);
+}
+
+/* EL INTERRUPTOR: Si el body tiene 'modo-lista', invertimos las visibilidades */
+body.modo-lista .materia-checkboxes { display: none !important; }
+body.modo-lista .materia-select { display: block !important; }
+
+/* COLORES DINÁMICOS PARA LA LISTA DESPLEGABLE */
+.materia-select[data-estado="1"] { border-color: var(--color-check-rojo); color: var(--color-check-rojo); }
+.materia-select[data-estado="2"] { border-color: var(--color-check-anaranjado); color: var(--color-check-anaranjado); }
+.materia-select[data-estado="3"] { border-color: var(--color-check-verde); color: var(--color-check-verde); }
+
+/* Opcional: Estilo de las opciones de la lista */
+.materia-select option {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-weight: bold;
+}
